@@ -20,7 +20,7 @@ I started writing the posts in Markdown, and controlling the blog workflow with 
 
 Unrelated to computer vision, I'm the co-builder of a [website](http://www.expensesplit.com) for roommate expense splitting.
 
-## Lets get in touch
+## Getting in touch
 Email: jacob.gildenblat@gmail.com
 
 [Linkedin](https://www.linkedin.com/in/jacob-gildenblat)

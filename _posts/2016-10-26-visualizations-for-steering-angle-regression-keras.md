@@ -84,7 +84,7 @@ Third attempt - Getting there - class activation maps using gradients
 
 (The above image shows pixels that contribute to steering right)
 
-[Class activation maps](http://jacobcv.blogspot.com/2016/08/class-activation-maps-in-keras.html) are a technique to visualize the importance of image pixels to the final output of the network.
+[Class activation maps](https://jacobgil.github.io/deeplearning/2016/08/19/class-activation-maps.html) are a technique to visualize the importance of image pixels to the final output of the network.
 Basically you take the output of the last convolutional layer, you take a spatial average of that (global average pooling), and you feed that into a softmax for classification.
 Now you can look at the softmax weights used to give a category score - large weights mean important features - and multiply them by the corresponding conv outputs.
 
