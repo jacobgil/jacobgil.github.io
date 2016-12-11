@@ -2,7 +2,8 @@
 layout: post
 title:  "A few quick notes on using the Tensorflow C++ API"
 date:   2016-06-10 22:10:33 +0200
-categories: DeepLearning
+permalink: deeplearning/tensorflow-cpp
+
 ---
 
 If you are unfamiliar with bazel, then there are some quirks in getting TensorFlow to work with OpenCV, optimizations turned on, and with building shared libraries.

@@ -2,7 +2,7 @@
 layout: post
 title:  "Visualizations for regressing wheel steering angles in self driving cars"
 date:   2016-10-26 22:10:33 +0200
-categories: DeepLearning
+permalink: deeplearning/vehicle-steering-angle-visualizations
 ---
 
 ![grad-cam](https://github.com/jacobgil/keras-steering-angle-visualizations/blob/master/examples/18123_cam.jpg?raw=true)

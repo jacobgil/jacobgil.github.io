@@ -2,7 +2,7 @@
 layout: post
 title:  "Visualizing CNN filters with keras"
 date:   2016-03-23 22:10:33 +0200
-categories: DeepLearning
+permalink: deeplearning/filter-visualizations
 ---
 
 [Here](https://github.com/jacobgil/keras-filter-visualization) is a utility I made for visualizing filters with Keras, using a few regularizations for more natural outputs.  

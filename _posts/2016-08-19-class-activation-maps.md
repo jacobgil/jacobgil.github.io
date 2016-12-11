@@ -2,7 +2,7 @@
 layout: post
 title:  "Class activation maps in Keras for visualizing where deep learning networks pay attention"
 date:   2016-08-19 22:10:33 +0200
-categories: DeepLearning
+permalink: deeplearning/class-activation-maps
 ---
 [Github project with all the code](https://github.com/jacobgil/keras-cam)
 

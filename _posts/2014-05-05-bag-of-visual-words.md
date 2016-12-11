@@ -2,7 +2,7 @@
 layout: post
 title:  "Bag of visual words for image classification"
 date:   2014-05-05 22:10:33 +0200
-categories: MachineLearning
+permalink: machinelearning/bag-of-words
 ---
 
 [Github repository](https://github.com/jacobgil/BagOfVisualWords)

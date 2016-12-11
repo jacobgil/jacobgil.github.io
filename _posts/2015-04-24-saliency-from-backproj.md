@@ -2,7 +2,7 @@
 layout: post
 title:  "Simple Image saliency detection from histogram backprojection"
 date:   2015-04-24 22:10:33 +0200
-categories: ComputerVision
+permalink: computervision/saliency-from-backproj
 ---
 
 [Github repository](https://github.com/jacobgil/saliency-from-backproj)  

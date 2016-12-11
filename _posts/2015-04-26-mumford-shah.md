@@ -2,7 +2,7 @@
 layout: post
 title:  "Smoothing images with the Mumford Shah functional "
 date:   2015-04-26 22:10:33 +0200
-categories: ComputerVision
+permalink: computervision/mumford-shah
 ---
 
 [Try out my python implementation](https://github.com/jacobgil/Ambrosio-Tortorelli-Minimizer) for minimizing the Mumford Shah functional.  

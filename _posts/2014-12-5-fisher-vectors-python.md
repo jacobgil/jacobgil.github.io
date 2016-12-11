@@ -2,7 +2,7 @@
 layout: post
 title:  "Image Fisher Vectors In Python"
 date:   2014-12-05 22:10:33 +0200
-categories: MachineLearning
+permalink: machinelearning/fisher-vectors-python
 ---
 
 Although the state of the art in image classification (while writing this post) is deep learning,
