@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "A few quick notes on using the Tensorflow C++ API"
+title:  "A few notes on using the Tensorflow C++ API"
 date:   2016-06-10 22:10:33 +0200
 permalink: deeplearning/tensorflow-cpp
 

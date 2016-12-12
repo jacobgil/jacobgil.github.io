@@ -4,7 +4,10 @@ title:  "Class activation maps in Keras for visualizing where deep learning netw
 date:   2016-08-19 22:10:33 +0200
 permalink: deeplearning/class-activation-maps
 ---
-[Github project with all the code](https://github.com/jacobgil/keras-cam)
+
+[Github project for class activation maps](https://github.com/jacobgil/keras-cam)
+
+[Github repo for gradient based class activation maps](https://github.com/jacobgil/keras-grad-cam)
 
 [Class activation maps](http://cnnlocalization.csail.mit.edu) are a simple technique to get the discriminative image regions used by a CNN to identify a specific class in the image.
 In other words, a class activation map (CAM) lets us see which regions in the image were relevant to this class.
@@ -113,3 +116,58 @@ Class activation maps look useful for understanding issues like this.
 Here's an example with weights from the "not person" category.
 It looks like it's using large "line-like" regions for making a "not person" decision.
 ![enter image description here](https://raw.githubusercontent.com/jacobgil/keras-cam/master/examples/traffic.jpg)
+
+
+### Gradient based class activation maps
+
+![grad-cam](https://github.com/jacobgil/keras-grad-cam/raw/master/examples/boat.jpg?raw=true)
+![grad-cam](https://github.com/jacobgil/keras-grad-cam/raw/master/examples/persian_cat.jpg?raw=true)
+
+The original CAM method described above requires changing the network structure and then retraining it.
+[This work](https://arxiv.org/abs/1610.02391) generelizes CAM to be able to apply it with existing networks.
+In case the network already has a CAM-compibtable structure, grad-cam converges to CAM.
+
+## Grad-CAM inputs:
+- A query image
+- A network
+- A target function that should be maximized by pixels of interest.
+
+# Output:
+- A heatmap for every convolutional layer output.
+
+## Outline
+- Create a target function.
+
+The output of grad-cam will be pixels that contribute to the maximization of this target function. 
+If for example you are interested in what maximizes category number 20, then zero out all the other categories.
+
+Simple tensorflow code that does this can look like:
+{% highlight python %}
+def target_category_loss(x, category_index, nb_classes):
+    return tf.mul(x, K.one_hot([category_index], nb_classes))
+{% endhighlight %}
+
+- Compute the gradients of the target function, with respect to the convolutional layer outputs.
+This can be done effeciently with backpropagation.
+
+Keras makes this quite easily to obtain, using the backend module.
+Python code for this can look like this:
+{% highlight python %}
+    grads = normalize(K.gradients(loss, conv_output)[0])
+    gradient_function = \
+        K.function([model.layers[0].input], [conv_output, grads])
+
+    output, grads_val = gradient_function([image])
+{% endhighlight %}
+
+- Use the convolutional layer output gradient image to create an importance map.
+The paper does this by taking the spatial average of each channel of the gradient image, and then scaling the corresponding channel of the convolutional layer output.
+
+Instead of scaling by the spatial average like in the paper, multiplying the gradient images by the conv output images seems more natural to me, since then we get a relevance coeffecient for each pixel in each channel.
+
+We can then sum all the scaled channels to obtain the a heatmap.
+
+
+- Activate ReLU on the heatmap.
+This keeps only pixels that have a positive influence on the target function.
+The output pixels are already positive (since they come after a ReLU), so if the CAM pixel was negative, this means that there were large/many negative gradients for this pixel.
