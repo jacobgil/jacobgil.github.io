@@ -5,5 +5,10 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-88816088-1', 'auto');
-  ga('send', 'pageview');
+  ga('send', {
+  hitType: 'pageview',
+  page: location.pathname
+  });
+
+  //ga('send', 'pageview');
 </script>
