@@ -89,7 +89,7 @@ Basically you take the output of the last convolutional layer, you take a spatia
 Now you can look at the softmax weights used to give a category score - large weights mean important features - and multiply them by the corresponding conv outputs.
 
 Relative to the rest of the stuff we tried here - this technique is great. It gives us an insight of how exactly each pixel was used in the overall decision process.
-However this technique requires a specific network architecture - conv layers + GAP, so existing networks with fully connected layers, like the nvidia model, can't be used as is.
+However this technique requires a specific network architecture - conv layers + GAP (global average pooling, the spatial mean for every channel in a feature map), so existing networks with fully connected layers, like the nvidia model, can't be used as is.
 We could just train a new model with conv layers + GAP (I actually did that), however we really want the fully connected layers here. They enable the network to reason spatially about the image - If it finds interesting features in the left part of the image - perhaps that road is blocked?
 
 [This paper](https://arxiv.org/pdf/1610.02391v1.pdf) solves the issue, and generalizes class activation maps.
