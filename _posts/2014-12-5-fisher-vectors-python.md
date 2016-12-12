@@ -62,7 +62,7 @@ It currently just trains a model and then classifies the images.
 The input images definitely need to be partitioned into training and validation parts.
 
 One more thing:
-Fisher vectors are successfully used in image recognition, check out:
+Fisher vectors are successfully used in face recognition, check out:
 [http://www.robots.ox.ac.uk/~vgg/publications/2013/Simonyan13/extras/simonyan13_ext.pdf](http://www.robots.ox.ac.uk/~vgg/publications/2013/Simonyan13/extras/simonyan13_ext.pdf)
 
 In their paper they extract features densely from a grid,  reduce the dimensionality with PCA, and augment the features with their spacial location.

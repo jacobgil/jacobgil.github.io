@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About Jacob Gildenblat
+title: About
 permalink: /about/
 ---
 
@@ -10,7 +10,7 @@ I'm a Computer Vision and Machine Learning developer.
 
 I live in Israel, and have an Msc focusing on Computer Vision from Tel Aviv University.
 
-This blog containts a few points in my journey from low level Computer Vision, to classic Machine Learning methods, 
+This blog contains a few points in my journey from low level Computer Vision, to classic Machine Learning methods, 
 to modern Deep Learning!
 
 If you find the contents here interesting, you might want to check my [github](http://github.com/jacobgil) account for some projects i've been working on.
