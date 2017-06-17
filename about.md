@@ -8,7 +8,7 @@ permalink: /about/
 
 I'm a Computer Vision and Deep Learning developer based in Israel.
 
-I have other open source projects in my [github](http://github.com/jacobgil)
+Apart from what I write about here, I have other open source projects on my [github](http://github.com/jacobgil).
 
 Drop me a line.
 
