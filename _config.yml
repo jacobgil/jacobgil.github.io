@@ -16,8 +16,9 @@
 title: Jacob's Computer Vision and Machine Learning blog
 email: jacob.gildenblat@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
- 
+    "[About]({{ site.baseurl }}/about)."
 baseurl: "" # the subpath of your site, e.g. /blog
+google_analytics: UA-88816088-1
 url: "http://jacobgil.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jacobgildenblat
 github_username:  jacobgil
