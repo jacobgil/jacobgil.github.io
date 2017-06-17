@@ -8,10 +8,10 @@ permalink: /about/
 
 I'm a Computer Vision and Deep Learning developer based in Israel.
 
-This blog contains a few points in my journey from low level Computer Vision, to classic Machine Learning methods, 
-to modern Deep Learning!
+I have other open source projects not shown here on my [github](http://github.com/jacobgil)
 
-I have many other online projects not shown here on my [github](http://github.com/jacobgil)
+Drop me a line :-)
+
 
 ## Getting in touch
 Email: jacob.gildenblat@gmail.com
