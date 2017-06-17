@@ -118,7 +118,7 @@ It looks like it's using large "line-like" regions for making a "not person" dec
 ![enter image description here](https://raw.githubusercontent.com/jacobgil/keras-cam/master/examples/traffic.jpg)
 
 
-### Gradient based class activation maps
+## Gradient based class activation maps
 
 ![grad-cam](https://github.com/jacobgil/keras-grad-cam/raw/master/examples/boat.jpg?raw=true)
 ![grad-cam](https://github.com/jacobgil/keras-grad-cam/raw/master/examples/persian_cat.jpg?raw=true)
