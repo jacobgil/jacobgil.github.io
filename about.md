@@ -1,22 +1,17 @@
 ---
 layout: page
-title: About
+title: About me
 permalink: /about/
 ---
 
-![Jacob]({{ site.url }}/assets/jacob.jpg)
+![Jacob]({{ site.url }}/assets/jacob.jpg =250x250)
 
-I'm a Computer Vision and Machine Learning developer.
-
-I live in Israel, and have an Msc focusing on Computer Vision from Tel Aviv University.
+I'm a Computer Vision and Deep Learning developer based in Israel.
 
 This blog contains a few points in my journey from low level Computer Vision, to classic Machine Learning methods, 
 to modern Deep Learning!
 
-If you find the contents here interesting, you might want to check my [github](http://github.com/jacobgil) account for open source projects i've been working on.
-
-The blog was migrated from blogger to jekyll hosted on github.
-Since I was writing the posts with markdown anyway, controlling the blog with git is just so much nicer.
+I have many other online projects not shown here on my [github](http://github.com/jacobgil)
 
 ## Getting in touch
 Email: jacob.gildenblat@gmail.com
