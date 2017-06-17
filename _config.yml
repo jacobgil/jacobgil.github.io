@@ -23,10 +23,10 @@ twitter_username: jacobgildenblat
 github_username:  jacobgil
 disqus:
   shortname: jacobgil
-
+google_analytics: UA-88816088-1
 # Build settings
 markdown: kramdown
-theme: minima
+theme:
 gems:
   - jekyll-feed
 exclude:
