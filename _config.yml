@@ -26,7 +26,7 @@ github_username:  jacobgil
 comments:
  provider: disqus
 disqus: 
- short_name: jacobgil
+ short_name: jacobgil.github.io
 
 google_analytics: UA-88816088-1
 # Build settings
