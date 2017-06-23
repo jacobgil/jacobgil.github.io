@@ -46,7 +46,6 @@ Which is surprising considering all the effort on running deep learning on mobil
 I guess the reason is a combination of:
 
  - The ranking methods weren't good enough until now, resulting in too big of an accuracy drop.
- - Most of the pruning papers report results on toy datasets like MNIST or CIFAR.
  - It's a pain to implement.
  - Those who do use pruning, keep it for themselves as a secret sauce advantage.
 
@@ -124,6 +123,8 @@ The ranking of h is then |C(W, D, h = 0) - C(W, D)|.
 
 ![Taylor expansion]({{ site.url }}/assets/prune_taylor_equation_1.png)
 ![Taylor expansion]({{ site.url }}/assets/prune_taylor_equation_2.png)
+
+The rankings of each layer are then normalized by the 
 
 If the difference is high, then h has a significant contribution to the loss.
 Notice how they used the absolute difference and not just the difference. 
@@ -222,8 +223,9 @@ Now that we have the ranking, we can use a min heap to get the N lowest ranking 
 The distribution of the low ranking filters is interesting.
 Most of the filters pruned are from the deeper layer.
 Here is a peek of which filters were pruned after the first iteration:
+
 | Layer number        | Number of pruned filters pruned
-| ------------- |:-------------:|
+| ------------- |:-------------|
 | Layer 0 	| 6		|
 | Layer 2 	| 1		|
 | Layer 5 	| 4		|
