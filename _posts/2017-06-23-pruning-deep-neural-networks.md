@@ -6,13 +6,10 @@ permalink: deeplearning/pruning-deep-learning
 ---
 
 
-An example of reducing the run time x3 and the model size x4 with the price of more training
-============================
-
-
 
 [My PyTorch implementation](https://github.com/jacobgil/pytorch-pruning) of [\[1611.06440 Pruning Convolutional Neural Networks for Resource Efficient Inference\]](https://arxiv.org/abs/1611.06440).
 
+TL;DR By using pruning VGG-16 based Dogs-vs-Cats classifier is made x3 faster and x4 smaller.
 
 ----------
 
