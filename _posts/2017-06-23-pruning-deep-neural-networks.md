@@ -75,6 +75,9 @@ This means the last convolutional layer will get pruned a lot, and a lot of neur
 When pruning the convolutional filters, another option would be to reduce the weights in each filter, or remove a specific dimension of a single kernel. You can end up with filters that are sparse,
 but it's not trivial the get a computational speed up. Recent works advocate "Structured sparsity" where entire filters are pruned instead.
 
+One important thing several of these papers show, is that by training and then pruning a larger network, especially in the case of transfer learning, they get results that are much better than training a smaller network from scratch.
+
+
 Lets now briefly review a few methods.
 
 
