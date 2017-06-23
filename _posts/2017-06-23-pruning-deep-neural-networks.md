@@ -149,14 +149,15 @@ We will take VGG16, drop the fully connected layers, And add three new fully con
 We will freeze the convolutional layers, and retrain only the new fully connected layers.
 In PyTorch, the new layers look like this:
 {% highlight python %}
-`self.classifier = nn.Sequential(
+self.classifier = nn.Sequential(
 	    nn.Dropout(),
 		    nn.Linear(25088, 4096),
 		    nn.ReLU(inplace=True),
 		    nn.Dropout(),
 		    nn.Linear(4096, 4096),
 		    nn.ReLU(inplace=True),
-		    nn.Linear(4096, 2))`
+		    nn.Linear(4096, 2))
+
 {% endhighlight %}
 After training for 20 epoches with data augmentation, we get an accuracy of 98.7% on the testing set. Cool!
 
@@ -166,6 +167,7 @@ To compute the Taylor criterea, we need to perform a Forward+Backward pass on ou
 
 Now we need to somehow get both the gradients and the activations for convolutional layers. In PyTorch we can register a hook on the gradient computation, so a callback is called when they are ready:
 {% highlight python %}
+
     		for layer, (name, module) in enumerate(self.model.features._modules.items()):
 		    x = module(x)
 		    if isinstance(module, torch.nn.modules.conv.Conv2d):
@@ -173,6 +175,8 @@ Now we need to somehow get both the gradients and the activations for convolutio
 		        self.activations.append(x)
 		        self.activation_to_layer[activation_index] = layer
 		        activation_index += 1
+
+{% endhighlight %}
 
 Now we have the activations in self.activations, and when a gradient is ready, compute_rank will be called:
 {% highlight python %}
@@ -194,6 +198,7 @@ Now we have the activations in self.activations, and when a gradient is ready, c
 
 		self.filter_ranks[activation_index] += values
 		self.grad_index += 1
+
 {% endhighlight %}
 
 Now that we have the ranking, we can use a min heap to get the N lowest ranking filters. Unlike in the Nvidia paper where they used N=1 at each iteration, to get results faster we will use N=512! This means that each pruning iteration, we will remove 12% from the original number of the 4224 convolutional filters.
