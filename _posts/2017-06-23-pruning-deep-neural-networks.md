@@ -1,3 +1,11 @@
+---
+layout: post
+title:  "Pruning deep neural networks to make them fast and small"
+date:   2017-06-23 14:10:33 +0200
+permalink: deeplearning/pruning-deep-learning
+---
+
+
 An example of reducing the run time x3 and the model size by 72% with the price of more training
 ============================
 
