@@ -6,7 +6,7 @@ permalink: deeplearning/pruning-deep-learning
 ---
 
 
-A toy-problem example of reducing the run time x3 and the model size x4 with the price of more training
+An example of reducing the run time x3 and the model size x4 with the price of more training
 ============================
 
 
@@ -22,6 +22,11 @@ The idea is that among the many parameters in the network, some are redundant an
 
 
 If you could rank the neurons in the network according to how much they contribute, you could then remove the low ranking neurons from the network, resulting in a smaller and faster network.
+
+
+**Getting faster/smaller networks is important for running these deep learning networks on mobile devices.**
+
+
 
 The ranking can be done according to the L1/L2 mean of neuron weights, their mean activations, the number of times a neuron wasn't zero on some validation set, and other creative methods .
 After the pruning, the accuracy will drop (hopefully not too much if the ranking clever), and the network is usually trained more to recover.
