@@ -9,7 +9,7 @@ permalink: deeplearning/pruning-deep-learning
 
 [My PyTorch implementation](https://github.com/jacobgil/pytorch-pruning) of [\[1611.06440 Pruning Convolutional Neural Networks for Resource Efficient Inference\]](https://arxiv.org/abs/1611.06440).
 
-TL;DR By using pruning VGG-16 based Dogs-vs-Cats classifier is made x3 faster and x4 smaller.
+TL;DR: By using pruning a VGG-16 based Dogs-vs-Cats classifier is made x3 faster and x4 smaller.
 
 ----------
 
@@ -155,7 +155,7 @@ In the paper their method outperformed other methods in accuracy, too, so it loo
 
 Anyway I think this is a nice method that's more friendly to code and test, than say, a particle filter, so we will explore this further!
 
-Pruning a Cats vs Dogs classifier
+Pruning a Cats vs Dogs classifier using the Taylor criteria ranking
 =================================
 
 So lets say we have a transfer learning task where we need to create a classifier from a relatively small dataset. 
