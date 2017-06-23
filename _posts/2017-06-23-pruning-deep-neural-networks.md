@@ -6,7 +6,7 @@ permalink: deeplearning/pruning-deep-learning
 ---
 
 
-An example of reducing the run time x3 and the model size by 72% with the price of more training
+An example of reducing the run time x3 and the model size x4 with the price of more training
 ============================
 
 
@@ -32,6 +32,8 @@ So in practice this is an iterative process - often called 'Iterative Pruning': 
 
 
 ![Pruning steps]({{ site.url }}/assets/pruning_steps.png)
+
+
 *The image is taken from [\[1611.06440 Pruning Convolutional Neural Networks for Resource Efficient Inference\]](https://arxiv.org/abs/1611.06440)*
 
 
@@ -82,6 +84,8 @@ Pruning a filter with index k affects the layer it resides in, and the following
 All the input channels at index k, in the following layer, will have to removed, since they won't exist any more after the pruning.
 
 ![Pruning a convolutional filter entire filter]({{ site.url }}/assets/prune_example.png)
+
+
 *The image is from [\[1608.08710 Pruning filters for effecient convnets\]](https://arxiv.org/abs/1608.08710)*
 
 In case the following layer is a fully connected layer, and the size of the feature map of that channel would be MxN, then MxN neurons be removed from the fully connected layer.
@@ -180,40 +184,60 @@ To compute the Taylor criterea, we need to perform a Forward+Backward pass on ou
 Now we need to somehow get both the gradients and the activations for convolutional layers. In PyTorch we can register a hook on the gradient computation, so a callback is called when they are ready:
 {% highlight python %}
 
-    		for layer, (name, module) in enumerate(self.model.features._modules.items()):
-		    x = module(x)
-		    if isinstance(module, torch.nn.modules.conv.Conv2d):
-		    	x.register_hook(self.compute_rank)
-		        self.activations.append(x)
-		        self.activation_to_layer[activation_index] = layer
-		        activation_index += 1
+for layer, (name, module) in enumerate(self.model.features._modules.items()):
+x = module(x)
+if isinstance(module, torch.nn.modules.conv.Conv2d):
+	x.register_hook(self.compute_rank)
+    self.activations.append(x)
+    self.activation_to_layer[activation_index] = layer
+    activation_index += 1
 
 {% endhighlight %}
 
 Now we have the activations in self.activations, and when a gradient is ready, compute_rank will be called:
 {% highlight python %}
 
-	def compute_rank(self, grad):
-		activation_index = len(self.activations) - self.grad_index - 1
-		activation = self.activations[activation_index]
-		values = \
-			torch.sum((activation * grad), dim = 0).\
-				sum(dim=2).sum(dim=3)[0, :, 0, 0].data
-		
-		# Normalize the rank by the filter dimensions
-		values = \
-			values / (activation.size(0) * activation.size(2) * activation.size(3))
+def compute_rank(self, grad):
+	activation_index = len(self.activations) - self.grad_index - 1
+	activation = self.activations[activation_index]
+	values = \
+		torch.sum((activation * grad), dim = 0).\
+			sum(dim=2).sum(dim=3)[0, :, 0, 0].data
+	
+	# Normalize the rank by the filter dimensions
+	values = \
+		values / (activation.size(0) * activation.size(2) * activation.size(3))
 
-		if activation_index not in self.filter_ranks:
-			self.filter_ranks[activation_index] = \
-				torch.FloatTensor(activation.size(1)).zero_().cuda()
+	if activation_index not in self.filter_ranks:
+		self.filter_ranks[activation_index] = \
+			torch.FloatTensor(activation.size(1)).zero_().cuda()
 
-		self.filter_ranks[activation_index] += values
-		self.grad_index += 1
+	self.filter_ranks[activation_index] += values
+	self.grad_index += 1
 
 {% endhighlight %}
 
 Now that we have the ranking, we can use a min heap to get the N lowest ranking filters. Unlike in the Nvidia paper where they used N=1 at each iteration, to get results faster we will use N=512! This means that each pruning iteration, we will remove 12% from the original number of the 4224 convolutional filters.
+
+The distribution of the low ranking filters is interesting.
+Most of the filters pruned are from the deeper layer.
+Here is a peek of which filters were pruned after the first iteration:
+| Layer number        | Number of pruned filters pruned
+| ------------- |:-------------:|
+| Layer 0 	| 6		|
+| Layer 2 	| 1		|
+| Layer 5 	| 4		|
+| Layer 7 	| 3		|
+| Layer 10 	| 23		|
+| Layer 12 	| 13		|
+| Layer 14 	| 9		|
+| Layer 17 	| 51		|
+| Layer 19 	| 35		|
+| Layer 21 	| 52		|
+| Layer 24 	| **68**	|
+| Layer 26 	| **74**	|
+| Layer 28 	| **73**	|
+
 
 Step 3 - Fine tune and repeat
 ------------------
@@ -222,5 +246,6 @@ Then we go back to step 1 with the modified network, and repeat.
 
 This is the real price we pay - that's 50% of the number of epoches used to train the network. We can get away with this since the dataset is small.
 If you're doing this for a huge dataset, you better have lots of GPUs.
+
 
 

@@ -6,7 +6,7 @@ permalink: /about/
 
 ![Jacob]({{ site.url }}/assets/jacob.jpg)
 
-I'm a Computer Vision and Deep Learning developer based in Israel.
+I'm a Computer Vision and Deep Learning developer from Israel.
 
 Apart from what I write about here, I have other open source projects on my [github](http://github.com/jacobgil).
 
