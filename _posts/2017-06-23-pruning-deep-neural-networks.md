@@ -157,7 +157,7 @@ In PyTorch, the new layers look like this:
 		    nn.Linear(4096, 4096),
 		    nn.ReLU(inplace=True),
 		    nn.Linear(4096, 2))`
-
+{% endhighlight %}
 After training for 20 epoches with data augmentation, we get an accuracy of 98.7% on the testing set. Cool!
 
 Step two - Rank the filters
@@ -165,7 +165,7 @@ Step two - Rank the filters
 To compute the Taylor criterea, we need to perform a Forward+Backward pass on out dataset (or on a smaller part of it if it's too large. but since we have only 2000 images lets use that).
 
 Now we need to somehow get both the gradients and the activations for convolutional layers. In PyTorch we can register a hook on the gradient computation, so a callback is called when they are ready:
-
+{% highlight python %}
     		for layer, (name, module) in enumerate(self.model.features._modules.items()):
 		    x = module(x)
 		    if isinstance(module, torch.nn.modules.conv.Conv2d):
@@ -178,23 +178,23 @@ Now we have the activations in self.activations, and when a gradient is ready, c
 {% highlight python %}
 
 	def compute_rank(self, grad):
-	activation_index = len(self.activations) - self.grad_index - 1
-	activation = self.activations[activation_index]
-	values = \
-		torch.sum((activation * grad), dim = 0).\
-			sum(dim=2).sum(dim=3)[0, :, 0, 0].data
-	
-	# Normalize the rank by the filter dimensions
-	values = \
-		values / (activation.size(0) * activation.size(2) * activation.size(3))
+		activation_index = len(self.activations) - self.grad_index - 1
+		activation = self.activations[activation_index]
+		values = \
+			torch.sum((activation * grad), dim = 0).\
+				sum(dim=2).sum(dim=3)[0, :, 0, 0].data
+		
+		# Normalize the rank by the filter dimensions
+		values = \
+			values / (activation.size(0) * activation.size(2) * activation.size(3))
 
-	if activation_index not in self.filter_ranks:
-		self.filter_ranks[activation_index] = \
-			torch.FloatTensor(activation.size(1)).zero_().cuda()
+		if activation_index not in self.filter_ranks:
+			self.filter_ranks[activation_index] = \
+				torch.FloatTensor(activation.size(1)).zero_().cuda()
 
-	self.filter_ranks[activation_index] += values
-	self.grad_index += 1
-
+		self.filter_ranks[activation_index] += values
+		self.grad_index += 1
+{% endhighlight %}
 
 Now that we have the ranking, we can use a min heap to get the N lowest ranking filters. Unlike in the Nvidia paper where they used N=1 at each iteration, to get results faster we will use N=512! This means that each pruning iteration, we will remove 12% from the original number of the 4224 convolutional filters.
 
@@ -205,3 +205,4 @@ Then we go back to step 1 with the modified network, and repeat.
 
 This is the real price we pay - that's 50% of the number of epoches used to train the network. We can get away with this since the dataset is small.
 If you're doing this for a huge dataset, you better have lots of GPUs.
+
