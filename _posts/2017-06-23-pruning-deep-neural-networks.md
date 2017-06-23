@@ -179,7 +179,7 @@ On a i7 CPU the inference time reduced from 0.78 to 0.277 seconds for a single i
 Step one - train a large network
 ----------------------------------
 
-We will take VGG16, drop the fully connected layers, And add three new fully connected layers.
+We will take VGG16, drop the fully connected layers, and add three new fully connected layers.
 We will freeze the convolutional layers, and retrain only the new fully connected layers.
 In PyTorch, the new layers look like this:
 {% highlight python %}
@@ -193,22 +193,22 @@ self.classifier = nn.Sequential(
 		    nn.Linear(4096, 2))
 
 {% endhighlight %}
-After training for 20 epoches with data augmentation, we get an accuracy of 98.7% on the testing set. Cool!
+After training for 20 epoches with data augmentation, we get an accuracy of 98.7% on the testing set.
 
 Step two - Rank the filters
 -------
-To compute the Taylor criteria, we need to perform a Forward+Backward pass on out dataset (or on a smaller part of it if it's too large. but since we have only 2000 images lets use that).
+To compute the Taylor criteria, we need to perform a Forward+Backward pass on our dataset (or on a smaller part of it if it's too large. but since we have only 2000 images lets use that).
 
 Now we need to somehow get both the gradients and the activations for convolutional layers. In PyTorch we can register a hook on the gradient computation, so a callback is called when they are ready:
 {% highlight python %}
 
 for layer, (name, module) in enumerate(self.model.features._modules.items()):
-x = module(x)
-if isinstance(module, torch.nn.modules.conv.Conv2d):
-	x.register_hook(self.compute_rank)
-    self.activations.append(x)
-    self.activation_to_layer[activation_index] = layer
-    activation_index += 1
+	x = module(x)
+	if isinstance(module, torch.nn.modules.conv.Conv2d):
+		x.register_hook(self.compute_rank)
+		self.activations.append(x)
+		self.activation_to_layer[activation_index] = layer
+		activation_index += 1
 
 {% endhighlight %}
 
@@ -263,13 +263,14 @@ Step 3 - Fine tune and repeat
 At this stage, we unfreeze all the layers and retrain the network for 10 epoches, which was enough to get good results on this dataset.
 Then we go back to step 1 with the modified network, and repeat. 
 
-This is the real price we pay - that's 50% of the number of epoches used to train the network. We can get away with this since the dataset is small.
+This is the real price we pay - that's 50% of the number of epoches used to train the network, at a single iteration. In this toy dataset can get away with this since the dataset is small.
 If you're doing this for a huge dataset, you better have lots of GPUs.
 
 Summary
 =======
 
-I think Pruning is an overlooked method that is going to get a lot more attention and use in practice.
-We showed how we can get nice results on a toy dataset. I think many problems deep learning is used to solve in practice are similar to this one, using transfer learning on a limited dataset, so they can benefit from pruning too.
+I think pruning is an overlooked method that is going to get a lot more attention and use in practice.
+We showed how we can get nice results on a toy dataset. 
+I think many problems deep learning is used to solve in practice are similar to this one, using transfer learning on a limited dataset, so they can benefit from pruning too.
 
 
