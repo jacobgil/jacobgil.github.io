@@ -71,7 +71,7 @@ But this has a cool side affect of also reducing memory. As observed in the [\[1
 This means the last convolutional layer will get pruned a lot, and a lot of neurons from the fully connected layer following it will also be discarded!
 
 When pruning the convolutional filters, another option would be to reduce the weights in each filter, or remove a specific dimension of a single kernel. You can end up with filters that are sparse,
-but it's not trivial the get a computational speed up. Some recent works advocate "Structured sparsity" where entire filters are pruned.
+but it's not trivial the get a computational speed up. Recent works advocate "Structured sparsity" where entire filters are pruned instead.
 
 Lets now briefly review a few methods.
 
@@ -97,7 +97,9 @@ At each pruning iteration they rank all the filters, prune the m lowest ranking 
 ------------------------------------------------------------------------
 This work seems similar, but the ranking is much more complex.
 They keep a set of N particle filters, which represent N convolutional filters to be pruned.
+
 Each particle is assigned a score based on the network accuracy on a validation set, when the filter represented by the particle was not masked out. Then based on the new score, a new pruning masks are sampled.
+
 Since running this process is heavy, they used a small validation set for measuring the particle scores.
 
 [\[1611.06440 Pruning Convolutional Neural Networks for Resource Efficient Inference\]](https://arxiv.org/abs/1611.06440)
@@ -109,26 +111,33 @@ First they state the pruning problem as a combinatorial optimization problem: ch
 
 ![Pruning as a combinatorial optimization problem]({{ site.url }}/assets/prune_equation.png)
 
-Now all ranking methods will be judged by this cost function.
-VGG16 has 4224 convolutional filters. The "ideal" ranking method would be brute force - prune each filter, and then observe the on the cost function when running on the training set.
+Notice how they used the absolute difference and not just the difference. 
+Using the absolute difference enforces that the pruned network won't decrease the network performance too much, but it also shouldn't increase it. In the paper they show this gives better results, presumably because it's more stable.
+
+
+
+Now all ranking methods can be judged by this cost function.
+
+VGG16 has 4224 convolutional filters. The "ideal" ranking method would be brute force - prune each filter, and then observe how the cost function changes when running on the training set.
 Since they are Nvidia and they have access to a gazillion GPUs they did just that.
-This is called the oracle ranking - the best possible ranking for minimizing the network cost change. 
-Now to measure the effectiveness of other ranking methods, they compute the spearman correlation with the oracle. Surprise surprise, the ranking method they came up with (described next) is most similar to the oracle.
+This is called the oracle ranking - the best possible ranking for minimizing the network cost change.
+Now to measure the effectiveness of other ranking methods, they compute the spearman correlation with the oracle. Surprise surprise, the ranking method they came up with (described next) correlates most with the oracle.
 
 They come up with a new neuron ranking method based on a first order (meaning fast to compute) Taylor expansion of the network cost function.
+
 Pruning a filter h is the same as zeroing it out.
+
 C(W, D) is the average network cost function on the dataset D, when the network weights are set to W. Now we can evaluate C(W, D) as an expansion around C(W, D, h = 0).
 They should be pretty close, since removing a single filter shouldn't affect the cost too much.
+
 The ranking of h is then |C(W, D, h = 0) - C(W, D)|.
 
 ![Taylor expansion]({{ site.url }}/assets/prune_taylor_equation_1.png)
 ![Taylor expansion]({{ site.url }}/assets/prune_taylor_equation_2.png)
 
-The rankings of each layer are then normalized by the 
+The rankings of each layer are then normalized by the L2 norm of the ranks in that layer. I guess this kind of empiric, and i'm not sure why is this needed, but it greatly effects the quality of the pruning.
 
 If the difference is high, then h has a significant contribution to the loss.
-Notice how they used the absolute difference and not just the difference. 
-Using the absolute difference enforces that the pruned network won't decrease the network performance too much, but it also shouldn't increase it. In the paper they show this gives better results, presumably because it's more stable.
 
 I think this rank is quite intuitive.
 We could've used both the activation, and the gradient, as ranking methods by themselves. If any of them are high, that means they are significant to the output. Multiplying them gives us a way to throw/keep the filter if either the gradients or the activations are very low or high.
