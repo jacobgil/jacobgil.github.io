@@ -4,7 +4,7 @@ title: About me
 permalink: /about/
 ---
 
-![Jacob]({{ site.url }}/assets/jacob.jpg =250x)
+![Jacob]({{ site.url }}/assets/jacob.jpg =250x250)
 
 I'm a Computer Vision and Deep Learning developer based in Israel.
 
