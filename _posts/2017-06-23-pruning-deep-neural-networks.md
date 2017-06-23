@@ -139,12 +139,12 @@ The ranking of h is then abs(C(W, D, h = 0) - C(W, D)).
 
 The rankings of each layer are then normalized by the L2 norm of the ranks in that layer. I guess this kind of empiric, and i'm not sure why is this needed, but it greatly effects the quality of the pruning.
 
-If the difference is high, then h has a significant contribution to the loss.
+
 
 This rank is quite intuitive. We could've used both the activation, and the gradient, as ranking methods by themselves. If any of them are high, that means they are significant to the output. Multiplying them gives us a way to throw/keep the filter if either the gradients or the activations are very low or high.
 
-This makes me wonder - did they pose the pruning problem as minimizing the difference of the network costs, and **THEN** come up with the taylor expansion method,
-or was it **OTHER WAY AROUND**, and the difference of network costs oracle was a way to back up their new method  ? :-)
+This makes me wonder - did they pose the pruning problem as minimizing the difference of the network costs, and **then** come up with the taylor expansion method,
+or was it **other way around**, and the difference of network costs oracle was a way to back up their new method  ?   :-)
 
 In the paper their method outperformed other methods in accuracy, too, so it looks like the oracle is a good indicator.
 
@@ -197,7 +197,7 @@ After training for 20 epoches with data augmentation, we get an accuracy of 98.7
 
 Step two - Rank the filters
 -------
-To compute the Taylor criterea, we need to perform a Forward+Backward pass on out dataset (or on a smaller part of it if it's too large. but since we have only 2000 images lets use that).
+To compute the Taylor criteria, we need to perform a Forward+Backward pass on out dataset (or on a smaller part of it if it's too large. but since we have only 2000 images lets use that).
 
 Now we need to somehow get both the gradients and the activations for convolutional layers. In PyTorch we can register a hook on the gradient computation, so a callback is called when they are ready:
 {% highlight python %}
@@ -270,8 +270,6 @@ Summary
 =======
 
 I think Pruning is an overlooked method that is going to get a lot more attention and use in practice.
-
-We showed how we can get nice results on a toy dataset. I think many problems deep learning is used to solve in practice are similar to 
-this one, using transfer learning on a limited dataset, so they can benefit from pruning too.
+We showed how we can get nice results on a toy dataset. I think many problems deep learning is used to solve in practice are similar to this one, using transfer learning on a limited dataset, so they can benefit from pruning too.
 
 
