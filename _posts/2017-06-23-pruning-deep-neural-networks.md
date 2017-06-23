@@ -10,6 +10,7 @@ An example of reducing the run time x3 and the model size by 72% with the price 
 ============================
 
 
+
 My PyTorch implementation of [\[1611.06440 Pruning Convolutional Neural Networks for Resource Efficient Inference\]](https://arxiv.org/abs/1611.06440).
 
 
@@ -19,6 +20,7 @@ My PyTorch implementation of [\[1611.06440 Pruning Convolutional Neural Networks
 Pruning neural networks is an old idea going back to 1990 [(with Yan Lecun's optimal brain damage work)](http://yann.lecun.com/exdb/publis/pdf/lecun-90b.pdf) and before.
 The idea is that among the many parameters in the network, some are redundant and don't contribute a lot to the output. 
 
+
 If you could rank the neurons in the network according to how much they contribute, you could then remove the low ranking neurons from the network, resulting in a smaller and faster network.
 
 The ranking can be done according to the L1/L2 mean of neuron weights, their mean activations, the number of times a neuron is not zero, and other creative methods .
@@ -27,8 +29,11 @@ After the pruning, the accuracy will drop (hopefully not too much if the ranking
 If we prune too much at once, the network might be damaged so much it won't be able to recover. 
 
 So in practice this is an iterative process - often called 'Iterative Pruning': Prune / Train / Repeat.
+
+
 ![Pruning steps]({{ site.url }}/assets/pruning_steps.png)
 *The image is taken from [\[1611.06440 Pruning Convolutional Neural Networks for Resource Efficient Inference\]](https://arxiv.org/abs/1611.06440)*
+
 
 Sounds good, why isn't this more popular?
 -------------------------
@@ -38,29 +43,36 @@ There are a lot of papers about pruning, but I've never encountered pruning used
 Which is surprising considering all the effort on running deep learning on mobile devices.
 I guess the reason is a combination of:
 
- - The ranking methods weren't good enough until now, resulting in an too big accuracy drop.
+ - The ranking methods weren't good enough until now, resulting in too big of an accuracy drop.
  - Most of the pruning papers report results on toy datasets like MNIST or CIFAR.
  - It's a pain to implement.
  - Those who do use pruning, keep it for themselves as a secret sauce advantage.
 
-So, I decided to implement pruning myself and see if it's actually useful.
+So, I decided to implement pruning myself and see if I could get good results with it.
 
 In this post we will go over a few pruning methods, and then dive into the implementation details of one of the recent methods.
+
 We will fine tune a VGG network to classify cats/dogs on the [Kaggle Dogs vs Cats dataset](https://www.kaggle.com/c/dogs-vs-cats), which represents a kind of transfer learning that I think is very common in practice. 
-Then we will prune the network and reduce both the number of convolutional filters and the total model size by  a factor x3 !
+
+Then we will prune the network and speed it up by a factor of almost x3, and reduce the size by a factor of almost x4!
 
 ----------
 ## Pruning for speed vs Pruning for a small model ##
 
-In VGG16 90% of the weights are in the fully connected layers, but those account for 1% of the total floating point operations. Up until recently most of the works focused on pruning the fully connected layers. By pruning those, the model size can be dramatically reduced.
+In VGG16 90% of the weights are in the fully connected layers, but those account for 1% of the total floating point operations. 
+
+Up until recently most of the works focused on pruning the fully connected layers. By pruning those, the model size can be dramatically reduced.
+
 We will focus here on pruning entire filters in convolutional layers.
+
 But this has a cool side affect of also reducing memory. As observed in the [\[1611.06440 Pruning Convolutional Neural Networks for Resource Efficient Inference\]](https://arxiv.org/abs/1611.06440) paper, the deeper the layer, the more it will get pruned.
+
 This means the last convolutional layer will get pruned a lot, and a lot of neurons from the fully connected layer following it will also be discarded!
 
 When pruning the convolutional filters, another option would be to reduce the weights in each filter, or remove a specific dimension of a single kernel. You can end up with filters that are sparse,
 but it's not trivial the get a computational speed up. Some recent works advocate "Structured sparsity" where entire filters are pruned.
 
-Lets now briefly review a few methods!
+Lets now briefly review a few methods.
 
 
 [\[1608.08710 Pruning filters for effecient convnets\]](https://arxiv.org/abs/1608.08710)
@@ -69,7 +81,7 @@ In this work they advocate pruning entire convolutional filters.
 Pruning a filter with index k affects the layer it resides in, and the following layer.
 All the input channels at index k, in the following layer, will have to removed, since they won't exist any more after the pruning.
 
-![Pruning a convolutional filter entire filter]({{ site.url }}/assets/prune_example.png =250x250)
+![Pruning a convolutional filter entire filter]({{ site.url }}/assets/prune_example.png)
 *The image is from [\[1608.08710 Pruning filters for effecient convnets\]](https://arxiv.org/abs/1608.08710)*
 
 In case the following layer is a fully connected layer, and the size of the feature map of that channel would be MxN, then MxN neurons be removed from the fully connected layer.
@@ -92,7 +104,7 @@ This is a really cool work from Nvidia.
 First they state the pruning problem as a combinatorial optimization problem: choose a subset of weights B, such that when pruning them the network cost change will be minimal.
 
 
-![Pruning as a combinatorial optimization problem]({{ site.url }}/assets/prune_equation.png =250x250)
+![Pruning as a combinatorial optimization problem]({{ site.url }}/assets/prune_equation.png)
 
 Now all ranking methods will be judged by this cost function.
 VGG16 has 4224 convolutional filters. The "ideal" ranking method would be brute force - prune each filter, and then observe the on the cost function when running on the training set.
@@ -106,8 +118,8 @@ C(W, D) is the average network cost function on the dataset D, when the network 
 They should be pretty close, since removing a single filter shouldn't affect the cost too much.
 The ranking of h is then |C(W, D, h = 0) - C(W, D)|.
 
-![Taylor expansion]({{ site.url }}/assets/prune_taylor_equation_1.png =250x250)
-![Taylor expansion]({{ site.url }}/assets/prune_taylor_equation_2.png =250x250)
+![Taylor expansion]({{ site.url }}/assets/prune_taylor_equation_1.png)
+![Taylor expansion]({{ site.url }}/assets/prune_taylor_equation_2.png)
 
 If the difference is high, then h has a significant contribution to the loss.
 Notice how they used the absolute difference and not just the difference. 
@@ -210,4 +222,5 @@ Then we go back to step 1 with the modified network, and repeat.
 
 This is the real price we pay - that's 50% of the number of epoches used to train the network. We can get away with this since the dataset is small.
 If you're doing this for a huge dataset, you better have lots of GPUs.
+
 
