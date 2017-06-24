@@ -190,12 +190,12 @@ In PyTorch, the new layers look like this:
 {% highlight python %}
 self.classifier = nn.Sequential(
 	    nn.Dropout(),
-		    nn.Linear(25088, 4096),
-		    nn.ReLU(inplace=True),
-		    nn.Dropout(),
-		    nn.Linear(4096, 4096),
-		    nn.ReLU(inplace=True),
-		    nn.Linear(4096, 2))
+	    nn.Linear(25088, 4096),
+	    nn.ReLU(inplace=True),
+	    nn.Dropout(),
+	    nn.Linear(4096, 4096),
+	    nn.ReLU(inplace=True),
+	    nn.Linear(4096, 2))
 
 {% endhighlight %}
 After training for 20 epoches with data augmentation, we get an accuracy of 98.7% on the testing set.
@@ -240,6 +240,11 @@ def compute_rank(self, grad):
 
 {% endhighlight %}
 
+This did a point wise multiplication of each activation in the batch and it's gradient, and then we sum in all dimensions except the dimension of the output. 
+
+For example, if the batch size was 32, the number of outputs was 256 and the spatial size was 112, so that the activation/gradient shapes were 32x256x112x112, then the output will a 256 sized vector representing the ranks of the 256 filters in this layer.
+
+
 Now that we have the ranking, we can use a min heap to get the N lowest ranking filters. Unlike in the Nvidia paper where they used N=1 at each iteration, to get results faster we will use N=512! This means that each pruning iteration, we will remove 12% from the original number of the 4224 convolutional filters.
 
 The distribution of the low ranking filters is interesting.
@@ -268,7 +273,7 @@ Step 3 - Fine tune and repeat
 At this stage, we unfreeze all the layers and retrain the network for 10 epoches, which was enough to get good results on this dataset.
 Then we go back to step 1 with the modified network, and repeat. 
 
-This is the real price we pay - that's 50% of the number of epoches used to train the network, at a single iteration. In this toy dataset can get away with this since the dataset is small.
+This is the real price we pay - that's 50% of the number of epoches used to train the network, at a single iteration. In this toy dataset we can get away with it since the dataset is small.
 If you're doing this for a huge dataset, you better have lots of GPUs.
 
 Summary
