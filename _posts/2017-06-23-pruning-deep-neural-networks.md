@@ -242,7 +242,8 @@ def compute_rank(self, grad):
 
 This did a point wise multiplication of each activation in the batch and it's gradient, and then we sum in all dimensions except the dimension of the output. 
 
-For example, if the batch size was 32, the number of outputs was 256 and the spatial size was 112, so that the activation/gradient shapes were 32x256x112x112, then the output will a 256 sized vector representing the ranks of the 256 filters in this layer.
+For example, if the batch size was 32, the number of outputs was 256 and the spatial size was 112, such the activation/gradient shapes were 32x256x112x112, then the output will be a 256 sized vector representing the ranks of the 256 filters in this layer.
+
 
 
 Now that we have the ranking, we can use a min heap to get the N lowest ranking filters. Unlike in the Nvidia paper where they used N=1 at each iteration, to get results faster we will use N=512! This means that each pruning iteration, we will remove 12% from the original number of the 4224 convolutional filters.
