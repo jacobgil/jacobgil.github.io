@@ -240,9 +240,10 @@ def compute_rank(self, grad):
 
 {% endhighlight %}
 
-This did a point wise multiplication of each activation in the batch and it's gradient, and then we sum in all dimensions except the dimension of the output. 
+This did a point wise multiplication of each activation in the batch and it's gradient, and then for each activation (that is an output of a convolution) we sum in all dimensions except the dimension of the output. 
 
-For example, if the batch size was 32, the number of outputs was 256 and the spatial size was 112, such the activation/gradient shapes were 32x256x112x112, then the output will be a 256 sized vector representing the ranks of the 256 filters in this layer.
+For example, if the batch size was 32, the number of outputs for a specific activation was 256 and the spatial size of that activation was 112x112 such the activation/gradient shapes were 32x256x112x112, then the output will be a 256 sized vector representing the ranks of the 256 filters in this layer.
+
 
 
 
