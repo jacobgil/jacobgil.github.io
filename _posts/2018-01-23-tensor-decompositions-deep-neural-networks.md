@@ -9,7 +9,7 @@ permalink: deeplearning/tensor-decompositions-deep-learning
 
 # Background
 
-In this post I will cover a few low rank tensor decomposition techniques for taking layers in existing deep learning models and making them more compact. I will also share PyTorch code that uses [Tensorly](https://tensorly.github.io/stable/index.html) for performing CP decomposition and Tucker decomposition of convolutional layers. 
+In this post I will cover a few low rank tensor decomposition methods for taking layers in existing deep learning models and making them more compact. I will also share PyTorch code that uses [Tensorly](https://tensorly.github.io/stable/index.html) for performing CP decomposition and Tucker decomposition of convolutional layers. 
 
 Although hopefully most of the post is self contained, a good review of tensor decompositions can be found [here](http://www.sandia.gov/~tgkolda/pubs/pubfiles/TensorReview.pdf).
 The author of Tensorly also created some [really nice notebooks](https://github.com/JeanKossaifi/tensorly-notebooks) about Tensors basics. That helped me getting started, and I recommend going through that.
@@ -21,7 +21,7 @@ Together with pruning, tensor decompositions are practical tools for speeding up
 ----------
 
 
-These techniques take a layer and decompose it into several smaller layers.  Although there will be more layers after the decomposition, the total number of floating point operations and weights will be smaller.
+These methods take a layer and decompose it into several smaller layers.  Although there will be more layers after the decomposition, the total number of floating point operations and weights will be smaller.
 Reported results are on the order of x8 for entire networks for tasks easier than image net, or x4 for specific layers inside imagenet. 
 My experience was that with these decompositions I was able to get a speedup of between x2 and x4, depending on the accuracy drop I was willing to take.
 
@@ -32,7 +32,7 @@ This means they work best in cases of over parameterized networks. Networks like
 
 Similarly to pruning, after the decomposition usually the model needs to be fine tuned to restore accuracy.
 
-One last worth noting before we dive into details, is that while these techniques are practical and give nice results, they have a few drawbacks:
+One last worth noting before we dive into details, is that while these methods are practical and give nice results, they have a few drawbacks:
 
  - They operate on the weights of a linear layer (like a convolution or a fully connected layer), and ignore any non linearity that comes after them.
  - They are greedy and perform the decomposition layer wise, ignoring interactions between different layers.
@@ -353,7 +353,7 @@ def tucker_decomposition_conv_layer(layer):
 ```
 
 # Summary
-In this post we went over a Tensor Decomposition techniques for accelerating layers in deep neural networks.
+In this post we went over a few tensor decomposition methods for accelerating layers in deep neural networks.
 
  - Truncated SVD can be used for accelerating fully connected layers.
  
