@@ -35,7 +35,7 @@ This means they work best in cases of over parameterized networks. Networks like
 
 Similarly to pruning, after the decomposition usually the model needs to be fine tuned to restore accuracy.
 
-One last worth noting before we dive into details, is that while these methods are practical and give nice results, they have a few drawbacks:
+One last thing worth noting before we dive into details, is that while these methods are practical and give nice results, they have a few drawbacks:
 
  - They operate on the weights of a linear layer (like a convolution or a fully connected layer), and ignore any non linearity that comes after them.
  - They are greedy and perform the decomposition layer wise, ignoring interactions between different layers.
