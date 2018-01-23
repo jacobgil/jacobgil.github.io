@@ -59,12 +59,15 @@ $$ \hat{A} = U_{nxt}S_{txt}V^T_{mxt} $$
 $$ \hat{A} $$ has the nice property of being the rank t matrix that has the Frobenius-norm closest to A, so $$ \hat{A} $$ is a good approximation of A if t is large enough.
 
 # SVD on a fully connected layer
-A fully connected layer essentially does matrix multiplication of its input by a matrix A, and then adds a bias b: $$ Ax+b $$
+A fully connected layer essentially does matrix multiplication of its input by a matrix A, and then adds a bias b: 
+
+$$ Ax+b $$.
+
 We can take the SVD of A, and keep only the first t singular values.
 
 $$ (U_{nxt}S_{txt}V^T_{mxt})x + b $$ = $$ U_{nxt} ( S_{txt}V^T_{mxt} x ) + b $$
 
-Instead of a single fully connected layer, we can implement this as two smaller ones:
+Instead of a single fully connected layer, this guides us how to implement it as two smaller ones:
 - The first one will have a shape of mxt, will have no bias, and its weights will be taken from $$ S_{txt}V^T $$.
 - The second one will have a shape of txn, will have a bias equal to b, and its weights will be taken from $$ U $$.
 
@@ -78,7 +81,7 @@ A 2D convolutional layer is a multi dimensional matrix (from now on - tensor) wi
 
 Following the SVD example, we would want to somehow decompose the tensor into several smaller tensors. The convolutional layer would then be approximated by several smaller convolutional layers.
 
-We will use the two popular (well, at least in the world of Tensor algorithms) tensor decompositions: CP decomposition and the Tucker decomposition (also called higher-order SVD) for this.
+For this we will use the two popular (well, at least in the world of Tensor algorithms) tensor decompositions: the CP decomposition and the Tucker decomposition (also called higher-order SVD and many other names).
 
 # CP Decomposition on convolutional layers
 
@@ -86,7 +89,7 @@ We will use the two popular (well, at least in the world of Tensor algorithms) t
 As we will see, this factors the convolutional layer into something that resembles mobile nets.
 
 They were able to use this to accelerate a network by more than x8 without significant decrease in accuracy. In my own experiments I was able to use this get a x2 speedup on a network based 
-on VGG16. 
+on VGG16 without accuracy drop. 
 
 My experience with this method is that the finetuning learning rate needs to be chosen very carefuly to get it to work, and the learning rate should usually be very small (around $$ 10^{-6} $$).
 
@@ -97,13 +100,15 @@ My experience with this method is that the finetuning learning rate needs to be 
 
 A rank R matrix can be viewed as a sum of R rank 1 matrices, were each rank 1 matrix is a column vector multiplying a row vector: $$ \sum_1^Ra_i*b_i^T $$
 
-The SVD gives us a way for writing this sum using the columns of  U and V: 
+The SVD gives us a way for writing this sum for matrices using the columns of  U and V from the SVD: 
 $$\sum_1^R \sigma_i u_i*v_i^T$$.
 
 If we choose an R that is less than the full rank of the matrix, than this sum is just an approximation, like in the case of truncated SVD.
 
 The CP decomposition lets us generalize this for tensors. 
+
 Using CP-Decompoisition, our convolutional kernel, a 4 dimensional tensor $$K(i, j, s, t)$$ can be approximated similarly for a chosen R: 
+
 $$ \sum_{r=1}^R K^x_r(i)K^y_r(j)K^s_r(s)K^t_r(t) $$.
 
 We will want R to be small for the decomposition to be effecient, but large enough to keep a high approximation accuracy.
@@ -343,7 +348,7 @@ def tucker_decomposition_conv_layer(layer):
 ```
 
 # Summary
-In this post we went over a tensor techniques for decomposing layers in deep neural networks.
+In this post we went over a Tensor Decomposition techniques for accelerating layers in deep neural networks.
 
  - Truncated SVD can be used for accelerating fully connected layers.
  - CP Decomposition decomposed convolutional layers into something that resembles mobile-nets, although it was even more aggressive since it was also separable in the spatial dimensions.
