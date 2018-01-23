@@ -7,7 +7,7 @@ permalink: deeplearning/tensor-decompositions-deep-learning
 
 {% include katex.html %}
 
-[My PyTorch implementations for tensor decomposition methods on convolutional layers.](https://github.com/jacobgil/pytorch-tensor-decompositions)
+[My PyTorch implementation for CNN tensor decomposition methods.](https://github.com/jacobgil/pytorch-tensor-decompositions)
 
 
 # Background
