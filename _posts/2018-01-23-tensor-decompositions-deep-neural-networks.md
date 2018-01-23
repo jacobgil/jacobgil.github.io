@@ -6,7 +6,7 @@ permalink: deeplearning/tensor-decompositions-deep-learning
 ---
 
 
-# 
+
 In this post I will cover a few low rank tensor decomposition techniques for taking layers in existing deep learning models and making them more compact. I will also share PyTorch code that uses [Tensorly](https://tensorly.github.io/stable/index.html) for performing CP decomposition and Tucker decomposition of convolutional layers. 
 
 Although most of the post is self contained, a good review of tensor decompositions can be found [here](http://www.sandia.gov/~tgkolda/pubs/pubfiles/TensorReview.pdf).
