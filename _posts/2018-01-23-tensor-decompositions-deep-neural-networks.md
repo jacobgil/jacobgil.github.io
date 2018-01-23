@@ -7,17 +7,21 @@ permalink: deeplearning/tensor-decompositions-deep-learning
 
 {% include katex.html %}
 
+# Background
+
 In this post I will cover a few low rank tensor decomposition techniques for taking layers in existing deep learning models and making them more compact. I will also share PyTorch code that uses [Tensorly](https://tensorly.github.io/stable/index.html) for performing CP decomposition and Tucker decomposition of convolutional layers. 
 
-Although most of the post is self contained, a good review of tensor decompositions can be found [here](http://www.sandia.gov/~tgkolda/pubs/pubfiles/TensorReview.pdf).
+Although hopefully most of the post is self contained, a good review of tensor decompositions can be found [here](http://www.sandia.gov/~tgkolda/pubs/pubfiles/TensorReview.pdf).
 The author of Tensorly also created some [really nice notebooks](https://github.com/JeanKossaifi/tensorly-notebooks) about Tensors basics. That helped me getting started, and I recommend going through that.
 
 
 Together with pruning, tensor decompositions are practical tools for speeding existing up deep neural networks, and I hope this post will make them a bit more accessible.
 
-# Background
 
-These techniques take a layer and decompose it into several smaller layers. Although there will be more layers after the decomposition, the total number of floating point operations and weights will be smaller.
+----------
+
+
+These techniques take a layer and decompose it into several smaller layers.  Although there will be more layers after the decomposition, the total number of floating point operations and weights will be smaller.
 
 In [this blog post](https://jacobgil.github.io/deeplearning/pruning-deep-learning) I covered a technique called pruning for reducing the number of parameters in a model. Pruning requires making a forward pass (and sometimes a backward pass) on a dataset, and then ranks the neurons according to some criterion on the activations in the network.
 
@@ -49,7 +53,9 @@ $$ A_{nxm} = U_{nxn} S_{nxm} V^T_{mxm} $$
 S is a diagonal matrix with non negative values along its diagonal (the singular values), and is usually constructed such that the singular values are sorted in descending order.
 U and V are orthogonal matrices: $$ U^TU=V^TV=I $$
 
-If we take the largest t singular values and zero out the rest, we get an approximation of A: $$ \hat{A} = U_{nxt}S_{txt}V^T_{mxt} $$
+If we take the largest t singular values and zero out the rest, we get an approximation of A: 
+$$ \hat{A} = U_{nxt}S_{txt}V^T_{mxt} $$
+
 $$ \hat{A} $$ has the nice property of being the rank t matrix that has the Frobenius-norm closest to A, so $$ \hat{A} $$ is a good approximation of A if t is large enough.
 
 ## SVD on a fully connected layer
@@ -97,9 +103,7 @@ We will want R to be small for the decomposition to be effecient, but large enou
 ### The convolution forward pass with CP Decomposition
 To forward the layer, we do convolution with an input $$ X(i, j, s) $$:
 
-$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) $$
- $$ = \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s) $$ 
- $$ = \sum_r\sum_i \sum_j \sum_sK^t_r(t) K^x_r(x-i)K^y_r(y-i)K^s_r(s)X(i, j, s) $$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) = \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s) = \sum_r\sum_i \sum_j \sum_sK^t_r(t) K^x_r(x-i)K^y_r(y-i)K^s_r(s)X(i, j, s) $$ 
 
 This gives us a recipe to do the convlution:
 
@@ -329,5 +333,3 @@ In this post we went over a tensor techniques for decomposing layers in deep neu
  - Tucker Decomposition reduced the number of input and output channels the 2D convolution layer operated on, and used pointwise convolutions to switch the number of channels before and after the 2D convolution.
 
 I think it's interesting how common patterns in network design, pointwise and depthwise convolutions, naturally appear in these decompositions!
-
-{% include katex_end.html %}
