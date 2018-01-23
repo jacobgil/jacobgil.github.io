@@ -61,18 +61,21 @@ $$ \hat{A} $$ has the nice property of being the rank t matrix that has the Frob
 ## SVD on a fully connected layer
 A fully connected layer essentially does matrix multiplication of its input by a matrix A, and then adds a bias b: $$ Ax+b $$
 We can take the SVD of A, and keep only the first t singular values.
+
 $$ (U_{nxt}S_{txt}V^T_{mxt})x + b $$ = $$ U_{nxt} ( S_{txt}V^T_{mxt} x ) + b $$
 
 Instead of a single fully connected layer, we can implement this as two smaller ones:
 - The first one will have a shape of mxt, will have no bias, and its weights will be taken from $$ S_{txt}V^T $$.
-- The second one will have a shape of txn, will have a bias equal to b, and its weights will be taken from $$ U $$
+- The second one will have a shape of txn, will have a bias equal to b, and its weights will be taken from $$ U $$.
 
 The total number of weights dropped from nxm to t(n+m).
 
 # Tensor decompositions on convolutional layers
 
 A 2D convolutional layer is a multi dimensional matrix (from now on - tensor) with 4 dimensions:
-`cols x rows x input_channels x output_channels`
+
+`cols x rows x input_channels x output_channels`.
+
 Following the SVD example, we would want to somehow decompose the tensor into several smaller tensors. The convolutional layer would then be approximated by several smaller convolutional layers.
 
 We will use the two popular (well, at least in the world of Tensor algorithms) tensor decompositions: CP decomposition and the Tucker decomposition (also called higher-order SVD) for this.
@@ -103,7 +106,7 @@ We will want R to be small for the decomposition to be effecient, but large enou
 ### The convolution forward pass with CP Decomposition
 To forward the layer, we do convolution with an input $$ X(i, j, s) $$:
 
-$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) = \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s) = \sum_r\sum_i \sum_j \sum_sK^t_r(t) K^x_r(x-i)K^y_r(y-i)K^s_r(s)X(i, j, s) $$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) = \newline \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s) = \sum_r\sum_i \sum_j \sum_sK^t_r(t) K^x_r(x-i)K^y_r(y-i)K^s_r(s)X(i, j, s) $$ 
 
 This gives us a recipe to do the convlution:
 
