@@ -236,8 +236,9 @@ Like for CP decomposition, lets write the convolution formula and plug in the ke
 
 $$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) $$ 
  
-= $$ V(x, y, t) = \sum_i \sum_j \sum_s\sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{(x-i)(y-j) r_3 r_4}K^s_{r3}(s)K^t_{r4}(t)X(i, j, s) $$ 
-= $$ V(x, y, t) = \sum_i \sum_j \sum_{r_4=1}^{R_4}\sum_{r_3=1}^{R_3}K^t_{r4}(t)\sigma_{(x-i)(y-j) r_3 r_4} \sum_s\ K^s_{r3}(s)X(i, j, s) $$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_s\sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{(x-i)(y-j) r_3 r_4}K^s_{r3}(s)K^t_{r4}(t)X(i, j, s) $$ 
+
+$$ V(x, y, t) = \sum_i \sum_j \sum_{r_4=1}^{R_4}\sum_{r_3=1}^{R_3}K^t_{r4}(t)\sigma_{(x-i)(y-j) r_3 r_4} \sum_s\ K^s_{r3}(s)X(i, j, s) $$ 
 
 This gives us the following recipe for doing the convolution with Tucker Decomposition:
 
