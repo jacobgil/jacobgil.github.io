@@ -222,7 +222,7 @@ def cp_decomposition_conv_layer(layer, rank):
 ```
 
 ## Tucker Decomposition on convolutional layers
-[*Compression of Deep Convolutional Neural Networks for Fast and Low Power Mobile Applications*](Compression%20of%20Deep%20Convolutional%20Neural%20Networks%20for%20Fast%20and%20Low%20Power%20Mobile%20Applications) is a really cool paper that shows how to use the Tucker Decomposition for speeding up convolutional layers with even better results.
+[*Compression of Deep Convolutional Neural Networks for Fast and Low Power Mobile Applications*](https://arxiv.org/abs/1511.06530) is a really cool paper that shows how to use the Tucker Decomposition for speeding up convolutional layers with even better results.
 I also used this accelerate an over-parameterized VGG based network, with better accuracy than CP Decomposition. As the authors note in the paper, it lets us do the finetuning using higher learning rates (I used $10^{-4}$).
 
 The Tucker Decomposition, also known as the higher order SVD (HOSVD) and many other names, is a generalization of SVD for tensors. 
