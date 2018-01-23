@@ -100,13 +100,17 @@ The SVD gives us a way for writing this sum using the columns of  U and V: $\sum
 If we choose an R that is less than the full rank of the matrix, than this sum is just an approximation, like in the case of truncated SVD.
 
 The CP decomposition lets us generalize this for tensors. 
-Using CP-Decompoisition, our convolutional kernel, a 4 dimensional tensor $K(i, j, s, t)$ can be approximated similarly for a chosen R: $$ \sum_{r=1}^R K^x_r(i)K^y_r(j)K^s_r(s)K^t_r(t) $$.
+Using CP-Decompoisition, our convolutional kernel, a 4 dimensional tensor $$K(i, j, s, t)$$ can be approximated similarly for a chosen R: 
+$$ \sum_{r=1}^R K^x_r(i)K^y_r(j)K^s_r(s)K^t_r(t) $$.
+
 We will want R to be small for the decomposition to be effecient, but large enough to keep a high approximation accuracy.
 
 ### The convolution forward pass with CP Decomposition
 To forward the layer, we do convolution with an input $$ X(i, j, s) $$:
 
-$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) = \newline \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s) = \sum_r\sum_i \sum_j \sum_sK^t_r(t) K^x_r(x-i)K^y_r(y-i)K^s_r(s)X(i, j, s) $$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) $$
+$$ = \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s) $$
+$$ = \sum_r\sum_i \sum_j \sum_sK^t_r(t) K^x_r(x-i)K^y_r(y-i)K^s_r(s)X(i, j, s) $$ 
 
 This gives us a recipe to do the convlution:
 
