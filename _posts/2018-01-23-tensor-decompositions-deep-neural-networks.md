@@ -5,7 +5,7 @@ date:   2018-01-23 20:10:33 +0200
 permalink: deeplearning/tensor-decompositions-deep-learning
 ---
 
-
+{% include katex.html %}
 
 In this post I will cover a few low rank tensor decomposition techniques for taking layers in existing deep learning models and making them more compact. I will also share PyTorch code that uses [Tensorly](https://tensorly.github.io/stable/index.html) for performing CP decomposition and Tucker decomposition of convolutional layers. 
 
@@ -41,7 +41,10 @@ Code for this can be found in the [pyfaster-rcnn implementation.](https://github
 ## SVD recap
 The singular value decomposition lets us decompose any matrix A with n rows and m columns:
 
-$ A_{nxm} = U_{nxn} S_{nxm} V^T_{mxm} $
+$$ A_{nxm} = U_{nxn} S_{nxm} V^T_{mxm} $$
+
+
+
 
 S is a diagonal matrix with non negative values along its diagonal (the singular values), and is usually constructed such that the singular values are sorted in descending order.
 U and V are orthogonal matrices: $U^TU=V^TV=I$
@@ -326,3 +329,5 @@ In this post we went over a tensor techniques for decomposing layers in deep neu
  - Tucker Decomposition reduced the number of input and output channels the 2D convolution layer operated on, and used pointwise convolutions to switch the number of channels before and after the 2D convolution.
 
 I think it's interesting how common patterns in network design, pointwise and depthwise convolutions, naturally appear in these decompositions!
+
+{% include katex_end.html %}
