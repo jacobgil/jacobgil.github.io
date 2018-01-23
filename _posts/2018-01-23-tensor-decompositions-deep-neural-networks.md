@@ -85,9 +85,9 @@ Following the SVD example, we would want to somehow decompose the tensor into se
 
 For this we will use the two popular (well, at least in the world of Tensor algorithms) tensor decompositions: the CP decomposition and the Tucker decomposition (also called higher-order SVD and many other names).
 
-# CP Decomposition on convolutional layers
+# 1412.6553 Speeding-up Convolutional Neural Networks Using Fine-tuned CP-Decomposition
 
-[*Speeding-up Convolutional Neural Networks Using Fine-tuned CP-Decomposition*](https://arxiv.org/abs/1412.6553) shows how CP-Decomposition can be used to speed up convolutional layers. 
+[*1412.6553 Speeding-up Convolutional Neural Networks Using Fine-tuned CP-Decomposition*](https://arxiv.org/abs/1412.6553) shows how CP-Decomposition can be used to speed up convolutional layers. 
 As we will see, this factors the convolutional layer into something that resembles mobile nets.
 
 They were able to use this to accelerate a network by more than x8 without significant decrease in accuracy. In my own experiments I was able to use this get a x2 speedup on a network based 
@@ -221,8 +221,8 @@ def cp_decomposition_conv_layer(layer, rank):
     return nn.Sequential(*new_layers)
 ```
 
-## Tucker Decomposition on convolutional layers
-[*Compression of Deep Convolutional Neural Networks for Fast and Low Power Mobile Applications*](https://arxiv.org/abs/1511.06530) is a really cool paper that shows how to use the Tucker Decomposition for speeding up convolutional layers with even better results.
+# 1511.06530 Compression of Deep Convolutional Neural Networks for Fast and Low Power Mobile Applications
+[*1511.06530 Compression of Deep Convolutional Neural Networks for Fast and Low Power Mobile Applications*](https://arxiv.org/abs/1511.06530) is a really cool paper that shows how to use the Tucker Decomposition for speeding up convolutional layers with even better results.
 I also used this accelerate an over-parameterized VGG based network, with better accuracy than CP Decomposition. As the authors note in the paper, it lets us do the finetuning using higher learning rates (I used $10^{-4}$).
 
 The Tucker Decomposition, also known as the higher order SVD (HOSVD) and many other names, is a generalization of SVD for tensors. 
@@ -261,7 +261,7 @@ This gives us the following recipe for doing the convolution with Tucker Decompo
  3. Pointwise convolution with $$ K^t_{r4}(t) $$ to get back to T output channels like the original convolution.
  Since this is the last convolution, at this point we add the bias if there is one.
 
-#  How should we select the ranks for the decomposition ?
+#  How can we select the ranks for the decomposition ?
 One way would be trying different values and checking the accuracy. I played with heuristics like $$ R_3 = S/3 $$ , $$ R_4 = T/3 $$ with good results.
 
 *Ideally selecting the ranks should be automated.*
