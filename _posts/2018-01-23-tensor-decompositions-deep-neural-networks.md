@@ -25,8 +25,8 @@ Together with pruning, tensor decompositions are practical tools for speeding up
 
 
 These methods take a layer and decompose it into several smaller layers.  Although there will be more layers after the decomposition, the total number of floating point operations and weights will be smaller.
-Reported results are on the order of x8 for entire networks for tasks easier than image net, or x4 for specific layers inside imagenet. 
-My experience was that with these decompositions I was able to get a speedup of between x2 and x4, depending on the accuracy drop I was willing to take.
+Some reported results are on the order of x8 for entire networks (not aimed at large tasks like imagenet, though), or x4 for specific layers inside imagenet. 
+My experience was that with these decompositions I was able to get a speedup of between x2 to x4, depending on the accuracy drop I was willing to take.
 
 In [this blog post](https://jacobgil.github.io/deeplearning/pruning-deep-learning) I covered a technique called pruning for reducing the number of parameters in a model. Pruning requires making a forward pass (and sometimes a backward pass) on a dataset, and then ranks the neurons according to some criterion on the activations in the network.
 
