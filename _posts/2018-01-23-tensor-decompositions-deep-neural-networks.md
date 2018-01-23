@@ -1,3 +1,4 @@
+
 ---
 layout: post
 title:  "Accelerating deep neural networks with tensor decompositions"
@@ -6,6 +7,9 @@ permalink: deeplearning/tensor-decompositions-deep-learning
 ---
 
 {% include katex.html %}
+
+[My PyTorch implementations for tensor decomposition methods on convolutional layers.](https://github.com/jacobgil/pytorch-tensor-decompositions)
+
 
 # Background
 
