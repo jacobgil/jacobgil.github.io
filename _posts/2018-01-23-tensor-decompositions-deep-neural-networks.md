@@ -266,7 +266,7 @@ The authors suggested using [variational Bayesian matrix factorization (VBMF) (N
 VBMF is complicated and is out of the scope of this post, but in a really high level summary what they do is approximate a matrix $$ V_{LxM} $$ as the sum of a lower ranking matrix $$ B_{LxH}A^T_{HxM} $$ and gaussian noise. 
 After A and B are found, H is an upper bound on the rank.
 
-To use this for tucker decomposition, we can unfold the s and t components of the original to create matrices. Then we can estimate $$ R_3 $$ and $$R_4$$ as the rank of the matrices using VBMF.
+To use this for tucker decomposition, we can unfold the s and t components of the original weight tensor to create matrices. Then we can estimate $$ R_3 $$ and $$R_4$$ as the rank of the matrices using VBMF.
 
 I used this [python implementation of VBMF](https://github.com/CasvandenBogaard/VBMF) and got convinced it works :-)
 
@@ -351,7 +351,9 @@ def tucker_decomposition_conv_layer(layer):
 In this post we went over a Tensor Decomposition techniques for accelerating layers in deep neural networks.
 
  - Truncated SVD can be used for accelerating fully connected layers.
- - CP Decomposition decomposed convolutional layers into something that resembles mobile-nets, although it was even more aggressive since it was also separable in the spatial dimensions.
+ 
+ - CP Decomposition decomposes convolutional layers into something that resembles mobile-nets, although it is even more aggressive since it is also separable in the spatial dimensions.
+ 
  - Tucker Decomposition reduced the number of input and output channels the 2D convolution layer operated on, and used pointwise convolutions to switch the number of channels before and after the 2D convolution.
 
 I think it's interesting how common patterns in network design, pointwise and depthwise convolutions, naturally appear in these decompositions!
