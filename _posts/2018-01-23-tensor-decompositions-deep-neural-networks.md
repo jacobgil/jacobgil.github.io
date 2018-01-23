@@ -41,7 +41,7 @@ Code for this can be found in the [pyfaster-rcnn implementation.](https://github
 ## SVD recap
 The singular value decomposition lets us decompose any matrix A with n rows and m columns:
 
-$$ A_{nxm} = U_{nxn} S_{nxm} V^T_{mxm} $$
+$ A_{nxm} = U_{nxn} S_{nxm} V^T_{mxm} $
 
 S is a diagonal matrix with non negative values along its diagonal (the singular values), and is usually constructed such that the singular values are sorted in descending order.
 U and V are orthogonal matrices: $U^TU=V^TV=I$
