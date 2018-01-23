@@ -47,7 +47,7 @@ $$ A_{nxm} = U_{nxn} S_{nxm} V^T_{mxm} $$
 
 
 S is a diagonal matrix with non negative values along its diagonal (the singular values), and is usually constructed such that the singular values are sorted in descending order.
-U and V are orthogonal matrices: $U^TU=V^TV=I$
+U and V are orthogonal matrices: $ U^TU=V^TV=I $
 
 If we take the largest t singular values and zero out the rest, we get an approximation of A: $\hat{A} = U_{nxt}S_{txt}V^T_{mxt}$
 $\hat{A}$ has the nice property of being the rank t matrix that has the Frobenius-norm closest to A, so $\hat{A}$ is a good approximation of A if t is large enough.
