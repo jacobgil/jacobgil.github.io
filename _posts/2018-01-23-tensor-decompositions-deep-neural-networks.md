@@ -50,16 +50,16 @@ S is a diagonal matrix with non negative values along its diagonal (the singular
 U and V are orthogonal matrices: $$ U^TU=V^TV=I $$
 
 If we take the largest t singular values and zero out the rest, we get an approximation of A: $$ \hat{A} = U_{nxt}S_{txt}V^T_{mxt} $$
-$$ \hat{A} $$ has the nice property of being the rank t matrix that has the Frobenius-norm closest to A, so $\hat{A}$ is a good approximation of A if t is large enough.
+$$ \hat{A} $$ has the nice property of being the rank t matrix that has the Frobenius-norm closest to A, so $$ \hat{A} $$ is a good approximation of A if t is large enough.
 
 ## SVD on a fully connected layer
-A fully connected layer essentially does matrix multiplication of its input by a matrix A, and then adds a bias b: $Ax+b$
+A fully connected layer essentially does matrix multiplication of its input by a matrix A, and then adds a bias b: $$ Ax+b $$
 We can take the SVD of A, and keep only the first t singular values.
-$(U_{nxt}S_{txt}V^T_{mxt})x + b$ = $U_{nxt} ( S_{txt}V^T_{mxt} x ) + b$ 
+$$ (U_{nxt}S_{txt}V^T_{mxt})x + b $$ = $$ U_{nxt} ( S_{txt}V^T_{mxt} x ) + b $$
 
 Instead of a single fully connected layer, we can implement this as two smaller ones:
-- The first one will have a shape of mxt, will have no bias, and its weights will be taken from $S_{txt}V^T$.
-- The second one will have a shape of txn, will have a bias equal to b, and its weights will be taken from $U$
+- The first one will have a shape of mxt, will have no bias, and its weights will be taken from $$ S_{txt}V^T $$.
+- The second one will have a shape of txn, will have a bias equal to b, and its weights will be taken from $$ U $$
 
 The total number of weights dropped from nxm to t(n+m).
 
@@ -79,34 +79,34 @@ We will use the two popular (well, at least in the world of Tensor algorithms) t
 They were able to use this to accelerate a network by more than x8 without significant decrease in accuracy. In my own experiments I was able to use this get a x2 speedup on a network based 
 on VGG16. 
 
-My experience with this method is that the finetuning learning rate needs to be chosen very carefuly to get it to work, and the learning rate should usually be very small (around $10^-6$).
+My experience with this method is that the finetuning learning rate needs to be chosen very carefuly to get it to work, and the learning rate should usually be very small (around $$ 10^-6 $$).
 
 
 
 ----------
 
 
-A rank R matrix can be viewed as a sum of R rank 1 matrices, were each rank 1 matrix is a column vector multiplying a row vector: $\sum_1^Ra_i*b_i^T$
+A rank R matrix can be viewed as a sum of R rank 1 matrices, were each rank 1 matrix is a column vector multiplying a row vector: $$ \sum_1^Ra_i*b_i^T $$
 The SVD gives us a way for writing this sum using the columns of  U and V: $\sum_1^R \sigma_i u_i*v_i^T$.
 If we choose an R that is less than the full rank of the matrix, than this sum is just an approximation, like in the case of truncated SVD.
 
 The CP decomposition lets us generalize this for tensors. 
-Using CP-Decompoisition, our convolutional kernel, a 4 dimensional tensor $K(i, j, s, t)$ can be approximated similarly for a chosen R: $\sum_{r=1}^R K^x_r(i)K^y_r(j)K^s_r(s)K^t_r(t)$.
+Using CP-Decompoisition, our convolutional kernel, a 4 dimensional tensor $K(i, j, s, t)$ can be approximated similarly for a chosen R: $$ \sum_{r=1}^R K^x_r(i)K^y_r(j)K^s_r(s)K^t_r(t) $$.
 We will want R to be small for the decomposition to be effecient, but large enough to keep a high approximation accuracy.
 
 ### The convolution forward pass with CP Decomposition
-To forward the layer, we do convolution with an input $X(i, j, s)$:
+To forward the layer, we do convolution with an input $$ X(i, j, s) $$:
 
-$V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s)$ 
- $= \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s)$ 
- $= \sum_r\sum_i \sum_j \sum_sK^t_r(t) K^x_r(x-i)K^y_r(y-i)K^s_r(s)X(i, j, s)$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) $$
+ $$ = \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s) $$ 
+ $$ = \sum_r\sum_i \sum_j \sum_sK^t_r(t) K^x_r(x-i)K^y_r(y-i)K^s_r(s)X(i, j, s) $$ 
 
 This gives us a recipe to do the convlution:
 
- 1. First do a point wise (1x1xS) convolution with $K_r(s)$. 
+ 1. First do a point wise (1x1xS) convolution with $$ K_r(s) $$. 
  This reduces the number of input channels from S to R.
  The convolutions will next be done on a smaller number of channels, making them faster.
-2. Perform seperable convolutions in the spatial dimensions with $K^x_r,K^y_r$.
+2. Perform seperable convolutions in the spatial dimensions with $$ K^x_r,K^y_r $$.
 Like in [mobilenets](https://arxiv.org/abs/1704.04861) the convolutions are depthwise seperable, done in each channel separately. 
 
 	**Unlike mobilenets the convolutions are also separable in the spatial dimensions.**
@@ -205,44 +205,44 @@ def cp_decomposition_conv_layer(layer, rank):
 I also used this accelerate an over-parameterized VGG based network, with better accuracy than CP Decomposition. As the authors note in the paper, it lets us do the finetuning using higher learning rates (I used $10^{-4}$).
 
 The Tucker Decomposition, also known as the higher order SVD (HOSVD) and many other names, is a generalization of SVD for tensors. 
-$K(i, j, s, t) = \sum_{r_1=1}^{R_1}\sum_{r_2=1}^{R_2}\sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{r_1 r_2 r_3 r_4} K^x_{r1}(i)K^y_{r2}(j)K^s_{r3}(s)K^t_{r4}(t)$
-The reason its considered a generalization of the SVD is that often the components of $\sigma_{r_1 r_2 r_3 r_4}$ are orthogonal, but this isn't really important for our purpose.
-$\sigma_{r_1 r_2 r_3 r_4}$ is called the core matrix, and defines how different axis interact.
+$$ K(i, j, s, t) = \sum_{r_1=1}^{R_1}\sum_{r_2=1}^{R_2}\sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{r_1 r_2 r_3 r_4} K^x_{r1}(i)K^y_{r2}(j)K^s_{r3}(s)K^t_{r4}(t) $$
+The reason its considered a generalization of the SVD is that often the components of $$ \sigma_{r_1 r_2 r_3 r_4} $$ are orthogonal, but this isn't really important for our purpose.
+$$ \sigma_{r_1 r_2 r_3 r_4} $$ is called the core matrix, and defines how different axis interact.
 
-In the CP Decomposition described above, the decomposition along the spatial dimensions  $K^x_r(i)K^y_r(j)$ caused a spatially separable convolution. The filters are quite small anyway, typically 3x3 or 5x5, so the separable convolution isn't saving us a lot of computation, and is an aggressive approximation.
+In the CP Decomposition described above, the decomposition along the spatial dimensions  $$ K^x_r(i)K^y_r(j) $$ caused a spatially separable convolution. The filters are quite small anyway, typically 3x3 or 5x5, so the separable convolution isn't saving us a lot of computation, and is an aggressive approximation.
 
 The Tucker decomposition has the useful property that it doesn't have to be decomposed along all the axis (modes).
 We can perform the decomposition along the input and output channels instead (a mode-2 decomposition)
-$K(i, j, s, t) = \sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{i j r_3 r_4}(j)K^s_{r3}(s)K^t_{r4}(t)$
+$$ K(i, j, s, t) = \sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{i j r_3 r_4}(j)K^s_{r3}(s)K^t_{r4}(t) $$
 
 ### The convolution forward pass with Tucker Decomposition
 
 Like for CP decomposition, lets write the convolution formula and plug in the kernel decomposition:
 
-$V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s)$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) $$ 
  
-= $V(x, y, t) = \sum_i \sum_j \sum_s\sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{(x-i)(y-j) r_3 r_4}K^s_{r3}(s)K^t_{r4}(t)X(i, j, s)$ 
-= $V(x, y, t) = \sum_i \sum_j \sum_{r_4=1}^{R_4}\sum_{r_3=1}^{R_3}K^t_{r4}(t)\sigma_{(x-i)(y-j) r_3 r_4} \sum_s\ K^s_{r3}(s)X(i, j, s)$ 
+= $$ V(x, y, t) = \sum_i \sum_j \sum_s\sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{(x-i)(y-j) r_3 r_4}K^s_{r3}(s)K^t_{r4}(t)X(i, j, s) $$ 
+= $$ V(x, y, t) = \sum_i \sum_j \sum_{r_4=1}^{R_4}\sum_{r_3=1}^{R_3}K^t_{r4}(t)\sigma_{(x-i)(y-j) r_3 r_4} \sum_s\ K^s_{r3}(s)X(i, j, s) $$ 
 
 This gives us the following recipe for doing the convolution with Tucker Decomposition:
 
- 1. Point wise convolution with $K^s_{r3}(s)$ for reducing the number of channels from S to $R_3$.
- 2. Regular (not separable) convolution with $\sigma_{(x-i)(y-j) r_3 r_4}$.
+ 1. Point wise convolution with $$ K^s_{r3}(s) $$ for reducing the number of channels from S to $$ R_3 $$.
+ 2. Regular (not separable) convolution with $$ \sigma_{(x-i)(y-j) r_3 r_4} $$.
  Instead of S input channels and T output channels like the original layer had,
- this convolution has $R_3$ input channels and $R_4$ output channels. 
+ this convolution has $$ R_3 $$ input channels and $$ R_4 $$ output channels. 
  If these ranks are smaller than S and T, this is were the reduction comes from.
- 3. Pointwise convolution with $K^t_{r4}(t)$ to get back to T output channels like the original convolution.
+ 3. Pointwise convolution with $$ K^t_{r4}(t) $$ to get back to T output channels like the original convolution.
  Since this is the last convolution, at this point we add the bias if there is one.
 
 ###  How should we select the ranks for the decomposition ?
-One way would be trying different values and checking the accuracy. I played with heuristics like $R_3 = S/3$ , $R_4 = T/3$ with good results.
+One way would be trying different values and checking the accuracy. I played with heuristics like $$ R_3 = S/3 $$ , $$ R_4 = T/3 $$ with good results.
 Ideally this should be automated.
 The authors suggested using [variational Bayesian matrix factoriza-
 tion (VBMF) (Nakajima et al., 2013)](http://www.jmlr.org/papers/volume14/nakajima13a/nakajima13a.pdf) as a method  for estimating the rank.
 
-That's a complicated paper out of the scope of this post, but in a really high level summary what they do is approximate a matrix $V_{LxM}$ as the sum of a lower ranking matrix $B_{LxH}A^T_{HxM}$ and gaussian noise. After A and B are found, H is an upper bound on the rank.
+That's a complicated paper out of the scope of this post, but in a really high level summary what they do is approximate a matrix $$ V_{LxM} $$ as the sum of a lower ranking matrix $$ B_{LxH}A^T_{HxM} $$ and gaussian noise. After A and B are found, H is an upper bound on the rank.
 
-To use this for tucker decomposition, we can unfold the s and t components of the original to create matrices. Then we can estimate $R_3$ and $R_4$ as the rank of the matrices using VBMF.
+To use this for tucker decomposition, we can unfold the s and t components of the original to create matrices. Then we can estimate $$ R_3 $$ and $$R_4$$ as the rank of the matrices using VBMF.
 
 I used this [python implementation of VBMF](https://github.com/CasvandenBogaard/VBMF) and got convinced it works :-) VBMF usually returned ranks very close to what I previously found with careful and tedious manual tuning.
 
