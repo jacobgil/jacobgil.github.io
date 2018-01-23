@@ -110,7 +110,7 @@ To forward the layer, we do convolution with an input $$ X(i, j, s) $$:
 
 $$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) $$
 $$ = \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s) $$
-$$ = \sum_r\sum_i \sum_j \sum_sK^t_r(t) K^x_r(x-i)K^y_r(y-i)K^s_r(s)X(i, j, s) $$ 
+$$ = \sum_rK^t_r(t) \sum_i \sum_j K^x_r(x-i)K^y_r(y-i)\sum_sK^s_r(s)X(i, j, s) $$ 
 
 This gives us a recipe to do the convlution:
 
@@ -118,9 +118,8 @@ This gives us a recipe to do the convlution:
  This reduces the number of input channels from S to R.
  The convolutions will next be done on a smaller number of channels, making them faster.
 2. Perform seperable convolutions in the spatial dimensions with $$ K^x_r,K^y_r $$.
-Like in [mobilenets](https://arxiv.org/abs/1704.04861) the convolutions are depthwise seperable, done in each channel separately. 
-
-	**Unlike mobilenets the convolutions are also separable in the spatial dimensions.**
+**Like in [mobilenets](https://arxiv.org/abs/1704.04861) the convolutions are depthwise seperable, done in each channel separately.**
+**Unlike mobilenets the convolutions are also separable in the spatial dimensions.**
 
 3. Do another pointwise convolution to change the number of channels from R to T
 If the original convolutional layer had a bias, add it at this point.
