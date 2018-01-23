@@ -83,12 +83,12 @@ We will use the two popular (well, at least in the world of Tensor algorithms) t
 ## CP Decomposition on convolutional layers
 
 [*Speeding-up Convolutional Neural Networks Using Fine-tuned CP-Decomposition*](https://arxiv.org/abs/1412.6553) shows how CP-Decomposition can be used to speed up convolutional layers. 
-**This factors the convolutional layer into something that resembles mobile nets.**
+As we will see, this factors the convolutional layer into something that resembles mobile nets.
 
 They were able to use this to accelerate a network by more than x8 without significant decrease in accuracy. In my own experiments I was able to use this get a x2 speedup on a network based 
 on VGG16. 
 
-My experience with this method is that the finetuning learning rate needs to be chosen very carefuly to get it to work, and the learning rate should usually be very small (around $$ 10^-6 $$).
+My experience with this method is that the finetuning learning rate needs to be chosen very carefuly to get it to work, and the learning rate should usually be very small (around $$ 10^{-6} $$).
 
 
 
@@ -96,7 +96,10 @@ My experience with this method is that the finetuning learning rate needs to be 
 
 
 A rank R matrix can be viewed as a sum of R rank 1 matrices, were each rank 1 matrix is a column vector multiplying a row vector: $$ \sum_1^Ra_i*b_i^T $$
-The SVD gives us a way for writing this sum using the columns of  U and V: $\sum_1^R \sigma_i u_i*v_i^T$.
+
+The SVD gives us a way for writing this sum using the columns of  U and V: 
+$$\sum_1^R \sigma_i u_i*v_i^T$$.
+
 If we choose an R that is less than the full rank of the matrix, than this sum is just an approximation, like in the case of truncated SVD.
 
 The CP decomposition lets us generalize this for tensors. 
@@ -126,7 +129,7 @@ If the original convolutional layer had a bias, add it at this point.
 
 Notice the combination of pointwise and depthwise convolutions like in mobilenets. While with mobilenets you have to train a network from scratch to get this structure, here we can decompose an existing layer into this form.
 
-Like with mobile nets, to get a large speedup you will need a platform that has an efficient implementation of depthwise separable convolutions.
+Like with mobile nets, to get the most speedup you will need a platform that has an efficient implementation of depthwise separable convolutions.
 
 
 ![](https://ai2-s2-public.s3.amazonaws.com/figures/2017-08-08/62e348e26976c3ef77909b9af9788ebc2509009a/3-Figure1-1.png)
@@ -216,13 +219,15 @@ I also used this accelerate an over-parameterized VGG based network, with better
 
 The Tucker Decomposition, also known as the higher order SVD (HOSVD) and many other names, is a generalization of SVD for tensors. 
 $$ K(i, j, s, t) = \sum_{r_1=1}^{R_1}\sum_{r_2=1}^{R_2}\sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{r_1 r_2 r_3 r_4} K^x_{r1}(i)K^y_{r2}(j)K^s_{r3}(s)K^t_{r4}(t) $$
+
 The reason its considered a generalization of the SVD is that often the components of $$ \sigma_{r_1 r_2 r_3 r_4} $$ are orthogonal, but this isn't really important for our purpose.
 $$ \sigma_{r_1 r_2 r_3 r_4} $$ is called the core matrix, and defines how different axis interact.
 
 In the CP Decomposition described above, the decomposition along the spatial dimensions  $$ K^x_r(i)K^y_r(j) $$ caused a spatially separable convolution. The filters are quite small anyway, typically 3x3 or 5x5, so the separable convolution isn't saving us a lot of computation, and is an aggressive approximation.
 
 The Tucker decomposition has the useful property that it doesn't have to be decomposed along all the axis (modes).
-We can perform the decomposition along the input and output channels instead (a mode-2 decomposition)
+We can perform the decomposition along the input and output channels instead (a mode-2 decomposition):
+
 $$ K(i, j, s, t) = \sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{i j r_3 r_4}(j)K^s_{r3}(s)K^t_{r4}(t) $$
 
 ### The convolution forward pass with Tucker Decomposition
