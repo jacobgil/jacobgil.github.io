@@ -15,7 +15,7 @@ Although hopefully most of the post is self contained, a good review of tensor d
 The author of Tensorly also created some [really nice notebooks](https://github.com/JeanKossaifi/tensorly-notebooks) about Tensors basics. That helped me getting started, and I recommend going through that.
 
 
-Together with pruning, tensor decompositions are practical tools for speeding existing up deep neural networks, and I hope this post will make them a bit more accessible.
+Together with pruning, tensor decompositions are practical tools for speeding up existing deep neural networks, and I hope this post will make them a bit more accessible.
 
 
 ----------
