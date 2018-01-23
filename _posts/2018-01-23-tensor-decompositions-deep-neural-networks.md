@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title:  "Accelerating deep neural networks with tensor decompositions"
