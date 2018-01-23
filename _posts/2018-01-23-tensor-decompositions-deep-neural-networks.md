@@ -5,10 +5,9 @@ date:   2018-01-23 20:10:33 +0200
 permalink: deeplearning/tensor-decompositions-deep-learning
 ---
 
-{% include katex.html %}
-
 [My PyTorch implementation for CNN tensor decomposition methods.](https://github.com/jacobgil/pytorch-tensor-decompositions)
 
+{% include katex.html %}
 
 # Background
 
