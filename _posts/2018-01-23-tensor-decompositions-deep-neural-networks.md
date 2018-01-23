@@ -42,7 +42,7 @@ There are works that try to address these issues, and its still an active resear
 The first reference I could find of using this for accelerating deep neural networks, is in the [Fast-RCNN](https://arxiv.org/abs/1504.08083) paper. Ross Girshick used it to speed up the fully connected layers used for detection.
 Code for this can be found in the [pyfaster-rcnn implementation.](https://github.com/rbgirshick/py-faster-rcnn/blob/master/tools/compress_net.py)
 
-## SVD recap
+# SVD recap
 The singular value decomposition lets us decompose any matrix A with n rows and m columns:
 
 $$ A_{nxm} = U_{nxn} S_{nxm} V^T_{mxm} $$
@@ -58,7 +58,7 @@ $$ \hat{A} = U_{nxt}S_{txt}V^T_{mxt} $$
 
 $$ \hat{A} $$ has the nice property of being the rank t matrix that has the Frobenius-norm closest to A, so $$ \hat{A} $$ is a good approximation of A if t is large enough.
 
-## SVD on a fully connected layer
+# SVD on a fully connected layer
 A fully connected layer essentially does matrix multiplication of its input by a matrix A, and then adds a bias b: $$ Ax+b $$
 We can take the SVD of A, and keep only the first t singular values.
 
@@ -80,7 +80,7 @@ Following the SVD example, we would want to somehow decompose the tensor into se
 
 We will use the two popular (well, at least in the world of Tensor algorithms) tensor decompositions: CP decomposition and the Tucker decomposition (also called higher-order SVD) for this.
 
-## CP Decomposition on convolutional layers
+# CP Decomposition on convolutional layers
 
 [*Speeding-up Convolutional Neural Networks Using Fine-tuned CP-Decomposition*](https://arxiv.org/abs/1412.6553) shows how CP-Decomposition can be used to speed up convolutional layers. 
 As we will see, this factors the convolutional layer into something that resembles mobile nets.
@@ -108,7 +108,7 @@ $$ \sum_{r=1}^R K^x_r(i)K^y_r(j)K^s_r(s)K^t_r(t) $$.
 
 We will want R to be small for the decomposition to be effecient, but large enough to keep a high approximation accuracy.
 
-### The convolution forward pass with CP Decomposition
+# The convolution forward pass with CP Decomposition
 To forward the layer, we do convolution with an input $$ X(i, j, s) $$:
 
 $$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) $$
@@ -139,7 +139,7 @@ Like with mobile nets, to get the most speedup you will need a platform that has
 ----------
 
 
-### Convolutional layer CP-Decomposition with PyTorch and Tensorly
+# Convolutional layer CP-Decomposition with PyTorch and Tensorly
 ```python
 def cp_decomposition_conv_layer(layer, rank):
     """ Gets a conv layer and a target rank, 
@@ -230,7 +230,7 @@ We can perform the decomposition along the input and output channels instead (a 
 
 $$ K(i, j, s, t) = \sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{i j r_3 r_4}(j)K^s_{r3}(s)K^t_{r4}(t) $$
 
-### The convolution forward pass with Tucker Decomposition
+# The convolution forward pass with Tucker Decomposition
 
 Like for CP decomposition, lets write the convolution formula and plug in the kernel decomposition:
 
@@ -250,7 +250,7 @@ This gives us the following recipe for doing the convolution with Tucker Decompo
  3. Pointwise convolution with $$ K^t_{r4}(t) $$ to get back to T output channels like the original convolution.
  Since this is the last convolution, at this point we add the bias if there is one.
 
-###  How should we select the ranks for the decomposition ?
+#  How should we select the ranks for the decomposition ?
 One way would be trying different values and checking the accuracy. I played with heuristics like $$ R_3 = S/3 $$ , $$ R_4 = T/3 $$ with good results.
 
 *Ideally selecting the ranks should be automated.*
@@ -269,7 +269,7 @@ VBMF usually returned ranks very close to what I previously found with careful a
 This could also be used for estimating the rank for Truncated SVD acceleration of fully connected layers.
 
 
-### Convolutional layer Tucker-Decomposition with PyTorch and Tensorly
+# Convolutional layer Tucker-Decomposition with PyTorch and Tensorly
 ``` python
 def estimate_ranks(layer):
     """ Unfold the 2 modes of the Tensor the decomposition will 
