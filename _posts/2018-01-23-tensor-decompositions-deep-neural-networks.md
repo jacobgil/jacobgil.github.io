@@ -251,7 +251,9 @@ This gives us the following recipe for doing the convolution with Tucker Decompo
 
 ###  How should we select the ranks for the decomposition ?
 One way would be trying different values and checking the accuracy. I played with heuristics like $$ R_3 = S/3 $$ , $$ R_4 = T/3 $$ with good results.
-Ideally this should be automated.
+
+*Ideally selecting the ranks should be automated.*
+
 The authors suggested using [variational Bayesian matrix factorization (VBMF) (Nakajima et al., 2013)](http://www.jmlr.org/papers/volume14/nakajima13a/nakajima13a.pdf) as a method  for estimating the rank.
 
 VBMF is complicated and is out of the scope of this post, but in a really high level summary what they do is approximate a matrix $$ V_{LxM} $$ as the sum of a lower ranking matrix $$ B_{LxH}A^T_{HxM} $$ and gaussian noise. 
@@ -259,7 +261,9 @@ After A and B are found, H is an upper bound on the rank.
 
 To use this for tucker decomposition, we can unfold the s and t components of the original to create matrices. Then we can estimate $$ R_3 $$ and $$R_4$$ as the rank of the matrices using VBMF.
 
-I used this [python implementation of VBMF](https://github.com/CasvandenBogaard/VBMF) and got convinced it works :-) VBMF usually returned ranks very close to what I previously found with careful and tedious manual tuning.
+I used this [python implementation of VBMF](https://github.com/CasvandenBogaard/VBMF) and got convinced it works :-)
+
+VBMF usually returned ranks very close to what I previously found with careful and tedious manual tuning.
 
 This could also be used for estimating the rank for Truncated SVD acceleration of fully connected layers.
 
