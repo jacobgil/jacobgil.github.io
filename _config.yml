@@ -31,6 +31,9 @@ disqus:
 google_analytics: UA-88816088-1
 # Build settings
 markdown: kramdown
+kramdown:
+  math_engine: mathjax
+
 theme:
 gems:
   - jekyll-feed
