@@ -127,8 +127,8 @@ This gives us a recipe to do the convlution:
  1. First do a point wise (1x1xS) convolution with $$ K_r(s) $$. 
  This reduces the number of input channels from S to R.
  The convolutions will next be done on a smaller number of channels, making them faster.
-2. Perform seperable convolutions in the spatial dimensions with $$ K^x_r,K^y_r $$.
 
+2. Perform seperable convolutions in the spatial dimensions with $$ K^x_r,K^y_r $$.
 **Like in [mobilenets](https://arxiv.org/abs/1704.04861) the convolutions are depthwise seperable, done in each channel separately.**
 **Unlike mobilenets the convolutions are also separable in the spatial dimensions.**
 
@@ -251,10 +251,13 @@ $$ V(x, y, t) = \sum_i \sum_j \sum_{r_4=1}^{R_4}\sum_{r_3=1}^{R_3}K^t_{r4}(t)\si
 This gives us the following recipe for doing the convolution with Tucker Decomposition:
 
  1. Point wise convolution with $$ K^s_{r3}(s) $$ for reducing the number of channels from S to $$ R_3 $$.
+
  2. Regular (not separable) convolution with $$ \sigma_{(x-i)(y-j) r_3 r_4} $$.
  Instead of S input channels and T output channels like the original layer had,
  this convolution has $$ R_3 $$ input channels and $$ R_4 $$ output channels. 
+ 
  If these ranks are smaller than S and T, this is were the reduction comes from.
+ 
  3. Pointwise convolution with $$ K^t_{r4}(t) $$ to get back to T output channels like the original convolution.
  Since this is the last convolution, at this point we add the bias if there is one.
 
