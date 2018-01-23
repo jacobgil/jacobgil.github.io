@@ -266,7 +266,7 @@ This gives us the following recipe for doing the convolution with Tucker Decompo
  3. Pointwise convolution with $$ K^t_{r4}(t) $$ to get back to T output channels like the original convolution.
  Since this is the last convolution, at this point we add the bias if there is one.
 
-#  How can we select the ranks for the decomposition ?
+# How can we select the ranks for the decomposition ?
 One way would be trying different values and checking the accuracy. I played with heuristics like $$ R_3 = S/3 $$ , $$ R_4 = T/3 $$ with good results.
 
 *Ideally selecting the ranks should be automated.*
