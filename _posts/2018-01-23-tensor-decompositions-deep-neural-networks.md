@@ -129,6 +129,7 @@ This gives us a recipe to do the convlution:
  The convolutions will next be done on a smaller number of channels, making them faster.
 
 2. Perform seperable convolutions in the spatial dimensions with $$ K^x_r,K^y_r $$.
+
 **Like in [mobilenets](https://arxiv.org/abs/1704.04861) the convolutions are depthwise seperable, done in each channel separately.**
 **Unlike mobilenets the convolutions are also separable in the spatial dimensions.**
 
@@ -137,7 +138,7 @@ If the original convolutional layer had a bias, add it at this point.
 
 Notice the combination of pointwise and depthwise convolutions like in mobilenets. While with mobilenets you have to train a network from scratch to get this structure, here we can decompose an existing layer into this form.
 
-Like with mobile nets, to get the most speedup you will need a platform that has an efficient implementation of depthwise separable convolutions.
+As with mobile nets, to get the most speedup you will need a platform that has an efficient implementation of depthwise separable convolutions.
 
 
 ![](https://ai2-s2-public.s3.amazonaws.com/figures/2017-08-08/62e348e26976c3ef77909b9af9788ebc2509009a/3-Figure1-1.png)
