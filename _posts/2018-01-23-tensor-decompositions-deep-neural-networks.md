@@ -129,7 +129,6 @@ This gives us a recipe to do the convlution:
  The convolutions will next be done on a smaller number of channels, making them faster.
 
 2. Perform seperable convolutions in the spatial dimensions with $$ K^x_r,K^y_r $$.
-
 **Like in [mobilenets](https://arxiv.org/abs/1704.04861) the convolutions are depthwise seperable, done in each channel separately.**
 **Unlike mobilenets the convolutions are also separable in the spatial dimensions.**
 
