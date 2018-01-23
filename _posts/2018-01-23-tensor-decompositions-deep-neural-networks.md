@@ -1,3 +1,4 @@
+
 ---
 layout: post
 title:  "Accelerating deep neural networks with tensor decompositions"
@@ -5,9 +6,10 @@ date:   2018-01-23 20:10:33 +0200
 permalink: deeplearning/tensor-decompositions-deep-learning
 ---
 
-[My PyTorch implementation for CNN tensor decomposition methods.](https://github.com/jacobgil/pytorch-tensor-decompositions)
-
 {% include katex.html %}
+
+[My PyTorch implementations for tensor decomposition methods on convolutional layers.](https://github.com/jacobgil/pytorch-tensor-decompositions)
+
 
 # Background
 
@@ -153,15 +155,12 @@ As with mobile nets, to get the most speedup you will need a platform that has a
 ```python
 def cp_decomposition_conv_layer(layer, rank):
     """ Gets a conv layer and a target rank, 
-        returns a nn.Sequential object with the decomposition """
+        returns a nn.Sequential object with the CP Decomposition """
 
     # Perform CP decomposition on the layer weight tensor. 
-    print(layer, rank)
     X = layer.weight.data.numpy()
-    size = max(X.shape)
     # Using the SVD init gives better results, but stalls for large matrices.
     if size >= 256:
-        print("Init random")
         last, first, vertical, horizontal = parafac(X, rank=rank, init = 'random')
     else:
         last, first, vertical, horizontal = parafac(X, rank=rank, init = 'svd')
@@ -259,14 +258,12 @@ This gives us the following recipe for doing the convolution with Tucker Decompo
 
  2. Regular (not separable) convolution with $$ \sigma_{(x-i)(y-j) r_3 r_4} $$.
  Instead of S input channels and T output channels like the original layer had,
- this convolution has $$ R_3 $$ input channels and $$ R_4 $$ output channels. 
- 
- If these ranks are smaller than S and T, this is were the reduction comes from.
- 
+ this convolution has $$ R_3 $$ input channels and $$ R_4 $$ output channels.  If these ranks are smaller than S and T, this is were the reduction comes from.
+
  3. Pointwise convolution with $$ K^t_{r4}(t) $$ to get back to T output channels like the original convolution.
  Since this is the last convolution, at this point we add the bias if there is one.
 
-# How can we select the ranks for the decomposition ?
+#  How can we select the ranks for the decomposition ?
 One way would be trying different values and checking the accuracy. I played with heuristics like $$ R_3 = S/3 $$ , $$ R_4 = T/3 $$ with good results.
 
 *Ideally selecting the ranks should be automated.*
@@ -293,8 +290,8 @@ def estimate_ranks(layer):
     """
 
     weights = layer.weight.data.numpy()
-    unfold_0 = tl.base.unfold(weights, 0) 
-    unfold_1 = tl.base.unfold(weights, 1)
+    unfold_0 = tensorly.base.unfold(weights, 0) 
+    unfold_1 = tensorly.base.unfold(weights, 1)
     _, diag_0, _, _ = VBMF.EVBMF(unfold_0)
     _, diag_1, _, _ = VBMF.EVBMF(unfold_1)
     ranks = [diag_0.shape[0], diag_1.shape[1]]
@@ -308,7 +305,7 @@ def tucker_decomposition_conv_layer(layer):
     """
 
     ranks = estimate_ranks(layer)
-    print(layer, "VBMF Estimated ranks", ranks)
+
     core, [last, first] = \
         partial_tucker(layer.weight.data.numpy(), \
             modes=[0, 1], ranks=ranks, init='svd')
@@ -354,6 +351,7 @@ def tucker_decomposition_conv_layer(layer):
 
     new_layers = [first_layer, core_layer, last_layer]
     return nn.Sequential(*new_layers)
+
 ```
 
 # Summary
