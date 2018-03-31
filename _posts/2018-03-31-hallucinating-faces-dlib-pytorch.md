@@ -10,6 +10,10 @@ permalink: deeplearning/hallucinating_faces_dlib_pytorch
 
 [Here is the github repository](https://github.com/jacobgil/dlib_facedetector_pytorch) with all the code for this post.
 
+Scroll  to the end if you just want to see images :-)
+
+---
+
 In this post I will describe two experiments I did with Dlib's deep learning face detector:
 
  1. Porting the model weights to PyTorch, and testing it by detecting faces in a web cam feed.
