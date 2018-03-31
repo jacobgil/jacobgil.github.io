@@ -48,7 +48,7 @@ Since I was doing this on a CPU, I didn't really have a motivation for doing the
 
 After detection, non maxima suppression is done between the different scales, and the box size is receptive field is multiplied by the scale that best detected the object.
 
-[Here is the code.](https://github.com/jacobgil/dlib_facedetector_pytorch/blob/master/webcam_example.py)
+[Here is the code for face detection on a webcam.](https://github.com/jacobgil/dlib_facedetector_pytorch/blob/master/webcam_example.py)
 
 # Hallucinating faces
 
@@ -62,7 +62,7 @@ Here is a short summary of some of the things I used:
 Usually when using activation maximization, the mean output of the filter is used as the loss function. 
 To get face images, instead I used the center pixel in the output of the filter.
 This is probably related to how the model was trained - if a face is centered in the middle of the window, its score will be highest.
-- Regularization: Without regularization, the images look extremely noisy.  The regularization that worked best here was rotating the image by a random angle (I used a range of [-30, 30]), calculating the image gradients, and then rotating back.
+- Regularization: Without regularization, the images look extremely noisy.  The regularization that worked best here was rotating the image by a random angle (I used a range of [-30, 30]), calculating the image gradients, and then rotating back. A random horizontal flip also seemed to help.
 Initially I tried using bilateral filtering on the gradients, and decaying the image by 0.95, but those didn't really help and the results weren't as nice.
 - **Peeking at the second last convolutional layer.**
 The output from the last convolutional layer used a combination of the outputs in the one before, and tends to return multiple faces (often in different poses) in the same image. This kind of makes sense, since there are many different types of faces that can all cause a face to be detected.
