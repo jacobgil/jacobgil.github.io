@@ -6,6 +6,8 @@ permalink: deeplearning/hallucinating_faces_dlib_pytorch
 ---
 
 ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/13_4.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/18_3.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/18_6.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/1_5.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_4.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/20_9.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/14_2.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/17_9.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/5_3.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/4_0.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/26_8.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_9.jpg)
+
+
 [Here is the github repository](https://github.com/jacobgil/dlib_facedetector_pytorch) with all the code for this post.
 
 In this post I will describe two experiments I did with Dlib's deep learning face detector:
