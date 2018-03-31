@@ -5,9 +5,7 @@ date:   2018-03-31 14:10:33 +0200
 permalink: deeplearning/hallucinating_faces_dlib_pytorch
 ---
 
-![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/13_4.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/18_3.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/18_6.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/1_5.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_4.jpg)
-
----
+![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/13_4.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/18_3.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/18_6.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/1_5.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_4.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/20_9.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/14_2.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/17_9.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/5_3.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/4_0.jpg)
 
 [Here is the github repository](https://github.com/jacobgil/dlib_facedetector_pytorch) with all the code for this post.
 
@@ -33,8 +31,8 @@ Batch normalization is implemented a bit differently in DLib, without a running 
 
 ## Verifying it by detecting faces in a webcam
 
-*** The purpose of this section was to make sure the ported model is usable. 
-You can skip to the next section for the face hallucinations. ***
+* The purpose of this section was to make sure the ported model is usable. 
+You can skip to the next section for the face hallucinations. *
 
 On a i7 processor, the inference took between 30ms to 150ms on a 640x480 feed from a webcam, depending on the scales used, which isn't bad at all.
 Running it on higher end mobile devices (after porting to ONNX) should give a much faster inference time.
