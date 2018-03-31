@@ -32,8 +32,8 @@ Batch normalization is implemented a bit differently in DLib, without a running 
 
 # Verifying it by detecting faces in a webcam
 
-##### The purpose of this section was to make sure the ported model is usable. 
-##### You can skip to the next section for the face hallucinations.
+***The purpose of this section was to make sure the ported model is usable. 
+ You can skip to the next section for the face hallucinations.***
 
 On a i7 processor, the inference took between 30ms to 150ms on a 640x480 feed from a webcam, depending on the scales used, which isn't bad at all.
 Running it on higher end mobile devices (after porting to ONNX) should give a much faster inference time.
@@ -53,23 +53,24 @@ After detection, non maxima suppression is done between the different scales, an
 # Hallucinating faces
 
 Now that we have the PyTorch model, we can use activation maximization to find images that cause a large response in specific filters. 
-The idea is do perform gradient ascent iterations on the input image pixels, until a large activation in filter output is caused. 
+The idea is to perform gradient ascent iterations on the input image pixels, until a large activation in filter output is caused. 
+
 I tried a lot of things until I managed to get this to work. 
 Here is a short summary of some of the things I used:
 
- - The loss function is the center pixel in the filter output.
+ - **The loss function is the center pixel in the filter output.**
 Usually when using activation maximization, the mean output of the filter is used as the loss function. 
 To get face images, instead I used the center pixel in the output of the filter.
 This is probably related to how the model was trained - if a face is centered in the middle of the window, its score will be highest.
 - Regularization: Without regularization, the images look extremely noisy.  The regularization that worked best here was rotating the image by a random angle (I used a range of [-30, 30]), calculating the image gradients, and then rotating back.
 Initially I tried using bilateral filtering on the gradients, and decaying the image by 0.95, but those didn't really help and the results weren't as nice.
-- Peeking at the second last convolutional layer.
+- **Peeking at the second last convolutional layer.**
 The output from the last convolutional layer used a combination of the outputs in the one before, and tends to return multiple faces (often in different poses) in the same image. This kind of makes sense, since there are many different types of faces that can all cause a face to be detected.
 
 	On the other hand, maximizing the second last convolutional layer responses returns single faces, probably because they learned to be much more selective in the kind of faces they respond to.
 	Different runs on the same filter often returns different poses and expressions, of the same face.
-- Solving for a low activation, Activation Minimization, often still returns faces, but they aren't in the center of the image.
-Again this kind of makes sense because the face detector is trained to give a low response if the face has an offset to the window center, treating it as a false positive. So many of the "negative" responses have meanings - They aren't just random background patterns, they are faces, and face parts, in different areas of the image.
+- **Solving instead for a low activation, often still returns faces, but they aren't in the center of the image.**
+This kind of makes sense because the face detector is trained to give a low response if the face has an offset to the window center, treating it as a false positive. So many of the "negative" responses have meanings - They aren't just random background patterns, they are faces, and face parts, in different areas of the image.
 
 # Images that maximize the activation
 These are selected filters. Some filters did not correspond to faces, or had multiple faces.
