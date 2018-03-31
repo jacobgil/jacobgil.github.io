@@ -7,7 +7,6 @@ permalink: deeplearning/hallucinating_faces_dlib_pytorch
 
 ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/13_4.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/18_3.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/18_6.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/1_5.jpg)![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_4.jpg)
 
----
 
 [Here is the github repository](https://github.com/jacobgil/dlib_facedetector_pytorch) with all the code for this post.
 
