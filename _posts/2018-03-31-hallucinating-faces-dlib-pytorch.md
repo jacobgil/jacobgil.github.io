@@ -33,16 +33,18 @@ Batch normalization is implemented a bit differently in DLib, without a running 
 
 ## Using Dlib's PyTorch model to detect faces in a webcam on a CPU
 
-The purpose of this section was to make sure the ported model is usable.
+### The purpose of this section was to make sure the ported model is usable. 
+### You can skip to the next section for the face hallucinations.
+
 On a i7 processor, the inference took between 30ms to 150ms on a 640x480 feed from a webcam, depending on the scales used, which isn't bad at all.
 Running it on higher end mobile devices (after porting to ONNX) should give a much faster inference time.
 
-Dlib's face detector is a fully convolutional network, that slides over an input image and outputs a probability image. 
+Dlib's face detector is a fully convolutional network, that slides over an input image and outputs a score for each window in the image. 
 The network is aimed at detecting faces that have a certain size, determined by the receptive field of the network. 
 
 To get scale invariance, Dlib resizes the input images to different sizes, and packs them in a single image with paddings between the scaled images.
-This trades off more inference time (athough it's effecient because of the single image pyramid) with scale invariance. 
-Inference on the packed larger image gives a larger GPU utilization.
+This trades off more inference time with scale invariance. 
+Inference on the packed larger image gives larger GPU utilization.
 Since I was doing this on a CPU, I didn't really have a motivation for doing the image packing, so instead I just did multiple forward passes on resized images.
 
 After detection, non maxima suppression is done between the different scales, and the box size is receptive field is multiplied by the scale that best detected the object.
