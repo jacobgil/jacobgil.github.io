@@ -21,17 +21,17 @@ This is a good place to say that DLib is a remarkable piece of software, and it'
 
 At this point Dlib only has support for [converting the model weights to caffe](https://github.com/davisking/dlib/tree/master/tools/convert_dlib_nets_to_caffe), so I decided to jump in and add support for converting the face detector model to PyTorch. From PyTorch it can be easily be ported to many other platforms with the [ONNX format](http://pytorch.org/docs/master/onnx.html), so getting dlib's face detector to work in mobile deep learning frameworks should be straight forward from here.
 
-## Converting the model to PyTorch
+# Converting the model to PyTorch
 The first part here was saving the face detector model in an XML format, using `net_to_xml`, like in this [dlib example](https://github.com/davisking/dlib/blob/master/examples/dnn_introduction_ex.cpp#L164).
 The XML is fairly easy to parse in python, with each layer's parameters (like the layer type, padding, kernel size etc) stored in XML attributes, followed by a list of floats for each layer's biases and weights.
 Batch normalization is implemented a bit differently in DLib, without a running mean and running variance as part of the layer parameters, so a running mean and variance of 0 and 1 is used in PyTorch.
 
 [get_model](https://github.com/jacobgil/dlib_facedetector_pytorch/blob/master/dlib_torch_converter.py#L6) gets the XML path, and returns a PyTorch Sequential model.
 
-## Verifying it by detecting faces in a webcam
+# Verifying it by detecting faces in a webcam
 
-* The purpose of this section was to make sure the ported model is usable. 
-You can skip to the next section for the face hallucinations. *
+##### The purpose of this section was to make sure the ported model is usable. 
+##### You can skip to the next section for the face hallucinations.
 
 On a i7 processor, the inference took between 30ms to 150ms on a 640x480 feed from a webcam, depending on the scales used, which isn't bad at all.
 Running it on higher end mobile devices (after porting to ONNX) should give a much faster inference time.
@@ -48,7 +48,7 @@ After detection, non maxima suppression is done between the different scales, an
 
 [Here is the code.](https://github.com/jacobgil/dlib_facedetector_pytorch/blob/master/webcam_example.py)
 
-## Hallucinating faces
+# Hallucinating faces
 
 Now that we have the PyTorch model, we can use activation maximization to find images that cause a large response in specific filters. 
 The idea is do perform gradient ascent iterations on the input image pixels, until a large activation in filter output is caused. 
@@ -69,7 +69,7 @@ The output from the last convolutional layer used a combination of the outputs i
 - Solving for a low activation, Activation Minimization, often still returns faces, but they aren't in the center of the image.
 Again this kind of makes sense because the face detector is trained to give a low response if the face has an offset to the window center, treating it as a false positive. So many of the "negative" responses have meanings - They aren't just random background patterns, they are faces, and face parts, in different areas of the image.
 
-## Images that maximize the activation
+# Images that maximize the activation
 These are selected filters. Some filters did not correspond to faces, or had multiple faces.
 For each filter, there were 900 iterations of gradient ascent, repeated 10 times to create 10 different images.
 
@@ -139,7 +139,7 @@ For each filter, there were 900 iterations of gradient ascent, repeated 10 times
 
 ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_0.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_1.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_2.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_3.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_4.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_5.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_6.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_7.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_8.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/positive_images/28_9.jpg)  
 
-## Images that minimize the activation
+# Images that minimize the activation
 ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_0.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_1.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_2.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_3.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_4.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_5.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_6.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_7.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_8.jpg) ![](https://raw.githubusercontent.com/jacobgil/dlib_facedetector_pytorch/master/negative_images/0_9.jpg)  
 
 ---
