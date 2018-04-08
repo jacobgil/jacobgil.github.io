@@ -149,7 +149,6 @@ As with mobile nets, to get the most speedup you will need a platform that has a
 
 ----------
 
-
 # Convolutional layer CP-Decomposition with PyTorch and Tensorly
 ```python
 def cp_decomposition_conv_layer(layer, rank):
@@ -295,17 +294,15 @@ def tucker_decomposition_conv_layer(layer):
 
     # A pointwise convolution that increases the channels from R4 to T
     last_layer = torch.nn.Conv2d(in_channels=last.shape[1], \
-        out_channels=last.shape[0], kernel_size=1, stride=1, \
+        out_channels=last.shape[0], kernel_size=1, stride=1,
         padding=0, dilation=layer.dilation, bias=True)
 
     last_layer.bias.data = layer.bias.data
-
 
     first_layer.weight.data = \
         torch.transpose(first, 1, 0).unsqueeze(-1).unsqueeze(-1)
     last_layer.weight.data = last.unsqueeze(-1).unsqueeze(-1)
     core_layer.weight.data = core
-
 
     new_layers = [first_layer, core_layer, last_layer]
     return nn.Sequential(*new_layers)
