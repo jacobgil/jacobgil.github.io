@@ -121,9 +121,9 @@ We will want R to be small for the decomposition to be effecient, but large enou
 # The convolution forward pass with CP Decomposition
 To forward the layer, we do convolution with an input $$ X(i, j, s) $$:
 
-$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) $$
-$$ = \sum_r\sum_i \sum_j \sum_sK^x_r(x-i)K^y_r(y-i)K^s_r(s)K^t_r(t)X(i, j, s) $$
-$$ = \sum_rK^t_r(t) \sum_i \sum_j K^x_r(x-i)K^y_r(y-i)\sum_sK^s_r(s)X(i, j, s) $$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_sK(i, j, s, t)X(x-i, y-j, s) $$
+$$ = \sum_r\sum_i \sum_j \sum_sK^x_r(i)K^y_r(i)K^s_r(s)K^t_r(t)X(x-i, y-j, s) $$
+$$ = \sum_rK^t_r(t) \sum_i \sum_j K^x_r(i)K^y_r(i)\sum_sK^s_r(s)X(x-i, y-j, s) $$ 
 
 This gives us a recipe to do the convlution:
 
@@ -154,73 +154,45 @@ As with mobile nets, to get the most speedup you will need a platform that has a
 ```python
 def cp_decomposition_conv_layer(layer, rank):
     """ Gets a conv layer and a target rank, 
-        returns a nn.Sequential object with the CP Decomposition """
+        returns a nn.Sequential object with the decomposition """
 
-    # Perform CP decomposition on the layer weight tensor. 
-    X = layer.weight.data.numpy()
-    # Using the SVD init gives better results, but stalls for large matrices.
-    if size >= 256:
-        last, first, vertical, horizontal = parafac(X, rank=rank, init = 'random')
-    else:
-        last, first, vertical, horizontal = parafac(X, rank=rank, init = 'svd')
+    # Perform CP decomposition on the layer weight tensorly. 
+    last, first, vertical, horizontal = \
+        parafac(layer.weight.data, rank=rank, init='svd')
 
-    pointwise_s_to_r_layer = torch.nn.Conv2d(in_channels = first.shape[0], \
-            out_channels = first.shape[1],
-            kernel_size = 1, \
-            stride = layer.stride,
-            padding = 0,
-            dilation = layer.dilation,
-            bias = False)
+    pointwise_s_to_r_layer = torch.nn.Conv2d(in_channels=first.shape[0], \
+            out_channels=first.shape[1], kernel_size=1, stride=1, padding=0, 
+            dilation=layer.dilation, bias=False)
 
-    depthwise_vertical_layer = torch.nn.Conv2d(in_channels = vertical.shape[1], \
-            out_channels = vertical.shape[1],
-            kernel_size = (vertical.shape[0], 1),
-            stride = layer.stride,
-            padding = (layer.padding[0], 0),
-            dilation = layer.dilation,
-            groups = vertical.shape[1],
-            bias = False)
+    depthwise_vertical_layer = torch.nn.Conv2d(in_channels=vertical.shape[1], 
+            out_channels=vertical.shape[1], kernel_size=(vertical.shape[0], 1),
+            stride=1, padding=(layer.padding[0], 0), dilation=layer.dilation,
+            groups=vertical.shape[1], bias=False)
 
-    depthwise_horizontal_layer = torch.nn.Conv2d(in_channels = horizontal.shape[1], \
-            out_channels = horizontal.shape[1],
-            kernel_size = (1, horizontal.shape[0]),
-            stride = layer.stride,
-            padding = (0, layer.padding[0]),
-            dilation = layer.dilation,
-            groups = horizontal.shape[1],
-            bias = False)
+    depthwise_horizontal_layer = \
+        torch.nn.Conv2d(in_channels=horizontal.shape[1], \
+            out_channels=horizontal.shape[1], 
+            kernel_size=(1, horizontal.shape[0]), stride=layer.stride,
+            padding=(0, layer.padding[0]), 
+            dilation=layer.dilation, groups=horizontal.shape[1], bias=False)
 
-    pointwise_r_to_t_layer = torch.nn.Conv2d(in_channels = last.shape[1], \
-            out_channels = last.shape[0],
-            kernel_size = 1, \
-            stride = layer.stride,
-            padding = 0,
-            dilation = layer.dilation,
-            bias = True)
+    pointwise_r_to_t_layer = torch.nn.Conv2d(in_channels=last.shape[1], \
+            out_channels=last.shape[0], kernel_size=1, stride=1,
+            padding=0, dilation=layer.dilation, bias=True)
+
     pointwise_r_to_t_layer.bias.data = layer.bias.data
 
-    # Transpose dimensions back to what PyTorch expects
-    depthwise_vertical_layer_weights = np.expand_dims(np.expand_dims(\
-        vertical.transpose(1, 0), axis = 1), axis = -1)
-    depthwise_horizontal_layer_weights = np.expand_dims(np.expand_dims(\
-        horizontal.transpose(1, 0), axis = 1), axis = 1)
-    pointwise_s_to_r_layer_weights = np.expand_dims(\
-        np.expand_dims(first.transpose(1, 0), axis = -1), axis = -1)
-    pointwise_r_to_t_layer_weights = np.expand_dims(np.expand_dims(\
-        last, axis = -1), axis = -1)
-
-    # Fill in the weights of the new layers
     depthwise_horizontal_layer.weight.data = \
-        torch.from_numpy(np.float32(depthwise_horizontal_layer_weights))
+        torch.transpose(horizontal, 1, 0).unsqueeze(1).unsqueeze(1)
     depthwise_vertical_layer.weight.data = \
-        torch.from_numpy(np.float32(depthwise_vertical_layer_weights))
+        torch.transpose(vertical, 1, 0).unsqueeze(1).unsqueeze(-1)
     pointwise_s_to_r_layer.weight.data = \
-        torch.from_numpy(np.float32(pointwise_s_to_r_layer_weights))
-    pointwise_r_to_t_layer.weight.data = \
-        torch.from_numpy(np.float32(pointwise_r_to_t_layer_weights))
+        torch.transpose(first, 1, 0).unsqueeze(-1).unsqueeze(-1)
+    pointwise_r_to_t_layer.weight.data = last.unsqueeze(-1).unsqueeze(-1)
 
     new_layers = [pointwise_s_to_r_layer, depthwise_vertical_layer, \
                     depthwise_horizontal_layer, pointwise_r_to_t_layer]
+    
     return nn.Sequential(*new_layers)
 ```
 
@@ -245,17 +217,17 @@ $$ K(i, j, s, t) = \sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{i j r_3 r_4}(j)K^
 
 Like for CP decomposition, lets write the convolution formula and plug in the kernel decomposition:
 
-$$ V(x, y, t) = \sum_i \sum_j \sum_sK(x-i, y-j, s, t)X(i, j, s) $$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_sK(i, j, s, t)X(x-i, y-j, s) $$ 
  
-$$ V(x, y, t) = \sum_i \sum_j \sum_s\sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{(x-i)(y-j) r_3 r_4}K^s_{r3}(s)K^t_{r4}(t)X(i, j, s) $$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_s\sum_{r_3=1}^{R_3}\sum_{r_4=1}^{R_4}\sigma_{(i)(j) r_3 r_4}K^s_{r3}(s)K^t_{r4}(t)X(x-i, y-j, s) $$ 
 
-$$ V(x, y, t) = \sum_i \sum_j \sum_{r_4=1}^{R_4}\sum_{r_3=1}^{R_3}K^t_{r4}(t)\sigma_{(x-i)(y-j) r_3 r_4} \sum_s\ K^s_{r3}(s)X(i, j, s) $$ 
+$$ V(x, y, t) = \sum_i \sum_j \sum_{r_4=1}^{R_4}\sum_{r_3=1}^{R_3}K^t_{r4}(t)\sigma_{(i)(j) r_3 r_4} \sum_s\ K^s_{r3}(s)X(x-i, y-j, s) $$ 
 
 This gives us the following recipe for doing the convolution with Tucker Decomposition:
 
  1. Point wise convolution with $$ K^s_{r3}(s) $$ for reducing the number of channels from S to $$ R_3 $$.
 
- 2. Regular (not separable) convolution with $$ \sigma_{(x-i)(y-j) r_3 r_4} $$.
+ 2. Regular (not separable) convolution with $$ \sigma_{(i)(j) r_3 r_4} $$.
  Instead of S input channels and T output channels like the original layer had,
  this convolution has $$ R_3 $$ input channels and $$ R_4 $$ output channels.  If these ranks are smaller than S and T, this is were the reduction comes from.
 
@@ -304,52 +276,40 @@ def tucker_decomposition_conv_layer(layer):
     """
 
     ranks = estimate_ranks(layer)
-
+    print(layer, "VBMF Estimated ranks", ranks)
     core, [last, first] = \
-        partial_tucker(layer.weight.data.numpy(), \
+        partial_tucker(layer.weight.data, \
             modes=[0, 1], ranks=ranks, init='svd')
 
     # A pointwise convolution that reduces the channels from S to R3
-    first_layer = torch.nn.Conv2d(in_channels = first.shape[0], \
-            out_channels = first.shape[1],
-            kernel_size = 1, \
-            stride = layer.stride,
-            padding = 0,
-            dilation = layer.dilation,
-            bias = False)
+    first_layer = torch.nn.Conv2d(in_channels=first.shape[0], \
+            out_channels=first.shape[1], kernel_size=1, \
+            stride=1, padding=0, dilation=layer.dilation, bias=False)
 
     # A regular 2D convolution layer with R3 input channels 
     # and R3 output channels
-    core_layer = torch.nn.Conv2d(in_channels = core.shape[1], \
-            out_channels = core.shape[0],
-            kernel_size = layer.kernel_size,
-            stride = layer.stride,
-            padding = layer.padding,
-            dilation = layer.dilation,
-            bias = False)
+    core_layer = torch.nn.Conv2d(in_channels=core.shape[1], \
+            out_channels=core.shape[0], kernel_size=layer.kernel_size,
+            stride=layer.stride, padding=layer.padding, dilation=layer.dilation,
+            bias=False)
 
     # A pointwise convolution that increases the channels from R4 to T
-    last_layer = torch.nn.Conv2d(in_channels = last.shape[1], \
-            out_channels = last.shape[0],
-            kernel_size = 1, \
-            stride = layer.stride,
-            padding = 0,
-            dilation = layer.dilation,
-            bias = True)
+    last_layer = torch.nn.Conv2d(in_channels=last.shape[1], \
+        out_channels=last.shape[0], kernel_size=1, stride=1, \
+        padding=0, dilation=layer.dilation, bias=True)
 
     last_layer.bias.data = layer.bias.data
 
 
-    # Transpose add dimensions to fit into the PyTorch tensors
-    first = first.transpose((1, 0))
-    first_layer.weight.data = torch.from_numpy(np.float32(\
-        np.expand_dims(np.expand_dims(first.copy(), axis=-1), axis=-1)))
-    last_layer.weight.data = torch.from_numpy(np.float32(\
-        np.expand_dims(np.expand_dims(last.copy(), axis=-1), axis=-1)))
-    core_layer.weight.data = torch.from_numpy(np.float32(core.copy()))
+    first_layer.weight.data = \
+        torch.transpose(first, 1, 0).unsqueeze(-1).unsqueeze(-1)
+    last_layer.weight.data = last.unsqueeze(-1).unsqueeze(-1)
+    core_layer.weight.data = core
+
 
     new_layers = [first_layer, core_layer, last_layer]
     return nn.Sequential(*new_layers)
+
 
 ```
 
