@@ -282,7 +282,7 @@ def tucker_decomposition_conv_layer(layer):
 
     # A pointwise convolution that reduces the channels from S to R3
     first_layer = torch.nn.Conv2d(in_channels=first.shape[0], \
-            out_channels=first.shape[1], kernel_size=1, \
+            out_channels=first.shape[1], kernel_size=1,
             stride=1, padding=0, dilation=layer.dilation, bias=False)
 
     # A regular 2D convolution layer with R3 input channels 
