@@ -94,7 +94,7 @@ a {
   /* background-image: linear-gradient(120deg, $header-bg-color-secondary, $header-bg-color); */
   background-image: url("http://www.mk.ru/upload/entities/2017/10/31/articles/detailPicture/77/8f/c8/a5/d4a5245a710c9fa0ac5a340e1fbeb8a2.jpg");
 
-  background-repeat: no-repeat,
+  background-repeat: no-repeat;
 
 
   @include large {
