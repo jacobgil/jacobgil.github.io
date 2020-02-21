@@ -131,8 +131,9 @@ Lets look at a few *classic* uncertainty acquisition functions. We will cover so
 
 1. Entropy $$ H(p) = -\sum p_i Log_2(p_i) $$
    
-   H( [0.5, 0.5] ) = 1.0
-   H( [1.0, 0.0] ) = 0.0
+   $$ H( [0.5, 0.5] ) $$ = 1.0
+
+   $$ H( [1.0, 0.0] ) $$ = 0.0
 
    This is probably the most important example to understand.
    The idea is that when the model output is the same for all the categories, it is completely confused between the categories.
@@ -210,10 +211,13 @@ If we apply dropout many times and sum the results, we're doing Monte Carlo inte
 Lets break this into steps:
 
 1. $$ p(y=c|x) = \int p(y=c|x,\omega)p(w)dw $$
+
 We have a Bayesian neural network and an input image x. To get the output for the category c, we're going over all the possible weight configurations, weighting every configuration by its probability.
 2. $$ \approx \int p(y=c|x,\omega)*q^*(w)dw $$
+    
     We don't know the actual real parameter distribution, but we can approximate them assuming they belong to the Bernoulli distribution. We can simulate the Bernoulli distribution, simply by using Dropout.
 3. $$ \approx \frac{1}{T}\sum_t p(y|x,\omega_t) = \frac{1}{T}\sum_t p^t_c $$
+    
     To further approximate, we apply Monte Carlo integration, by running the network with dropout many times, and summing the results.
     As T gets larger, the approximation will get better.
 
@@ -225,7 +229,9 @@ This gives us a simple recipe: to approximate the output probability for every c
 ### Plugging MC Dropout into the Entropy acquisition function
 
 The Entropy uncertainty acquisition function is $$ \sum_c p(y=c|x)Log(p(y=c|x)) $$
+
 If we plug the approximation for p(y=c|x) from above, we get:
+
 $$ H \approx-\sum_c(\frac{1}{T}\sum_tp_c^t)Log(\frac{1}{T}\sum_tp_c^t) $$
 
 We need to run the network multiple time with dropout, average the outputs, and take the entropy.
@@ -440,9 +446,11 @@ Since K-means can be slow, they pre-filter the unlabeled images to keep the top 
 
 
 
-This is really similar in nature to the previous paper, and in my opinion also to Core Sets, but is worth mentioning since it's just so cool..
+This is really similar in nature to the previous paper, and in my opinion also to Core Sets, but has a unique twist.
 
-- For uncertainty sampling, instead of using the model output like is usually done, they compute the gradient of predicted category, with respect to the parameters of the last layer. There are many parameters, so the gradient is a vector. They call these ***gradient embeddings***.
+- For uncertainty sampling, instead of using the model output like is usually done, they compute the gradient of the predicted category, with respect to the parameters of the last layer. There are many parameters, so the gradient is a vector. 
+
+  They call these.. *drums roll.* ***gradient embeddings***.
 
   The rational here is that when the gradient norm is large, the parameters need to change a lot to more confident about the category.
   But this also gives us an embedding we can **cluster** to chose diverse points.
@@ -453,8 +461,11 @@ What's K-means++? From [Wikipedia](https://en.wikipedia.org/wiki/K-means%2B%2B):
 
 ```
 1. Choose one center uniformly at random from among the data points.
-2. For each data point x, compute D(x), the distance between x and the nearest center that has already been chosen.
-3. Choose one new data point at random as a new center, using a weighted probability distribution where a point x is chosen with probability proportional to D(x)^2.
+2. For each data point x, compute D(x), the distance between x and the nearest 
+center that has already been chosen.
+3. Choose one new data point at random as a new center, 
+using a weighted probability distribution where a point x is chosen
+with probability proportional to D(x)^2.
 4. Repeat Steps 2 and 3 until k centers have been chosen.
 ```
 
@@ -467,7 +478,7 @@ In Core-Sets, the embeddings were features from one of the last layers. In this 
 
 Thanks for reading. We went over active learning methods for Deep Learning. 
 
-These methods are really creative, so it was a joy to write.
+These methods are really creative, and it was a joy to write.
 
 We were focusing on images, but these methods can be used for other domains like text.
 
