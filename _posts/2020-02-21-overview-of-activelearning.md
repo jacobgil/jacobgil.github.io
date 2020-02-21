@@ -28,7 +28,7 @@ excerpt: "Overview of different Active Learning algorithms for Deep Learning."
   * [Batch aware methods](#batch-aware-methods)
     + [Active Learning for Convolutional Neural Networks: A Core-Set Approach *(an example of Diversity sampling)*](#active-learning-for-convolutional-neural-networks--a-core-set-approach---an-example-of-diversity-sampling--)
     + [BatchBALD *(an example of combining Uncertainty and Diversity Sampling)*](#batchbald---an-example-of-combining-uncertainty-and-diversity-sampling--)
-    + [Diverse mini-batch Active Learning *(an example of combing Uncertainty and Diversity Sampling)*](#diverse-mini-batch-active-learning---an-example-of-combing-uncertainty-and-diversity-sampling--)
+    + [Diverse mini-batch Active Learning *(an example of combining Uncertainty and Diversity Sampling)*](#diverse-mini-batch-active-learning---an-example-of-combining-uncertainty-and-diversity-sampling--)
     + [Deep Batch Active Learning by Diverse, Uncertain Gradient Lower Bounds *(an example of combining Uncertainty and Diversity Sampling)*](#deep-batch-active-learning-by-diverse--uncertain-gradient-lower-bounds---an-example-of-combining-uncertainty-and-diversity-sampling--)
 - [Summary](#summary)
 
@@ -422,7 +422,7 @@ $$ H(y_1,...,y_B | x_1,...,x_B, D_{train}) $$
 involves quite a bit of math and details, so refer to the paper for the details.
 
 
-### Diverse mini-batch Active Learning *(an example of combing Uncertainty and Diversity Sampling)*
+### Diverse mini-batch Active Learning *(an example of combining Uncertainty and Diversity Sampling)*
 
 Paper: https://arxiv.org/abs/1901.05954
 
