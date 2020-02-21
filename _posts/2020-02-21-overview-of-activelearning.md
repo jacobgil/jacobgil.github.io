@@ -233,7 +233,7 @@ This gives us a simple recipe: to approximate the output probability for every c
 
   $$ \sum_c p(y=c|x)Log(p(y=c|x)) $$
 
-- If we plug the approximation for $$p(y=c|x)$$ from above, we get:
+- If we plug the approximation from above, we get:
 
   $$ H \approx-\sum_c(\frac{1}{T}\sum_tp_c^t)Log(\frac{1}{T}\sum_tp_c^t) $$
 
