@@ -216,13 +216,13 @@ We have a Bayesian neural network and an input image x. To get the output for th
 2. $$ \approx \int p(y=c|x,\omega)*q^*(w)dw $$
     
     We don't know the actual real parameter distribution, but we can approximate them assuming they belong to the Bernoulli distribution. We can simulate the Bernoulli distribution, simply by using Dropout.
+
 3. $$ \approx \frac{1}{T}\sum_t p(y|x,\omega_t) = \frac{1}{T}\sum_t p^t_c $$
     
     To further approximate, we apply Monte Carlo integration, by running the network with dropout many times, and summing the results.
     As T gets larger, the approximation will get better.
 
 
----
 This gives us a simple recipe: to approximate the output probability for every category $$ p(y=c|x) $$, run the model many times with dropout and taking the average of all the runs.
 
 
