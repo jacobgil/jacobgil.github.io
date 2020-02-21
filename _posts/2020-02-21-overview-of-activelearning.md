@@ -228,14 +228,16 @@ This gives us a simple recipe: to approximate the output probability for every c
 
 ### Plugging MC Dropout into the Entropy acquisition function
 
-The Entropy uncertainty acquisition function is $$ \sum_c p(y=c|x)Log(p(y=c|x)) $$
+The Entropy uncertainty acquisition function is:
+
+$$ \sum_c p(y=c|x)Log(p(y=c|x)) $$
 
 If we plug the approximation for p(y=c|x) from above, we get:
 
 $$ H \approx-\sum_c(\frac{1}{T}\sum_tp_c^t)Log(\frac{1}{T}\sum_tp_c^t) $$
 
-We need to run the network multiple time with dropout, average the outputs, and take the entropy.
 
+We need to run the network multiple time with dropout, average the outputs, and take the entropy.
 
 
 Lets see how this measure behaves in two important cases that achieve a high **H**:
