@@ -222,19 +222,20 @@ We have a Bayesian neural network and an input image x. To get the output for th
     To further approximate, we apply Monte Carlo integration, by running the network with dropout many times, and summing the results.
     As T gets larger, the approximation will get better.
 
+---
 
 This gives us a simple recipe: to approximate the output probability for every category $$ p(y=c|x) $$, run the model many times with dropout and taking the average of all the runs.
 
 
 ### Plugging MC Dropout into the Entropy acquisition function
 
-The Entropy uncertainty acquisition function is:
+- The Entropy uncertainty acquisition function is:
 
-$$ \sum_c p(y=c|x)Log(p(y=c|x)) $$
+  $$ \sum_c p(y=c|x)Log(p(y=c|x)) $$
 
-If we plug the approximation for p(y=c|x) from above, we get:
+- If we plug the approximation for p(y=c|x) from above, we get:
 
-$$ H \approx-\sum_c(\frac{1}{T}\sum_tp_c^t)Log(\frac{1}{T}\sum_tp_c^t) $$
+  $$ H \approx-\sum_c(\frac{1}{T}\sum_tp_c^t)Log(\frac{1}{T}\sum_tp_c^t) $$
 
 
 We need to run the network multiple time with dropout, average the outputs, and take the entropy.
