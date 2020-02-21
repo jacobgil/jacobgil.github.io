@@ -9,7 +9,10 @@ permalink: /about/
 
 My name is Jacob Gildenblat.
 
-I'm a Computer Vision and Deep Learning developer from Israel.
+I'm a Deep Learning and Computer Vision developer from Israel.
+
+Currently i'm the Co-Founder and CTO of DeePathology.ai, developing AI for digital pathology.
+
 
 Apart from what I write about here, I have other open source projects on my [github](http://github.com/jacobgil).
 
