@@ -46,7 +46,7 @@ But getting useful annotated datasets is difficult. Really difficult. It can be 
 
 I think that being able to build practical machine learning systems is a lot about tools to annotate data, and that a lot of the future innovation in building systems that solve real problems will be about being able to annotate high quality datasets quickly.
 
-Active Learning is a great building block for this, and is under utilized.
+Active Learning is a great building block for this, and is under utilized in my opinion.
 
 
 In this post I will give a short introduction to Classical Active Learning, and then go over several papers that focus on Active Learning for Deep Learning.
@@ -76,7 +76,7 @@ Exploit the unannotated data to get better feature representations and improve t
 
 ![graph](../assets/graph.png){:height="300" width="500"}
 
-*image from https://arxiv.org/abs/1703.02910*
+*Image from https://arxiv.org/abs/1703.02910*
 
 The image above is a typical image in a paper about active learning. 
 The x axis is the size of the dataset. The y axis is accuracy on the test set.
@@ -130,14 +130,15 @@ Let's look a few examples.
 Lets look at a few *classic* uncertainty acquisition functions. We will cover some more when we get to the deep learning methods.
 
 1. Entropy $$ H(p) = -\sum p_i Log_2(p_i) $$
+   
    H( [0.5, 0.5] ) = 1.0
    H( [1.0, 0.0] ) = 0.0
 
-   This is probably the most important example to understand. 
+   This is probably the most important example to understand.
    The idea is that when the model output is the same for all the categories, it is completely confused between the categories.
 
    The rank will be highest in this case, because the entropy function is maximized the all it's inputs are equal, so we will select the image.
-   $$H$$ will grow as the probabilities p tend to be more uniform, and will shrink when fewer of the categories tend to get higher values.
+   $$ H $$ will grow as the probabilities p tend to be more uniform, and will shrink when fewer of the categories tend to get higher values.
 
 2. Variation Ratio: $$ 1-max(p) $$
 
@@ -182,11 +183,12 @@ Now lets cover a few papers about Active Learning for Deep Learning.
 
 The paper: [https://arxiv.org/abs/1703.02910](https://arxiv.org/abs/1703.02910)
 
-In my opinion this is the currently the most important paper about active learning for deep learning.
+In my opinion this is the currently the most important paper about active learning for deep learning, so we are going to cover this in detail.
 
 The idea is that Bayesian neural networks give better uncertainty measures.
 
 In a Bayesian neural network, every parameter in the model is sampled from a distribution. Then, when doing inference, we need to integrate over all the possible parameters. So we're using an ensemble of infinite different networks to compute the output.
+---
 
 An uncertainty measure from a single network might be flawed (maybe it's over confident in the output), but the ideas is that going over many networks is going to improve that. 
 
@@ -197,11 +199,10 @@ It's intractable to integrate over all possible parameter values in the distribu
 
 
 ### Monte Carlo dropout
-Lets go over this in detail, because this will be useful for more uncertainty measures as well.
 
 With Monte Carlo dropout, the idea is that we will simulate a case where every neuron output has a Bernoulli prior, multiplied by some value M (the actual value of that neuron output). 
 
-So a parameter $$i$$ is going to be 0 with some probability p, and $$M_i$$ otherwise.
+So a parameter $$ i $$ is going to be 0 with some probability p, and $$ M_i $$ otherwise.
 
 Now we can sample from the neuron priors by running the network and applying dropout at test time.
 If we apply dropout many times and sum the results, we're doing Monte Carlo integration.
@@ -301,7 +302,8 @@ Instead, in this paper they suggest comparing the predicted losses between image
 
 - Every batch of size B is split into B/2 pairs of images.
 - In every pair, the loss is predicted for both images.
-- The two losses are compared with a hinge loss, requiring that the two losses should have a distance of at least $$\xi$$  between them.![rank](../assets/loss2.png)
+- The two losses are compared with a hinge loss, requiring that the two losses should have a distance of at least $$ \xi $$  between them.
+![rank](../assets/loss2.png)
 
 
 
@@ -399,11 +401,11 @@ If we select the batch images one by one, we will select a, a' and b, since they
 
 a' is redundant since it already exists in the batch.
 
-With BatchBald, we don't select a', since it won't contribute anything to the total mutual information:
+BatchBald won't select a', since it doesn't contribute anything to the total mutual information:
 
 $$ I(a,b,a) = I(a, b) $$
-This encourages adding informative images that are different from the rest of the images in the batch.
 
+This encourages adding informative images that are different from the rest of the images in the batch.
 
 
 Approximating $$ H(y_1,...,y_B | x_1,...,x_B, D_{train}) $$ is not trivial, so refer to the paper for more implementation details.
