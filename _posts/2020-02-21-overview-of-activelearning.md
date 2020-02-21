@@ -188,6 +188,7 @@ In my opinion this is the currently the most important paper about active learni
 The idea is that Bayesian neural networks give better uncertainty measures.
 
 In a Bayesian neural network, every parameter in the model is sampled from a distribution. Then, when doing inference, we need to integrate over all the possible parameters. So we're using an ensemble of infinite different networks to compute the output.
+
 ---
 
 An uncertainty measure from a single network might be flawed (maybe it's over confident in the output), but the ideas is that going over many networks is going to improve that. 
