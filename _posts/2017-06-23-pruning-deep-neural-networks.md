@@ -8,7 +8,7 @@ permalink: deeplearning/pruning-deep-learning
 
 
 [My PyTorch implementation](https://github.com/jacobgil/pytorch-pruning) of [\[1611.06440 Pruning Convolutional Neural Networks for Resource Efficient Inference\]](https://arxiv.org/abs/1611.06440).
-
+<!--more-->
 TL;DR: By using pruning a VGG-16 based Dogs-vs-Cats classifier is made x3 faster and x4 smaller.
 
 ----------

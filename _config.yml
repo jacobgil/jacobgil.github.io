@@ -13,10 +13,10 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Jacob's Computer Vision and Machine Learning blog
+title: Jacob Gildenblat
 email: jacob.gildenblat@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Jacob Gildenblat's Computer Vision and Machine Learning blog.
+  Personal tech blog about Deep Learning, Machine Learning and Computer Vision.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://jacobgil.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter:
@@ -40,3 +40,5 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
+
+excerpt_separator: <!--more-->  # you can specify your own separator, of course.

@@ -9,6 +9,8 @@ permalink: deeplearning/tensor-decompositions-deep-learning
 
 [Notebook contributed to TensorLy.](https://github.com/JeanKossaifi/tensorly-notebooks/blob/master/05_pytorch_backend/cnn_acceleration_tensorly_and_pytorch.ipynb)
 
+<!--more-->
+
 {% include katex.html %}
 
 

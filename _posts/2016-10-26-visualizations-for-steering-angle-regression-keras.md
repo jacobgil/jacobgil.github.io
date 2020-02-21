@@ -6,7 +6,7 @@ permalink: deeplearning/vehicle-steering-angle-visualizations
 ---
 
 ![grad-cam](https://github.com/jacobgil/keras-steering-angle-visualizations/blob/master/examples/18123_cam.jpg?raw=true)
-
+<!--more-->
 *Pixels that contribute to steering right, using the grad-cam method described below*
 
 {% include youtubePlayer.html id="w6XHI1oIbOQ" %}
