@@ -5,7 +5,7 @@ date:   2016-06-10 22:10:33 +0200
 permalink: deeplearning/tensorflow-cpp
 
 ---
-
+<!--more-->
 If you are unfamiliar with bazel, then there are some quirks in getting TensorFlow to work with OpenCV, optimizations turned on, and with building shared libraries.
 
 Creating a binary compiled against Tensorflow with bazel

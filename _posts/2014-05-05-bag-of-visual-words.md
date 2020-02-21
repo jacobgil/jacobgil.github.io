@@ -4,7 +4,7 @@ title:  "Bag of visual words for image classification"
 date:   2014-05-05 22:10:33 +0200
 permalink: machinelearning/bag-of-words
 ---
-
+<!--more-->
 [Github repository](https://github.com/jacobgil/BagOfVisualWords)
 
 I wanted to play around with Bag Of Words for visual classification, so I coded a Matlab implementation that uses VLFEAT for the features and clustering.

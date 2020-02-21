@@ -6,8 +6,8 @@ permalink: deeplearning/class-activation-maps
 ---
 
 [Github project for class activation maps](https://github.com/jacobgil/keras-cam)
-
 [Github repo for gradient based class activation maps](https://github.com/jacobgil/keras-grad-cam)
+<!--more-->
 
 [Class activation maps](http://cnnlocalization.csail.mit.edu) are a simple technique to get the discriminative image regions used by a CNN to identify a specific class in the image.
 In other words, a class activation map (CAM) lets us see which regions in the image were relevant to this class.

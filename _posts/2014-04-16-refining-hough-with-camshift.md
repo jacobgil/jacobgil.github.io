@@ -4,7 +4,7 @@ title:  "Refining the Hough Transform with CAMSHIFT"
 date:   2014-05-05 22:10:33 +0200
 categories: MachineLearning
 ---
-
+<!--more-->
 The Circular Hough Transform result is often not very accurate due to noise\details\occlusions.  
 
 Typical ways of dealing with this are:  

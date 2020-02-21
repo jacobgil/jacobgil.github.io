@@ -4,7 +4,7 @@ title:  "Image Fisher Vectors In Python"
 date:   2014-12-05 22:10:33 +0200
 permalink: machinelearning/fisher-vectors-python
 ---
-
+<!--more-->
 Although the state of the art in image classification (while writing this post) is deep learning,
 Bag of words approaches still perform well on many image datasets.
 

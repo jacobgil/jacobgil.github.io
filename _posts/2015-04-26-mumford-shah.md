@@ -5,8 +5,8 @@ date:   2015-04-26 22:10:33 +0200
 permalink: computervision/mumford-shah
 ---
 
-[Try out my python implementation](https://github.com/jacobgil/Ambrosio-Tortorelli-Minimizer) for minimizing the Mumford Shah functional.  
-
+[My python implementation](https://github.com/jacobgil/Ambrosio-Tortorelli-Minimizer) for minimizing the Mumford Shah functional.  
+<!--more-->
 {% highlight python %}
     import cv2
     from AmbrosioTortorelliMinimizer import *

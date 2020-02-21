@@ -5,7 +5,8 @@ date:   2016-03-23 22:10:33 +0200
 permalink: deeplearning/filter-visualizations
 ---
 
-[Here](https://github.com/jacobgil/keras-filter-visualization) is a utility I made for visualizing filters with Keras, using a few regularizations for more natural outputs.  
+[Here](https://github.com/jacobgil/keras-filter-visualization) is a utility I made for visualizing filters with Keras, using a few regularizations for more natural outputs.
+<!--more-->
 You can use it to visualize filters, and inspect the filters as they are computed.
 
 By default the utility uses the VGG16 model, but you can change that to something else.  

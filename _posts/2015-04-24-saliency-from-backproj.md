@@ -6,7 +6,7 @@ permalink: computervision/saliency-from-backproj
 ---
 
 [Github repository](https://github.com/jacobgil/saliency-from-backproj)  
-
+<!--more-->
 Image saliency detection is about identifying the interesting parts of an image, the parts of the image human eyes would fix on.  
 
 ![enter image description here](https://raw.githubusercontent.com/jacobgil/saliency-from-backproj/master/images/flower_original.jpg) ![enter image description here](https://raw.githubusercontent.com/jacobgil/saliency-from-backproj/master/images/flower_original_result.jpg)  
