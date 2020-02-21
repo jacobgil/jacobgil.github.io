@@ -1,11 +1,11 @@
 ---
 layout: post
 title:  "Overview of Active Learning for Deep Learning"
-date:   2019-10-29 22:10:33 +0200
+date:   2020-02-21 22:10:33 +0200
 permalink: deeplearning/activelearning
 tags: [Active Learning, Deep Learning]
 categories: [deep-learning]
-excerpt: "Overview of different algorithm for Active Learning for Deep Learning."
+excerpt: "Overview of different Active Learning algorithms for Deep Learning."
 
 ---
 {% include katex.html %}
