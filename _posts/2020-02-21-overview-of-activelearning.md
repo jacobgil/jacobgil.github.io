@@ -316,7 +316,7 @@ Then during the active learning rounds, you select the images with the highest l
 
 ![](../assets/holes.png)
 
-*image taken from https://arxiv.org/abs/1811.03897*
+*Image from https://arxiv.org/abs/1811.03897*
 
 
 
@@ -404,12 +404,16 @@ a' is redundant since it already exists in the batch.
 
 BatchBald won't select a', since it doesn't contribute anything to the total mutual information:
 
-$$ I(a,b,a) = I(a, b) $$
+$$ I(a,b,a') = I(a, b) $$
+
+
 
 This encourages adding informative images that are different from the rest of the images in the batch.
 
 
-Approximating $$ H(y_1,...,y_B | x_1,...,x_B, D_{train}) $$ is not trivial, so refer to the paper for more implementation details.
+Approximating 
+$$ H(y_1,...,y_B | x_1,...,x_B, D_{train}) $$ 
+is not trivial, so refer to the paper for more implementation details.
 
 
 ### Diverse mini-batch Active Learning *(an example of combing Uncertainty and Diversity Sampling)*
