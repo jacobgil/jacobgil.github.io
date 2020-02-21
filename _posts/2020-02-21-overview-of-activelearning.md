@@ -413,7 +413,7 @@ This encourages adding informative images that are different from the rest of th
 
 Approximating 
 $$ H(y_1,...,y_B | x_1,...,x_B, D_{train}) $$ 
-is not trivial, so refer to the paper for more implementation details.
+involves quite a bit of math and details, so refer to the paper for the details.
 
 
 ### Diverse mini-batch Active Learning *(an example of combing Uncertainty and Diversity Sampling)*
