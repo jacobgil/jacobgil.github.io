@@ -19,17 +19,17 @@ excerpt: "Overview of different Active Learning algorithms for Deep Learning."
   * [Acquisition functions for uncertainty sampling - examples](#acquisition-functions-for-uncertainty-sampling---examples)
   * [Query by committee QBC](#query-by-committee-qbc)
 - [Active Learning for Deep Learning](#active-learning-for-deep-learning)
-  * [Deep Bayesian Active Learning with Image Data *(an example of Uncertainty Sampling)*](#deep-bayesian-active-learning-with-image-data---an-example-of-uncertainty-sampling--)
+  * [Deep Bayesian Active Learning with Image Data](#deep-bayesian-active-learning-with-image-data)
     + [Monte Carlo dropout](#monte-carlo-dropout)
     + [Plugging MC Dropout into the Entropy acquisition function](#plugging-mc-dropout-into-the-entropy-acquisition-function)
-  * [Bayesian Active Learning by Disagreement BALD *(an example of Uncertainty Sampling)*](#bayesian-active-learning-by-disagreement-bald---an-example-of-uncertainty-sampling--)
-  * [Learning Loss for Active Learning *(an example of Uncertainty Sampling)*](#learning-loss-for-active-learning---an-example-of-uncertainty-sampling--)
+    + [Bayesian Active Learning by Disagreement BALD](#bayesian-active-learning-by-disagreement-bald)
+  * [Learning Loss for Active Learning](#learning-loss-for-active-learning)
   * [Mode collapse in active learning](#mode-collapse-in-active-learning)
   * [Batch aware methods](#batch-aware-methods)
-    + [Active Learning for Convolutional Neural Networks: A Core-Set Approach *(an example of Diversity sampling)*](#active-learning-for-convolutional-neural-networks--a-core-set-approach---an-example-of-diversity-sampling--)
-    + [BatchBALD *(an example of combining Uncertainty and Diversity Sampling)*](#batchbald---an-example-of-combining-uncertainty-and-diversity-sampling--)
-    + [Diverse mini-batch Active Learning *(an example of combining Uncertainty and Diversity Sampling)*](#diverse-mini-batch-active-learning---an-example-of-combining-uncertainty-and-diversity-sampling--)
-    + [Deep Batch Active Learning by Diverse, Uncertain Gradient Lower Bounds *(an example of combining Uncertainty and Diversity Sampling)*](#deep-batch-active-learning-by-diverse--uncertain-gradient-lower-bounds---an-example-of-combining-uncertainty-and-diversity-sampling--)
+    + [Active Learning for Convolutional Neural Networks: A Core-Set Approach](#active-learning-for-convolutional-neural-networks--a-core-set-approach)
+    + [BatchBALD](#batchbald)
+    + [Diverse mini-batch Active Learning](#diverse-mini-batch-active-learning)
+    + [Deep Batch Active Learning by Diverse, Uncertain Gradient Lower Bounds](#deep-batch-active-learning-by-diverse--uncertain-gradient-lower-bounds)
 - [Summary](#summary)
 
 
@@ -180,7 +180,7 @@ Now lets cover a few papers about Active Learning for Deep Learning.
 
 
 
-## Deep Bayesian Active Learning with Image Data *(an example of Uncertainty Sampling)*
+## Deep Bayesian Active Learning with Image Data
 
 The paper: [https://arxiv.org/abs/1703.02910](https://arxiv.org/abs/1703.02910)
 
@@ -228,6 +228,7 @@ This gives us a simple recipe: to approximate the output probability for every c
 
 
 ### Plugging MC Dropout into the Entropy acquisition function
+***An example of Uncertainty Sampling***
 
 - The Entropy uncertainty acquisition function is:
 
@@ -261,7 +262,8 @@ Lets see how this measure behaves in two important cases that achieve a high **H
 
 This leads us to a modification that handles the second case:
 
-## Bayesian Active Learning by Disagreement BALD *(an example of Uncertainty Sampling)*
+### Bayesian Active Learning by Disagreement BALD
+***An example of Uncertainty Sampling***
 
 In Uncertainty sampling, the ultimate goal would be to find images the model is wrong about.
 
@@ -289,8 +291,9 @@ To get the first term, we make many runs, average the output, and measure the en
 To get the second term, we make many runs, measure the entropy of every run, and take the average.
 
 
+## Learning Loss for Active Learning
+***An example of Uncertainty Sampling***
 
-## Learning Loss for Active Learning *(an example of Uncertainty Sampling)*
 The paper: https://arxiv.org/abs/1905.03677
 
 The main idea here is to try to predict what would be the loss of the learning algorithm for a given input.
@@ -365,7 +368,8 @@ Next we are going to go over a few "batch aware" methods, that try to select a g
 
 
 
-### Active Learning for Convolutional Neural Networks: A Core-Set Approach *(an example of Diversity sampling)*
+### Active Learning for Convolutional Neural Networks: A Core-Set Approach
+***An example of Diversity sampling***
 
 The paper: https://arxiv.org/abs/1708.00489
 
@@ -390,7 +394,9 @@ For images they use the Euclidian distance between feature vectors extracted fro
 
 
 
-### BatchBALD *(an example of combining Uncertainty and Diversity Sampling)*
+### BatchBALD
+***An example of combining Uncertainty and Diversity Sampling***
+
 - The paper: https://arxiv.org/abs/1906.08158
 - The authors blog post on this: https://oatml.cs.ox.ac.uk/blog/2019/06/24/batchbald.html
 
@@ -424,7 +430,8 @@ $$ H(y_1,...,y_B | x_1,...,x_B, D_{train}) $$
 involves quite a bit of math and details, so refer to the paper for the details.
 
 
-### Diverse mini-batch Active Learning *(an example of combining Uncertainty and Diversity Sampling)*
+### Diverse mini-batch Active Learning
+***An example of combining Uncertainty and Diversity Sampling***
 
 Paper: https://arxiv.org/abs/1901.05954
 
@@ -444,8 +451,8 @@ Since K-means can be slow, they pre-filter the unlabeled images to keep the top 
 
 
 
-### Deep Batch Active Learning by Diverse, Uncertain Gradient Lower Bounds *(an example of combining Uncertainty and Diversity Sampling)*
-
+### Deep Batch Active Learning by Diverse, Uncertain Gradient Lower Bounds
+***An example of combining Uncertainty and Diversity Sampling ***
 
 
 This is really similar in nature to the previous paper, and in my opinion also to Core Sets, but has a unique twist.
