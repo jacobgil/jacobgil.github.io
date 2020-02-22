@@ -81,7 +81,7 @@ Exploit the unannotated data to get better feature representations and improve t
 The image above is a typical image in a paper about active learning. 
 The x axis is the size of the dataset. The y axis is accuracy on the test set.
 
-A good active learning algorithm is able to cleverly select that data we are going to annotate, so that when we train on it our model will be better compared to training on other data.
+A good active learning algorithm is able to cleverly select that data we are going to annotate, so that when we train on it, our model will be better than if we trained on other data.
 
 So if for example we have the constraint of being able to annotate only 400 images, the goal of active learning will be to select the best 400 images to annotate.
 
@@ -192,7 +192,7 @@ In a Bayesian neural network, every parameter in the model is sampled from a dis
 
 ---
 
-An uncertainty measure from a single network might be flawed (maybe it's over confident in the output), but the ideas is that going over many networks is going to improve that. 
+An uncertainty measure from a single network might be flawed (maybe it's over confident in the output), but the idea is that going over many networks is going to improve that. 
 
 Intuitively, if most models agree about one of the categories, the ensembled network will have high confidence for that category. If they disagree, we will get large outputs for several of the categories.
 
@@ -265,10 +265,9 @@ This leads us to a modification that handles the second case:
 
 In Uncertainty sampling, the ultimate goal would be to find images the model is wrong about.
 
-We can't do that since we don't know the labels. So the idea in BALD is to instead find examples were many of the different sampled networks are wrong about.
+We can't do that since we don't know the labels. So the idea in BALD is to instead find examples for which many of the different sampled networks are wrong about.
 
-If we sample many networks, using MC Dropout, and they disagree about the output, this means that some of them are wrong.
-
+If we sample many networks using MC Dropout, and they disagree about the output, this means that some of them are wrong.
 
 
 Lets get to the math.  The objective is to find the image that maximizes the mutual information between the model output, and the model parameters.
@@ -276,8 +275,8 @@ Lets get to the math.  The objective is to find the image that maximizes the mut
 $$ I(y; \omega | x, D_{train}) = H(y | x, D_{train}) - E_{p(\omega|D_{train})} [H(y|x, \omega, D_{train})] $$  
 
 - The first term looks for images that have high entropy in the average output.
-- The second term penalizes images were many of the sampled models are not confident about.
-  This keeps only images were the models **disagree** on.
+- The second term penalizes images where many of the sampled models are not confident about.
+  This keeps only images where the models **disagree** on.
 
 
 
@@ -351,7 +350,7 @@ This leads us to the next part about "Batch aware" methods, where we will see so
 
 Most of the active learning works selects a single image, at every active learning round.
 
-However for expensive/data hungry methods like Deep Learning we need to select a batch with many images at every round. After all, we're going to train on the entire new dataset and not just only on the new images, so we can't afford to train again every time a new image is added to the dataset.
+However for expensive/data hungry methods like Deep Learning we need to select a batch with many images at every round. After all, we're going to train on the entire new dataset and not just only on the new images, so we can't afford to train again every time a single new image is added to the dataset.
 
 
 
@@ -453,10 +452,14 @@ This is really similar in nature to the previous paper, and in my opinion also t
 
 - For uncertainty sampling, instead of using the model output like is usually done, they compute the gradient of the predicted category, with respect to the parameters of the last layer. There are many parameters, so the gradient is a vector. 
 
-  They call these.. *drums roll.* ***gradient embeddings***.
+  They call these.. *drums roll..*  ***gradient embeddings***.
 
-  The rational here is that when the gradient norm is large, the parameters need to change a lot to more confident about the category.
+  The rational here is that when the gradient norm is large, the parameters need to change a lot to be more confident about the category.
+
+  They give the rational that it's more natural to use gradients as uncertainty measures in neural networks, since gradients are used to train the network.
+
   But this also gives us an embedding we can **cluster** to chose diverse points.
+  So it kills two birds with one stone: a way to choose uncertain images, and a way to chose diverse images.
 
 - They then proceed to cluster the embeddings to chose diverse points. Instead of using K-means to choose the batch points, they use a K-means initialization algorithm called K-means++, which is much faster to compute.
 
@@ -464,11 +467,10 @@ What's K-means++? From [Wikipedia](https://en.wikipedia.org/wiki/K-means%2B%2B):
 
 ```
 1. Choose one center uniformly at random from among the data points.
-2. For each data point x, compute D(x), the distance between x and the nearest 
-center that has already been chosen.
-3. Choose one new data point at random as a new center, 
-using a weighted probability distribution where a point x is chosen
-with probability proportional to D(x)^2.
+2. For each data point x, compute D(x), the distance between x and the nearest center that 
+has already been chosen.
+3. Choose one new data point at random as a new center, using a weighted 
+probability distribution where a point x is chosen with probability proportional to D(x)^2.
 4. Repeat Steps 2 and 3 until k centers have been chosen.
 ```
 
@@ -480,10 +482,6 @@ In Core-Sets, the embeddings were features from one of the last layers. In this 
 # Summary
 
 Thanks for reading. We went over active learning methods for Deep Learning. 
-
 These methods are really creative, and it was a joy to write.
-
 We were focusing on images, but these methods can be used for other domains like text.
-
-
 I hope this will do some help to demystify active learning for Deep Learning.
