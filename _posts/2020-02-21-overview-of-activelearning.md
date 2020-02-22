@@ -452,7 +452,7 @@ Since K-means can be slow, they pre-filter the unlabeled images to keep the top 
 
 
 ### Deep Batch Active Learning by Diverse, Uncertain Gradient Lower Bounds
-***An example of combining Uncertainty and Diversity Sampling ***
+***An example of combining Uncertainty and Diversity Sampling***
 
 
 This is really similar in nature to the previous paper, and in my opinion also to Core Sets, but has a unique twist.
