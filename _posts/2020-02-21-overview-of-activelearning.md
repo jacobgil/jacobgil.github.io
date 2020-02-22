@@ -488,7 +488,10 @@ In Core-Sets, the embeddings were features from one of the last layers. In this 
 
 # Summary
 
-Thanks for reading. We went over active learning methods for Deep Learning. 
+Thanks for reading. We went over active learning methods for Deep Learning.
+
 These methods are really creative, and it was a joy to write.
+
 We were focusing on images, but these methods can be used for other domains like text.
+
 I hope this will do some help to demystify active learning for Deep Learning.
