@@ -3,6 +3,10 @@ layout: page
 title: Papers
 ---
 
+-- [Certainty Pooling for Multiple Instance Learning](https://arxiv.org/abs/2008.10548)
+
+	*2020 Jacob Gildenblat, Ido Ben-Shaul, Zvi Lapp, Eldad Klaiman*
+
 - [Self-Supervised Similarity Learning for Digital Pathology](https://arxiv.org/abs/1905.08139)
 	
 	*2019 Jacob Gildenblat, Eldad Klaiman*

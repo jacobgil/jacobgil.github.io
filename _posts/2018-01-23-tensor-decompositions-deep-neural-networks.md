@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Accelerating deep neural networks with tensor decompositions"
+title:  "Accelerating Deep Neural Networks with Tensor Decompositions"
 date:   2018-01-23 20:10:33 +0200
 permalink: deeplearning/tensor-decompositions-deep-learning
 ---
