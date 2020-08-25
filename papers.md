@@ -3,7 +3,7 @@ layout: page
 title: Papers
 ---
 
--- [Certainty Pooling for Multiple Instance Learning](https://arxiv.org/abs/2008.10548)
+- [Certainty Pooling for Multiple Instance Learning](https://arxiv.org/abs/2008.10548)
 
 	*2020 Jacob Gildenblat, Ido Ben-Shaul, Zvi Lapp, Eldad Klaiman*
 
