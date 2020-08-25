@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Hallucinating faces with Dlib's face detector model in PyTorch"
+title:  "Hallucinating faces with Deep Learning"
 date:   2018-03-31 14:10:33 +0200
 permalink: deeplearning/hallucinating_faces_dlib_pytorch
 ---
@@ -10,7 +10,7 @@ permalink: deeplearning/hallucinating_faces_dlib_pytorch
 
 [Here is the github repository](https://github.com/jacobgil/dlib_facedetector_pytorch) with all the code for this post.
 
-Scroll  to the end if you just want to see images :-)
+Scroll  to the end if you just want to see images.
 
 ---
 
