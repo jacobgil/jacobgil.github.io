@@ -148,7 +148,7 @@ The shape of each of these are - `3x197x64`
 
 
 
-**If for every attention head separately, we look inside the second dimension with 197 tokens, we can peek at the last 14x14=196 tokens. **
+**If for every attention head separately, we look inside the second dimension with 197 tokens, we can peek at the last 14x14=196 tokens.**
 
 
 
@@ -165,7 +165,7 @@ For every image patch with $$ q_i $$, Information is going to flow from location
 
 ![](http://jalammar.github.io/images/t/self-attention-matrix-calculation-2.png)
 
-** image from http://jalammar.github.io/illustrated-transformer **
+*image from http://jalammar.github.io/illustrated-transformer*
 
 
 
