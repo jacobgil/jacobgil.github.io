@@ -84,11 +84,12 @@ They are basically vanilla transformers, but the images are split into 14x14 dif
 Before continuing, you might want to read the two papers given above, and these blog posts about them:
 
 - https://ai.googleblog.com/2020/12/transformers-for-image-recognition-at.html
+
 - https://ai.facebook.com/blog/data-efficient-image-transformers-a-promising-new-technique-for-image-classification
 
+  
 
-
-# # Q, K, V and Attention.
+# Q, K, V and Attention.
 
 
 
