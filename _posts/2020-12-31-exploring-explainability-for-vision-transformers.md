@@ -386,6 +386,16 @@ Finally, here is how it looks like for a few different images:
 
 # Gradient Attention Rollout for Class Specific Explainability
 
+*Edit - it turns out there is another technique out there about this!*
+
+*Apart from what I implemented below, I refer you to Hila Chefer's [Transformer Interpretability Beyond Attention Visualization](https://arxiv.org/pdf/2012.09838v1.pdf) and their [github repo.](https://disq.us/url?url=https%3A%2F%2Fgithub.com%2Fhila-chefer%2FTransformer-Explainability%3ABKmLV7ssfTVusVFB51ifZBGq4ec&cuid=4756419)*
+
+
+
+---
+
+
+
 Another question we can ask is - "What in the image contributes to a higher output score in category 42?"
 
 Or in other words, Class Specific Explainability. 
