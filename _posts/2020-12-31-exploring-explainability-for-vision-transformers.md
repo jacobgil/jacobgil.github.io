@@ -19,7 +19,7 @@ excerpt: "Applying different Explainability techniques on Vision Transformers"
   * [Pattern 2 - The information flows in two directions](#pattern-2---the-information-flows-in-two-directions)
 - [How do the Attention Activations look like for the class token throughout the network?](#how-do-the-attention-activations-look-like-for-the-class-token-throughout-the-network-)
 - [Attention Rollout](#attention-rollout)
-      - [We have multiple attention heads. What do we do about them?](#we-have-multiple-attention-heads-what-do-we-do-about-them-)
+  - [We have multiple attention heads. What do we do about them?](#we-have-multiple-attention-heads-what-do-we-do-about-them-)
 - [Modifications to get Attention Rollout working with Vision Transformers](#modifications-to-get-attention-rollout-working-with-vision-transformers)
   * [The way we fuse the attention heads matters](#the-way-we-fuse-the-attention-heads-matters)
   * [We can focus only on the top attentions, and discard the rest](#we-can-focus-only-on-the-top-attentions--and-discard-the-rest)
