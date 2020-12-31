@@ -56,7 +56,7 @@ But what is going on inside Vision Transformers? How do they even work? Can we p
 
 "Explainability" might be an ambitious and over-loaded term that means different things to different people, but when I say Explainability I mean the next things:
 
-- *(useful for the developer)* **What's going on inside when run the Transformer on this image?** 
+- *(useful for the developer)* **What's going on inside when we run the Transformer on this image?** 
   Being able to look at intermediate activation layers.
   In computer vision - these are usually images!
   These are kind of interpretable since you can display the different channel activations as 2D images.
