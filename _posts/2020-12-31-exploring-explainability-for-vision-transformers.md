@@ -10,6 +10,27 @@ excerpt: "Applying different Explainability techniques on Vision Transformers"
 ---
 {% include katex.html %}
 
+
+
+- [Background](#background)
+- [Q, K, V and Attention.](#q--k--v-and-attention)
+- [Visual Examples of K and Q - different patterns of information flowing](#visual-examples-of-k-and-q---different-patterns-of-information-flowing)
+  * [Pattern 1 - The information flows in one direction](#pattern-1---the-information-flows-in-one-direction)
+  * [Pattern 2 - The information flows in two directions](#pattern-2---the-information-flows-in-two-directions)
+- [How do the Attention Activations look like for the class token throughout the network?](#how-do-the-attention-activations-look-like-for-the-class-token-throughout-the-network-)
+- [Attention Rollout](#attention-rollout)
+      - [We have multiple attention heads. What do we do about them?](#we-have-multiple-attention-heads-what-do-we-do-about-them-)
+- [Modifications to get Attention Rollout working with Vision Transformers](#modifications-to-get-attention-rollout-working-with-vision-transformers)
+  * [The way we fuse the attention heads matters](#the-way-we-fuse-the-attention-heads-matters)
+  * [We can focus only on the top attentions, and discard the rest](#we-can-focus-only-on-the-top-attentions--and-discard-the-rest)
+- [Gradient Attention Rollout for Class Specific Explainability](#gradient-attention-rollout-for-class-specific-explainability)
+  * [Where does the Transformer see a Dog (category 243), and a Cat (category 282)?](#where-does-the-transformer-see-a-dog--category-243---and-a-cat--category-282--)
+  * [Where does the Transformer see a Musket dog (category 161) and a Parrot (category 87)?](#where-does-the-transformer-see-a-musket-dog--category-161--and-a-parrot--category-87--)
+- [What Activation Maximization Tells us](#what-activation-maximization-tells-us)
+- [Summary](#summary)
+
+
+
 # Background
 
 In the last few months before writing this post, there seems to be a sort of a breakthrough in bringing Transformers into the world of Computer Vision.

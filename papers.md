@@ -5,7 +5,7 @@ title: Papers
 
 - [Deep learning for sensitive detection of Helicobacter Pylori in gastric biopsies](https://bmcgastroenterol.biomedcentral.com/articles/10.1186/s12876-020-01494-7)
 
-	*2020 Sebastian Klein, Jacob Gildenblat, Michaele Angelika Ihle, Sabine Merkelbach-Bruse, Ka-Won Noh, Martin Peifer, Alexander Quaas & Reinhard Büttner *
+	*2020 Sebastian Klein, Jacob Gildenblat, Michaele Angelika Ihle, Sabine Merkelbach-Bruse, Ka-Won Noh, Martin Peifer, Alexander Quaas & Reinhard Büttner*
 
 - [Certainty Pooling for Multiple Instance Learning](https://arxiv.org/abs/2008.10548)
 
