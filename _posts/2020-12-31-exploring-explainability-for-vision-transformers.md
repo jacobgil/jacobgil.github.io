@@ -10,10 +10,7 @@ excerpt: "Applying different Explainability techniques on Vision Transformers"
 ---
 {% include katex.html %}
 
-
-
-
-## Background
+# Background
 
 In the last few months before writing this post, there seems to be a sort of a breakthrough in bringing Transformers into the world of Computer Vision.
 
@@ -91,7 +88,7 @@ Before continuing, you might want to read the two papers given above, and these 
 
 
 
-# ## Q, K, V and Attention.
+# # Q, K, V and Attention.
 
 
 
@@ -150,9 +147,7 @@ For every image patch with $$ q_i $$, Information is going to flow from location
 
 
 
-
-
-## Visual Examples of K and Q - different patterns of information flowing
+# Visual Examples of K and Q - different patterns of information flowing
 
 Lets look at an example.
 
@@ -193,7 +188,7 @@ To contrast the negative and positive pixels, we're going to pass every image th
 
 From looking at the Q,K visualizations for different channels I think there are kind of two patterns that emerge.
 
-### Pattern 1 - The information flows in one direction
+## Pattern 1 - The information flows in one direction
 
 **Layer 8, channel 26, first attention head:**
 
@@ -216,8 +211,7 @@ Q, K here are telling us -
 
  `We found an airplane, and we want all the locations in the image to know about this!`
 
-
-### Pattern 2 - The information flows in two directions
+## Pattern 2 - The information flows in two directions
 
 **Layer 11, channel 59, first attention head:**
 
@@ -246,7 +240,7 @@ The information flows in two directions here:
 
 
 
-## How do the Attention Activations look like for the class token throughout the network?
+## # How do the Attention Activations look like for the class token throughout the network?
 
 Another thing we can do is visualize how the attention flows for the class token, in different layers in the network.
 
@@ -278,9 +272,7 @@ Although the attention suddenly discarded parts of the plane (the middle image a
 
 
 
-
-
-## Attention Rollout 
+# Attention Rollout 
 
 The images above show us how individual activations look like, but they don't show us how the attention flows from the start to the end throughout the Transformer.
 
@@ -321,9 +313,7 @@ $$ AttentionRollout_{L} = (A_l + I ) \dot AttentionRollout_{L-1} $$
 
 *We also have to normalize the rows, to keep the total attention flow 1.*
 
-
-
-## Modifications to get Attention Rollout working with Vision Transformers
+# Modifications to get Attention Rollout working with Vision Transformers
 
 I implemented this and ran this on the recent 'Data Efficient' models from Facebook, but the results weren't quite as nice as in the [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929),  paper.
 
@@ -335,7 +325,7 @@ Results were very noisy, and the attention doesn't seem to focus only on the int
 
 Trying to get this to work, I noticed two things:
 
-### The way we fuse the attention heads matters
+## The way we fuse the attention heads matters
 
 For example, here is how the result look if we take minimum value among the attention heads, instead of the mean value as suggested in the Attention Rollout paper:
 
@@ -349,9 +339,7 @@ Different attention heads look at different things, so I guess taking the minimu
 
 However, combined with discarding low attention pixels (next section), fusing the attention heads with the maximum operator seems to work best.
 
-
-
-### We can focus only on the top attentions, and discard the rest
+## We can focus only on the top attentions, and discard the rest
 
 Discarding the lowest attention values has a huge effect in how the results look like.
 
@@ -376,11 +364,7 @@ Finally, here is how it looks like for a few different images:
 
 
 
-
-
-
-
-## Gradient Attention Rollout for Class Specific Explainability
+## # Gradient Attention Rollout for Class Specific Explainability
 
 Another question we can ask is - "What in the image contributes to a higher output score in category 42?"
 
@@ -394,17 +378,17 @@ When fusing the attention heads in every layer, we could just weight all the att
 
 $$ A_{ij} * grad_{ij} $$
 
-#### Where does the Transformer see a Dog (category 243), and a Cat (category 282)?
+## Where does the Transformer see a Dog (category 243), and a Cat (category 282)?
 
 ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/both_grad_rollout_243_0.900_max.png) ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/both_grad_rollout_282_0.900_max.png)
 
-#### Where does the Transformer see a Musket dog (category 161) and a Parrot (category 87)?
+## Where does the Transformer see a Musket dog (category 161) and a Parrot (category 87)?
 
 ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/dogbird_grad_rollout_161_0.900_max.png) ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/dogbird_grad_rollout_87_0.900_max.png)
 
 
 
-## What Activation Maximization Tells us
+## # What Activation Maximization Tells us
 
 Another thing we can do, is apply Activation Maximization, to find the kind of image inputs that maximize different parts in the network.
 
@@ -424,7 +408,7 @@ I guess future work can be about using some kind of a spatial continuity constra
 
 
 
-## Summary
+# Summary
 
 In this post we applied Explainability techniques for Vision Transformers.
 
