@@ -195,11 +195,11 @@ This activation vector is going to be a 14x14 image, with positive and negative 
 **Here is a tricky part:**
 
 For every pixel in K, we can ask "how is that location going to spread information to other parts of the image?"
-Since we take the dot product between the token vectors (every q_i and k_j), there are three scenarios:
+Since we take the dot product between the token vectors (every $$ q_i $$ and $$ k_j $$), there are three scenarios:
 
-- Two different pixels in $$ q_i $$ and  $$ k_j $$ have the same sign (both are positive or negative)- their multiplication is positive.
+- Two tokens $$ q_i $$ and  $$ k_j $$ have the same sign (both are positive or negative)- their multiplication is positive.
   This means that the pixel in $$ k_j $$ is going to contribute to flowing information into that location $$ q_i $$.
-- Two different pixels in $$ q_i $$ and $$ k_j $$ have different signs (one is positive and one is negative)- their multiplication is negative.
+- Two tokens $$ q_i $$ and $$ k_j $$ have different signs (one is positive and one is negative)- their multiplication is negative.
   This means that the pixel in $$ k_j $$ is NOT going to contribute to flowing information into that location in $$ q_i $$.
 
 
