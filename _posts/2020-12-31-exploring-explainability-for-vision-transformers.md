@@ -5,6 +5,8 @@ date:   2020-12-31 22:10:33 +0200
 permalink: deeplearning/vision-transformer-explainability
 tags: [Explainability, Deep Learning]
 categories: [deep-learning]
+excerpt: ""
+
 ---
 {% include katex.html %}
 
