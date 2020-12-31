@@ -131,6 +131,8 @@ The shape of each of these are - `3x197x64`
 
 **If for every attention head separately, we look inside the second dimension with 197 tokens, we can peek at the last 14x14=196 tokens. **
 
+
+
 This gives us an image of size 14x14x64 which we can then visualize.**
 
 
@@ -138,7 +140,7 @@ This gives us an image of size 14x14x64 which we can then visualize.**
 The rows of Q and K, are 64 length feature that represents a location in the image.
 
 We can then think of Q, K and V in the next way:
-For every image patch with $$ q_i $$, Information is going to flow from locations in the image that have keys k_j that are similar to that q_i.
+For every image patch with $$ q_i $$, Information is going to flow from locations in the image that have keys $$ k_j $$ that are similar to that $$ q_i $$.
 
  
 
@@ -168,8 +170,8 @@ This activation vector is going to be a 14x14 image, with positive and negative 
 
 
 
-- $$ q_i $$ is the Query feature vector for one of the locations i (patches) in the image.
-- $$ k_j $$ is the key feature vector for one of the locations j (patches) in the image.
+- $$ q_i $$ is the Query feature vector for one of the locations i in the image.
+- $$ k_j $$ is the key feature vector for one of the locations j in the image.
 
 
 
@@ -180,7 +182,7 @@ Since we take the dot product between the token vectors (every q_i and k_j), the
 
 - Two different pixels in $$ q_i $$ and  $$ k_j $$ have the same sign (both are positive or negative)- their multiplication is positive.
   This means that the pixel in $$ k_j $$ is going to contribute to flowing information into that location $$ q_i $$.
-- Two different pixels in $$ q_i $$ and $$ k_j $$ have the same sign (both are positive or negative)- their multiplication is positive.
+- Two different pixels in $$ q_i $$ and $$ k_j $$ have different signs (one is positive and one is negative)- their multiplication is negative.
   This means that the pixel in $$ k_j $$ is NOT going to contribute to flowing information into that location in $$ q_i $$.
 
 
@@ -208,7 +210,11 @@ For most locations in the Query image, since they are positive, information is g
 
 
 
-Q, K here are telling us - `We found an airplane, and we want all the locations in the image to know about this!`
+Q, K here are telling us -
+
+
+
+ `We found an airplane, and we want all the locations in the image to know about this!`
 
 
 ### Pattern 2 - The information flows in two directions
@@ -229,8 +235,13 @@ Q, K here are telling us - `We found an airplane, and we want all the locations 
 The information flows in two directions here:
 
 - The top part of the plane (negative values in the Key) is going to spread into all the image (negative values in the Query).
-  `Hey we found this plane, lets tell the rest of the image about it.`
+  
+- `Hey we found this plane, lets tell the rest of the image about it.`
+  
 - Information from the "Non Plane" parts of the image (positive values in the Key) is going to flow into the bottom part of the Plane (positive values in the Query).
+  
+  
+  
   `Lets tell the plane more about what's around it.`
 
 
@@ -243,7 +254,7 @@ Since we have multiple attention heads, to keep it simple we will just look at t
 
 
 
-The attention matrix (Q*K^T) has shape 197x197.
+The attention matrix ($$ Q*K^T $$) has shape 197x197.
 
 If we look at the first row (shape 197), and discard the first value (left with shape 196=14x14) that's how the information flows from the different locations in the image to the class token.
 
@@ -306,7 +317,7 @@ As we will see, it can make sense using other choices: like the minimum, the max
 
 Finally we get:
 
-$$ AttentionRollout_{L} = (A_l + I ) * AttentionRollout_{L-1} $$
+$$ AttentionRollout_{L} = (A_l + I ) \dot AttentionRollout_{L-1} $$
 
 *We also have to normalize the rows, to keep the total attention flow 1.*
 
@@ -340,7 +351,7 @@ However, combined with discarding low attention pixels (next section), fusing th
 
 
 
-### We can focus only on the top attentions, and discard the rest.
+### We can focus only on the top attentions, and discard the rest
 
 Discarding the lowest attention values has a huge effect in how the results look like.
 
@@ -393,7 +404,7 @@ $$ A_{ij} * grad_{ij} $$
 
 
 
-## What Activation Maximization Tells us - Bye image, Hello ordered image patches
+## What Activation Maximization Tells us
 
 Another thing we can do, is apply Activation Maximization, to find the kind of image inputs that maximize different parts in the network.
 
@@ -418,5 +429,7 @@ I guess future work can be about using some kind of a spatial continuity constra
 In this post we applied Explainability techniques for Vision Transformers.
 
 This was my attempt to try to better understand how are they working and what's going inside.
+
+You can access the code here: https://github.com/jacobgil/vit-explain
 
 I hope you enjoyed.
