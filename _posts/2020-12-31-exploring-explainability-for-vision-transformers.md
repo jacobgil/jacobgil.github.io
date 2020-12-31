@@ -237,10 +237,10 @@ The information flows in two directions here:
   
   
   `Lets tell the plane more about what's around it.`
+  
+  
 
-
-
-## # How do the Attention Activations look like for the class token throughout the network?
+# How do the Attention Activations look like for the class token throughout the network?
 
 Another thing we can do is visualize how the attention flows for the class token, in different layers in the network.
 
@@ -362,9 +362,7 @@ Finally, here is how it looks like for a few different images:
 | ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/dogbird.png) | ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/dogbird_attention_rollout_0.000_mean.png) | ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/dogbird_attention_rollout_0.900_max.png) |
 | ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/plane2.png) | ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/plane2_attention_rollout_0.000_mean.png) | ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/plane2_attention_rollout_0.900_max.png) |
 
-
-
-## # Gradient Attention Rollout for Class Specific Explainability
+# Gradient Attention Rollout for Class Specific Explainability
 
 Another question we can ask is - "What in the image contributes to a higher output score in category 42?"
 
@@ -386,9 +384,7 @@ $$ A_{ij} * grad_{ij} $$
 
 ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/dogbird_grad_rollout_161_0.900_max.png) ![](https://raw.githubusercontent.com/jacobgil/vit-explain/main/examples/dogbird_grad_rollout_87_0.900_max.png)
 
-
-
-## # What Activation Maximization Tells us
+# What Activation Maximization Tells us
 
 Another thing we can do, is apply Activation Maximization, to find the kind of image inputs that maximize different parts in the network.
 
