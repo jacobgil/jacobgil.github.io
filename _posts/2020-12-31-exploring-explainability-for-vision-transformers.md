@@ -253,7 +253,7 @@ Q, K here are telling us -
 
 
 - The Query image highlights mainly the bottom part of the Airplane.
-- The image is Negative in the top part of the Airplane.
+- The Key image is negative in the top part of the Airplane.
 
 
 
