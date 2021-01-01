@@ -279,7 +279,7 @@ Since we have multiple attention heads, to keep it simple we will just look at t
 
 
 
-The attention matrix ($$ Q*K^T $$) has shape 197x197.
+The attention matrix ($$ Q*K^T $$) has a shape of 197x197.
 
 If we look at the first row (shape 197), and discard the first value (left with shape 196=14x14) that's how the information flows from the different locations in the image to the class token.
 
