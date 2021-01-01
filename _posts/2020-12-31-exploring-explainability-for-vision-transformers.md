@@ -421,7 +421,7 @@ $$ A_{ij} * grad_{ij} $$
 
 Another thing we can do, is apply Activation Maximization, to find the kind of image inputs that maximize different parts in the network.
 
-In Vision Transformers the image are split into 14x14 independent patches (that represent 16x16 pixels). 
+In Vision Transformers the images are split into 14x14 independent patches (that represent 16x16 pixels). 
 
 We also see this in the Activation Maximization result below- instead of getting a continuous image, we get 14x14 patches.
 
