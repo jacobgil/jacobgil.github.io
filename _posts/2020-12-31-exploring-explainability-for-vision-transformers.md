@@ -338,9 +338,9 @@ As we will see, it can make sense using other choices: like the minimum, the max
 
 
 
-Finally we get:
+Finally we get a way to recursively compute the Attention Rollout matrix at layer L:
 
-$$ AttentionRollout_{L} = (A_l + I ) \dot AttentionRollout_{L-1} $$
+$$ AttentionRollout_{L} = (A_L + I ) \dot AttentionRollout_{L-1} $$
 
 *We also have to normalize the rows, to keep the total attention flow 1.*
 
