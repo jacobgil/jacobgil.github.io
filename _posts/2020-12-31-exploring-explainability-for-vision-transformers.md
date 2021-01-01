@@ -152,7 +152,7 @@ The shape of each of these are - `3x197x64`
 
 
 
-This gives us an image of size 14x14x64 which we can then visualize.**
+This gives us an image of size 14x14x64 which we can then visualize.
 
 
 
@@ -187,8 +187,8 @@ This activation vector is going to be a 14x14 image, with positive and negative 
 
 
 
-- $$ q_{ic} $$ is the Query feature vector for one of the locations i in the image, in channel c.
-- $$ k_{jc} $$ is the key feature vector for one of the locations j in the image, in channel c.
+- $$ q_{ic} $$ is the value of the Query feature vector for one of the locations i in the image, in channel c.
+- $$ k_{jc} $$ is the value of the Key feature vector for one of the locations j in the image, in channel c.
 
 
 
