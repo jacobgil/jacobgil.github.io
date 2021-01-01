@@ -181,26 +181,26 @@ The input to the network is this image of a plane:
 
 
 
-We can now look at the Q and K images in different layers, and visualize them for one of the 64 channels.
+We can now look at the Q and K images in different layers, and visualize them for one of the 64 channels c.
 
 This activation vector is going to be a 14x14 image, with positive and negative values, that seem to be in the range [-5, 5]. 
 
 
 
-- $$ q_i $$ is the Query feature vector for one of the locations i in the image.
-- $$ k_j $$ is the key feature vector for one of the locations j in the image.
+- $$ q_{ic} $$ is the Query feature vector for one of the locations i in the image, in channel c.
+- $$ k_{jc} $$ is the key feature vector for one of the locations j in the image, in channel c.
 
 
 
 **Here is a tricky part:**
 
 For every pixel in K, we can ask "how is that location going to spread information to other parts of the image?"
-Since we take the dot product between the token vectors (every $$ q_i $$ and $$ k_j $$), there are two scenarios:
+Since we take the dot product between the token vectors (every $$ q_{ic} $$ and $$ k_{jc} $$), there are two scenarios:
 
-- Two tokens $$ q_i $$ and  $$ k_j $$ have the same sign (both are positive or negative)- their multiplication is positive.
+- Two tokens, in the same channel c, $$ q_{ic} $$ and  $$ k_{jc} $$ have the same sign (both are positive or negative)- their multiplication is positive.
   This means that the pixel in $$ k_j $$ is going to contribute to flowing information into that location $$ q_i $$.
-- Two tokens $$ q_i $$ and $$ k_j $$ have different signs (one is positive and one is negative)- their multiplication is negative.
-  This means that the pixel in $$ k_j $$ is NOT going to contribute to flowing information into that location in $$ q_i $$.
+- Two tokens, in the same channel c, $$ q_{ic} $$ and $$ k_{jc} $$ have different signs (one is positive and one is negative)- their multiplication is negative.
+  This means that the pixel in $$ k_{jc} $$ is NOT going to contribute to flowing information into that location in $$ q_{ic} $$.
 
 
 
@@ -252,7 +252,7 @@ The information flows in two directions here:
 
 - The top part of the plane (negative values in the Key) is going to spread into all the image (negative values in the Query).
   
-- `Hey we found this plane, lets tell the rest of the image about it.`
+  `Hey we found this plane, lets tell the rest of the image about it.`
   
 - Information from the "Non Plane" parts of the image (positive values in the Key) is going to flow into the bottom part of the Plane (positive values in the Query).
   
