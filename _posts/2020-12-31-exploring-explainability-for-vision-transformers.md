@@ -324,7 +324,7 @@ We can model them by adding the identity matrix I to the layer Attention matrice
 #### We have multiple attention heads. What do we do about them?
 
 The Attention rollout paper suggests taking the average of the heads.
-As we will see, it can make sense using other choices: like the minimum, the maximum, using different weights.
+As we will see, it can make sense using other choices: like the minimum, the maximum, or using different weights.
 
 
 
