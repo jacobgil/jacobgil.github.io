@@ -309,11 +309,11 @@ This is also what the authors at [An Image is Worth 16x16 Words: Transformers fo
 
 
 
-At every Transformer block we get an attention Matrix $$ A_{ij} $$ that flows the defines how much attention is going to flow from token j in the previous layer to token i in the next layer.
+At every Transformer block we get an attention Matrix $$ A_{ij} $$ that defines how much attention is going to flow from token j in the previous layer to token i in the next layer.
 
 
 
-We can multiply all the Matrices between two layers, to get the total attention flow between them.
+We can multiply the Matrices between every two layers, to get the total attention flow between them.
 
 However - we also have the residual connections (like we saw in the previous section). 
 
