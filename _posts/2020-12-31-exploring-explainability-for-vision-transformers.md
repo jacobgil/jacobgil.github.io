@@ -349,7 +349,7 @@ Trying to get this to work, I noticed two things:
 
 ## The way we fuse the attention heads matters
 
-For example, here is how the result look if we take minimum value among the attention heads, instead of the mean value as suggested in the Attention Rollout paper:
+For example, here is how the result looks if we take minimum value among the attention heads, instead of the mean value as suggested in the Attention Rollout paper:
 
 | Image                                                        | Mean Fusion                                                  | Min Fusion                                                   |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -357,7 +357,7 @@ For example, here is how the result look if we take minimum value among the atte
 
 
 
-Different attention heads look at different things, so I guess taking the minimum removes noise by finding their dominator. 
+Different attention heads look at different things, so I guess taking the minimum removes noise by finding their common dominator. 
 
 However, combined with discarding low attention pixels (next section), fusing the attention heads with the maximum operator seems to work best.
 
@@ -440,7 +440,7 @@ I guess future work can be about using some kind of a spatial continuity constra
 
 In this post we applied Explainability techniques for Vision Transformers.
 
-This was my attempt to try to better understand how are they working and what's going inside.
+This was my attempt to try to better understand how are they working and what's going on inside them.
 
 You can access the code here: https://github.com/jacobgil/vit-explain
 
