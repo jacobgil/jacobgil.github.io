@@ -358,7 +358,7 @@ For example, here is how the result looks if we take minimum value among the att
 
 
 
-Different attention heads look at different things, so I guess taking the minimum removes noise by finding their common dominator. 
+Different attention heads look at different things, so I guess taking the minimum removes noise by finding their common denominator.
 
 However, combined with discarding low attention pixels (next section), fusing the attention heads with the maximum operator seems to work best.
 
