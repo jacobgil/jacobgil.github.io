@@ -309,7 +309,7 @@ The images above show us how individual activations look like, but they don't sh
 
 
 
-To quantify this we can use a technique called "Attention Rollout" from [Quantifying Attention Flow in Transformers](https://arxiv.org/abs/2005.00928)
+To quantify this we can use a technique called "Attention Rollout" from [Quantifying Attention Flow in Transformers, by Samira Abnar and Willem Zuidema](https://arxiv.org/abs/2005.00928)
 
 This is also what the authors at [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929) suggested.
 
