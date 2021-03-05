@@ -28,8 +28,8 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 19px;
+  font-family: Lora;
+  font-size: 16x;
   line-height: 1.5;
   color: $body-text-color;
 }
@@ -91,24 +91,13 @@ a {
   color: $header-heading-color;
   text-align: center;
   background-color: $header-bg-color;
-  background-image: url("../header.jpg");
+  /*background-image: url("../header.jpg");*/
   /*background-image: linear-gradient(120deg, $header-bg-color-secondary, $header-bg-color);*/
 
   background-repeat: no-repeat;
   background-size: 100% 100%;
 
 
-  @include large {
-    padding: 15rem 6rem;
-  }
-
-  @include medium {
-    padding: 3rem 4rem;
-  }
-
-  @include small {
-    padding: 2rem 1rem;
-  }
 }
 
 .project-name {
