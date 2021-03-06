@@ -97,7 +97,25 @@ a {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 
+  @include large {
+    padding: 15rem 6rem;
+  }
 
+  @include medium {
+    padding: 3rem 4rem;
+  }
+
+  @include small {
+    padding: 2rem 1rem;
+  }
+  }
+
+.page-header-post {
+  color: #000;
+  text-align: center;
+
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .project-name {
@@ -119,8 +137,8 @@ a {
 
 .project-tagline {
   margin-bottom: 2rem;
-  font-weight: normal;
-  opacity: 0.7;
+  font-weight: bold;
+  opacity: 1.0;
 
   @include large {
     font-size: 1.25rem;

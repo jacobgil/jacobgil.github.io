@@ -53,9 +53,16 @@
       {% assign page-tagline = page.tagline | escape  %}
     {% endif %}
 
+    {% if page.layout == 'home' %}
     <section class="page-header">
-      <h1 class="project-name">{{ page-title }}</h1>
-      <h2 class="project-tagline">{{ page-tagline }}</h2>
+    {% endif %}
+    {% if page.layout != 'home' %}
+    <section class="page-header-post">
+    {% endif %}
+
+ 
+      <h1 class="project-name"><text 1style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ page-title }}</text></h1>
+      <h2 class="project-tagline"><text 1style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ page-tagline }}</text></h2>
       {% if page.layout == 'home' and site.github.is_project_page %}
           <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
         {% if site.show_downloads %}
