@@ -3,6 +3,9 @@ layout: page
 title: Papers
 ---
 
+- [HEROHE Challenge: Predicting HER2 Status in Breast Cancer from Hematoxylin–Eosin Whole-Slide Imaging](https://www.mdpi.com/2313-433X/8/8/213)
+	*2020
+
 - [Deep learning for sensitive detection of Helicobacter Pylori in gastric biopsies](https://bmcgastroenterol.biomedcentral.com/articles/10.1186/s12876-020-01494-7)
 
 	*2020 Sebastian Klein, Jacob Gildenblat, Michaele Angelika Ihle, Sabine Merkelbach-Bruse, Ka-Won Noh, Martin Peifer, Alexander Quaas & Reinhard Büttner*
