@@ -10,13 +10,13 @@ permalink: /about/
 
 👋 Hello! My name is Jacob Gildenblat.
 
-I'm a Deep Learning researcher and a generalist software engineer from Israel. That's a fancy way of saying that I like to do Machine Learning, but I also like building software systems.
+I'm a Deep Learning researcher and a generalist software engineer from Israel. That's a fancy way of saying that I like to do things related to Machine Learning / Computer Vision etc, but I also like building software systems.
 
 I do quite a bit of open source, which you can see on my [github](http://github.com/jacobgil).
 I'm the author of the most widely used [Explainable AI package](https://github.com/jacobgil/pytorch-grad-cam) for computer vision.
 
 
-Since 2018 i'm the Co-Founder and CTO of DeePathology.ai. There i'm developing an Active Learning based interactive AI creation platform for digital pathology that lets Pathologists create and deploy deep learning algorithms.
+Since 2018 i'm the Co-Founder and CTO of DeePathology.ai. There i'm developing an Active Learning based interactive AI creation platform for digital pathology that lets Pathologists create and deploy deep learning models.
 
 
 Let's get in touch.
