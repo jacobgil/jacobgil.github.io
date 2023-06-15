@@ -2,7 +2,7 @@
 layout: post
 title:  "Deriving confidence intervals for variants of Recall, Precision and F1"
 date:   2023-06-14 22:10:33 +0200
-permalink: stats/f1_confidence_interval
+permalink: stats/confidence_intervals
 tags: [Statistics, Machine Learning, Metrics]
 categories: [Statistics]
 excerpt: ""
