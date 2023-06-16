@@ -36,8 +36,7 @@ However there are a few common variants that the paper didn't address:
 - Binary F1, which is extremely common since [it's the default in the scikit-learn library](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html).
 
 
-The next sections derive the confidence intervals for these missing metrics,
-in the spirit of the paper above using the delta method.
+The next sections derive the confidence intervals for these missing metrics in the spirit of the paper above, using the delta method.
 Some of the sections are a bit more verbose than in the paper that (elegently) combines some steps together, however I found it helpful to break it down a bit more.
 
 These were implemented in the [python confidence interval library](https://github.com/jacobgil/confidenceinterval).
@@ -49,12 +48,12 @@ This is the computation flow we're going to go through:
 2. Express the metrics as functions of $$p_{ij}$$: $$metric(p_{ij})$$.
 3. Use the delta method approximate the (normal) distrubution of $$metric(p_{ij})$$.
 4. Plug in our estimate of $$p_{ij}$$ based on the observed data, and get the variance of $$metric(p_{ij})$$ 
-5. Once we have the variance, we can get confidence inteval using the upper and lower bounds using the gaussian distribution.
+5. Once we have the variance, we can get the confidence interval lower and upper bounds using the gaussian distribution.
 
 # The confusion matrix multinomial distribution
 $$C_{ij}$$ is the confusion matrix: the number of predictions with the ground truth category i, that were actually predicted as j.
 *Note that here wee keep the [scikit-learn notation](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html), intead of the notation in the paper that's transposed.*
-Although we have an actual observed confusion matrix $$\hat{C_{ij}}$$, we assume was sampled from a distribution $$C_{ij}$$.
+We have an actual observed confusion matrix $$\hat{C_{ij}}$$, but we assumed it was sampled from a distribution $$C_{ij}$$.
 
 The core assumption here is that $$C_{ij}$$ has a multinomial distribution with parameters $$p_{ij}$$.
 
@@ -63,6 +62,8 @@ $$E(C_{ij}) = n p_{ij}$$
 $$Cov(C_{ij}, C_{ij}) = Var(C_{ij}) = np_{ij}(1-p_{ij})$$
 
 And when ij != kl:
+
+
 $$Cov(C_{ij}, C_{kl}) = -np_{ij}p_{kl}$$
 
 
@@ -106,7 +107,7 @@ If we plug in our estimate for p, we get the (point estimation of the) metric.
 
 # The multi-variate delta method
 
-The various metrics above are functions  $$metric(\hat{p})$$. We know from above that $$\hat{p}$$ has approximately a normal distribution.
+The various metrics above are functions $$metric(\hat{p})$$. We know from above that $$\hat{p}$$ has approximately a normal distribution.
 The multi-variate delta method gives us a recepie to get the distribution of the $$metric(\hat{p})$$:
 
 
@@ -133,7 +134,7 @@ $$metric(p) = R = \frac{1}{r}\sum_{i=1}^{r} \frac{p_{ii}}{\sum_j{p_{ij}}} =\frac
 $$\frac{\partial R}{\partial p_{ii}} =\frac{1}{r} [\frac{1}{di} - \frac{p_{ii}}{di^2}] = \frac{1}{r} \frac{1-R_i}{d_i}$$
 $$\frac{\partial R}{\partial p_{ij}} = -\frac{1}{r}  \frac{p_{ii}}{d_i^2} = -\frac{1}{r}  \frac{R_i}{d_i}$$
 
-In terms of computation, The non diagonal row elements will all be the same expression of the $$R_i$$ of that row.
+In terms of computation, the non diagonal row elements will all be the same expression of the $$R_i$$ of that row.
 
 The code can be found [here](https://github.com/jacobgil/confidenceinterval/blob/main/confidenceinterval/takahashi_methods.py#L260)
 
@@ -145,7 +146,7 @@ $$\frac{\partial P}{\partial p_{ii}} =\frac{1}{r} [\frac{1}{di} - \frac{p_{ii}}{
 $$\frac{\partial p}{\partial p_{ji}} = -\frac{1}{r}  \frac{p_{ii}}{d_i^2} = -\frac{1}{r}  \frac{P_i}{d_i}$$
 
 *Note* how for precision we derive for $$p_{ji}$$ instead of $$p_{ij}$$.
-In terms of computation, The non diagonal columns elements will all be the same expression of the $$P_i$$ of that column.
+In terms of computation, the non diagonal columns elements will all be the same expression of the $$P_i$$ of that column.
 
 
 The code can be found [here](https://github.com/jacobgil/confidenceinterval/blob/main/confidenceinterval/takahashi_methods.py#L78)
