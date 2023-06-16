@@ -24,7 +24,7 @@ excerpt: ""
 
 # Introduction
 
-For developing the [python confidence interval library](https://github.com/jacobgil/confidenceinterval), for the analytic confidence intervals of some metrics I've been relying on results from the remarkable [Confidence interval for micro-averaged F1 and macro-averaged F1 scores](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8936911/#S10) paper *by Kanae Takahashi, Kouji Yamamoto, Aya Kuchiba and Tatsuki Koyama.*
+In the development of the [python confidence interval library](https://github.com/jacobgil/confidenceinterval), for the analytic confidence intervals of some metrics I've been relying on results from the remarkable [Confidence interval for micro-averaged F1 and macro-averaged F1 scores](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8936911/#S10) paper *by Kanae Takahashi, Kouji Yamamoto, Aya Kuchiba and Tatsuki Koyama.*
 
 
 
