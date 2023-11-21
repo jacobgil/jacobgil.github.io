@@ -5,7 +5,7 @@ title: Papers
 
 - [Deep Cellular Embeddings: An Explainable Plug and Play Improvement for Feature Representation in Histopathology](https://link.springer.com/epdf/10.1007/978-3-031-43987-2_75?sharing_token=yxJ6M2mXl8FEoo6Lq0rSzfe4RwlQNchNByi7wbcMAY7jxNo0bliUewITgRTD3ZK5zOIKgD6offC0RWglrB0O-oy4us7z55pxC7n4LMnCki7m1PdapfqwDavHrBwuc4OtF65vUiwFCO76h-GQyVS45cr5dhxxwRJpwUHjMI-99fo%3D)
 
-  	*MICCAI 2023 Jacob Gildenblat, Anil Yüce, Samaneh Abbasi-Sureshjani, Konstanty Korski*
+	*2023 MICCAI, Jacob Gildenblat, Anil Yüce, Samaneh Abbasi-Sureshjani, Konstanty Korski*
 
 - [HEROHE Challenge: Predicting HER2 Status in Breast Cancer from Hematoxylin–Eosin Whole-Slide Imaging](https://www.mdpi.com/2313-433X/8/8/213)
 	
