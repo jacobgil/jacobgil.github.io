@@ -8,12 +8,11 @@ title: Papers
 	*2023 MICCAI, Jacob Gildenblat, Anil Yüce, Samaneh Abbasi-Sureshjani, Konstanty Korski*
 
 - [Identification of MYC -Driven High-Grade B-Cell Lymphoma Using Deep Learning-Based Whole Slide Image Analysis](https://www.researchgate.net/publication/376162120_Identification_of_MYC_-Driven_High-Grade_B-Cell_Lymphoma_Using_Deep_Learning-Based_Whole_Slide_Image_Analysis)
-  	
-  	*2023 November 2023Blood*
+	*2023 November Blood*
 
 - [Predicting Cell Of Origin from digitized images of hematoxylin and eosin-stained slides of diffuse large b-cell lymphomas using a cell-based deep-learning model](https://medically.gene.com/content/dam/pdmahub/restricted/oncology/icml-2023/ICNL-2023-poster-yuce-predicting-cell-of-origin-from-digitized-images.pdf)
-  	
-  	*2023, 17th International Conference on Malignant Lymphoma*
+
+	*2023, 17th International Conference on Malignant Lymphoma*
   
 - [HEROHE Challenge: Predicting HER2 Status in Breast Cancer from Hematoxylin–Eosin Whole-Slide Imaging](https://www.mdpi.com/2313-433X/8/8/213)
 	
