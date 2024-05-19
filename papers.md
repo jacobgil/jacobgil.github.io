@@ -4,6 +4,7 @@ title: Papers
 ---
 
 - [Multi-modal machine learning approaches for predicting cancer type and Gleason grade leveraging public TCGA data](https://www.abstractsonline.com/pp8/#!/20272/presentation/1712)
+
   	*2024 American Association of Cancer Research.*
 
 - [Deep Cellular Embeddings: An Explainable Plug and Play Improvement for Feature Representation in Histopathology](https://link.springer.com/epdf/10.1007/978-3-031-43987-2_75?sharing_token=yxJ6M2mXl8FEoo6Lq0rSzfe4RwlQNchNByi7wbcMAY7jxNo0bliUewITgRTD3ZK5zOIKgD6offC0RWglrB0O-oy4us7z55pxC7n4LMnCki7m1PdapfqwDavHrBwuc4OtF65vUiwFCO76h-GQyVS45cr5dhxxwRJpwUHjMI-99fo%3D)
