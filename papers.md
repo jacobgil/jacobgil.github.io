@@ -3,6 +3,10 @@ layout: page
 title: Papers
 ---
 
+- [Segmentation by Factorization: Unsupervised Semantic Segmentation for Pathology by Factorizing Foundation Model Features]
+(https://arxiv.org/abs/2409.05697)
+
+
 - [Multi-modal machine learning approaches for predicting cancer type and Gleason grade leveraging public TCGA data](https://www.abstractsonline.com/pp8/#!/20272/presentation/1712)
 
 	*2024 American Association of Cancer Research*
