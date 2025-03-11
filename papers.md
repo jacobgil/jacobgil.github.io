@@ -4,10 +4,10 @@ title: Papers
 ---
 
 - [Preserving clusters and correlations: a dimensionality reduction method for exceptionally high global structure preservation](https://arxiv.org/abs/2503.07609)
- 	*2025, arxiv Preprint, Jacob Gildenblat, Jens Pahnke*
+ 	*2025, arxiv preprint, Jacob Gildenblat, Jens Pahnke*
 
 - [Segmentation by Factorization: Unsupervised Semantic Segmentation for Pathology by Factorizing Foundation Model Features](https://arxiv.org/abs/2409.05697)
-  	*2025, arxiv Preprint, Jacob Gildenblat, Ofir Hadar*
+  	*2025, arxiv preprint, Jacob Gildenblat, Ofir Hadar*
 
 
 - [Multi-modal machine learning approaches for predicting cancer type and Gleason grade leveraging public TCGA data](https://www.abstractsonline.com/pp8/#!/20272/presentation/1712)
