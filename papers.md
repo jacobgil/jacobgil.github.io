@@ -15,7 +15,7 @@ title: Papers
 	*2024 American Association of Cancer Research*
 
 - [Artificial intelligence-assisted interpretation of colonic biopsies from patients with inflammatory bowel disease](https://link.springer.com/article/10.1007/s00428-024-03880-y)
-  
+
   	*2024, European Congress of Pathology | Adam P. Levine, Ofir Hadar, Hannah Lowes, Jacob Gildenblat, Talisa Mistry, Dahmane Oukrif, Chen Sagiv, Manuel Rodriguez-Justo*
 
 - [A decision support system for the detection of cutaneous fungal infections using artificial intelligence](https://www.sciencedirect.com/science/article/pii/S0344033824003911)
