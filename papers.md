@@ -9,17 +9,13 @@ title: Papers
 - [Segmentation by Factorization: Unsupervised Semantic Segmentation for Pathology by Factorizing Foundation Model Features](https://arxiv.org/abs/2409.05697)
   	*2025, arxiv preprint, Jacob Gildenblat, Ofir Hadar*
 
-
 - [Multi-modal machine learning approaches for predicting cancer type and Gleason grade leveraging public TCGA data](https://www.abstractsonline.com/pp8/#!/20272/presentation/1712)
-
 	*2024 American Association of Cancer Research*
 
 - [Artificial intelligence-assisted interpretation of colonic biopsies from patients with inflammatory bowel disease](https://link.springer.com/article/10.1007/s00428-024-03880-y)
-
   	*2024, European Congress of Pathology | Adam P. Levine, Ofir Hadar, Hannah Lowes, Jacob Gildenblat, Talisa Mistry, Dahmane Oukrif, Chen Sagiv, Manuel Rodriguez-Justo*
 
 - [A decision support system for the detection of cutaneous fungal infections using artificial intelligence](https://www.sciencedirect.com/science/article/pii/S0344033824003911)
-
    	*2024, Pathology - Research and Practice | Naama Rappoport, Ofir Hadar, Gil Goldinger, Assaf Debby, Yosef Molchanov, Yoash Barak, Jacob Gildenblat, Chen Sagiv, Aviv Barzilai*
 
 - [Deep Cellular Embeddings: An Explainable Plug and Play Improvement for Feature Representation in Histopathology](https://link.springer.com/epdf/10.1007/978-3-031-43987-2_75?sharing_token=yxJ6M2mXl8FEoo6Lq0rSzfe4RwlQNchNByi7wbcMAY7jxNo0bliUewITgRTD3ZK5zOIKgD6offC0RWglrB0O-oy4us7z55pxC7n4LMnCki7m1PdapfqwDavHrBwuc4OtF65vUiwFCO76h-GQyVS45cr5dhxxwRJpwUHjMI-99fo%3D)
