@@ -3,6 +3,9 @@ layout: page
 title: Papers
 ---
 
+- [MSI-VISUAL: New visualization methods for mass spectrometry imaging and tools for interactive mapping and exploration of m/z values](https://www.biorxiv.org/content/10.1101/2025.03.18.643852v1)
+ 	*2025, arxiv preprint, Jacob Gildenblat, Jens Pahnke*
+
 - [Preserving clusters and correlations: a dimensionality reduction method for exceptionally high global structure preservation](https://arxiv.org/abs/2503.07609)
  	*2025, arxiv preprint, Jacob Gildenblat, Jens Pahnke*
 
