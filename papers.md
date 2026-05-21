@@ -3,7 +3,8 @@ layout: page
 title: Papers
 ---
 
-- [Preserving clusters and correlations: a dimensionality reduction method for exceptionally high global structure preservation](https://link.springer.com/article/10.1007/s10044-025-01585-9)
+- [Dimensionality reduction with strong global structure preservation
+](https://link.springer.com/article/10.1007/s10044-025-01585-9)
  	*2026, Pattern analysis and applications, Jacob Gildenblat, Jens Pahnke*
 
 - [Mass spectrometry imaging-based explainable machine learning reveals the biochemical landscapes of the mouse brain](https://ejournals.uni-muenster.de/index.php/fnp/article/view/9413)
