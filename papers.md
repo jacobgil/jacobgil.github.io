@@ -11,7 +11,7 @@ title: Papers
 	*2026, Free Neuropathology, Jacob Gildenblat, Jorunn Stamnas, Jens Pahnke*
 
 - [MSI-VISUAL: New visualization methods for mass spectrometry imaging and tools for interactive mapping and exploration of m/z values](https://www.biorxiv.org/content/10.1101/2025.03.18.643852v1)
- 	*2025, arxiv preprint, Jacob Gildenblat, Jens Pahnke*
+ 	*2026, Science advances, Jacob Gildenblat, Jens Pahnke*
 
 - [Segmentation by Factorization: Unsupervised Semantic Segmentation for Pathology by Factorizing Foundation Model Features](https://arxiv.org/abs/2409.05697)
   	*2025, arxiv preprint, Jacob Gildenblat, Ofir Hadar*
