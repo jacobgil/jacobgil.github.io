@@ -44,7 +44,7 @@ title: Papers
 	*2020 Jacob Gildenblat, Ido Ben-Shaul, Zvi Lapp, Eldad Klaiman*
 
 - [Self-Supervised Similarity Learning for Digital Pathology](https://arxiv.org/abs/1905.08139)
-	*2019 Jacob Gildenblat, Eldad Klaiman*
+	*2019 Jacob Gildenblat, Eldad Klaiman, MICCAI 2019 Workshop COMPAY.*
 
 - [Prediction of biomarker status, diagnosis and outcome from histology slides using deep learning-based hypothesis free feature extraction](https://ascopubs.org/doi/abs/10.1200/JCO.2019.37.15_suppl.3140?af=R&)
 	*2018 Eldad Klaiman, Jacob Gildenblat, Ido Ben-Shaul, Astrid Heller, Konstanty Korski, Astrid Christina Kiermaier, Fabien Gaire*
