@@ -1,4 +1,445 @@
 ---
 ---
 
-@import 'jekyll-theme-cayman-blog';
+/* ==========================================================================
+   jacobgil.github.io redesign
+   Self-contained stylesheet (no theme imports).
+   Fonts: Computer Modern (serif, headings + prose), Inter (sans, nav/meta/tags).
+   Accent: #1e6bb8
+   ========================================================================== */
+
+$serif: 'Computer Modern Serif', 'Latin Modern Roman', Georgia, 'Times New Roman', serif;
+$sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+$mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+$accent: #1e6bb8;
+$text: #24292e;
+$muted: #6a737d;
+$border: #e1e4e8;
+$chip-bg: #e8f1fa;
+$masthead-bg: #111111;
+$code-bg: #f6f8fa;
+
+$content-width: 720px;
+$mobile: 640px;
+
+/* --------------------------------------------------------------------------
+   Reset / base
+   -------------------------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $serif;
+  /* Computer Modern has a small x-height, so it runs one size larger */
+  font-size: 18px;
+  line-height: 1.65;
+  color: $text;
+  background-color: #ffffff;
+}
+
+a {
+  color: $accent;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid $border;
+  margin: 2rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Masthead
+   -------------------------------------------------------------------------- */
+
+.site-masthead {
+  background-color: $masthead-bg;
+}
+
+.masthead-wrapper {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+}
+
+.site-masthead-title {
+  font-family: $sans;
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+
+  &:hover {
+    text-decoration: none;
+    color: #ffffff;
+  }
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+
+  .page-link {
+    font-family: $sans;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #d8d8d8;
+    white-space: nowrap;
+
+    &:hover {
+      color: #ffffff;
+      text-decoration: none;
+    }
+  }
+}
+
+@media screen and (max-width: $mobile) {
+  .masthead-wrapper {
+    flex-wrap: wrap;
+    gap: 0 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .site-nav {
+    gap: 0.9rem;
+
+    .page-link {
+      font-size: 13px;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Content headers (below masthead)
+   -------------------------------------------------------------------------- */
+
+.content-header {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 0;
+}
+
+.content-header-home {
+  padding-top: 1.5rem;
+}
+
+.site-intro {
+  font-family: $sans;
+  font-size: 14px;
+  color: $muted;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.post-title {
+  font-family: $serif;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.25;
+  margin: 0 0 0.6rem;
+}
+
+.page-title {
+  font-family: $serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 1.25;
+  margin: 0 0 0.5rem;
+}
+
+.page-tagline {
+  font-family: $sans;
+  font-size: 14px;
+  color: $muted;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Post meta row (date, reading time, tag chip)
+   -------------------------------------------------------------------------- */
+
+.post-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.post-meta-date {
+  font-family: $sans;
+  font-size: 13px;
+  color: $muted;
+}
+
+.tag-chip {
+  font-family: $sans;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: $accent;
+  background-color: $chip-bg;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Main content column
+   -------------------------------------------------------------------------- */
+
+.main-content {
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 2rem;
+  word-wrap: break-word;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: $serif;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 1.8em 0 0.6em;
+  }
+
+  h1 { font-size: 1.7rem; }
+  h2 { font-size: 1.45rem; }
+  h3 { font-size: 1.2rem; }
+  h4 { font-size: 1.05rem; }
+
+  /* LaTeX-style justified, hyphenated prose */
+  p, li, blockquote {
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  p {
+    margin: 0 0 1.1em;
+  }
+
+  ul, ol {
+    margin: 0 0 1.1em;
+    padding-left: 1.6em;
+  }
+
+  li {
+    margin-bottom: 0.3em;
+  }
+
+  blockquote {
+    margin: 0 0 1.1em;
+    padding: 0.2em 1em;
+    border-left: 3px solid $border;
+    color: $muted;
+  }
+
+  table {
+    border-collapse: collapse;
+    margin-bottom: 1.1em;
+    display: block;
+    overflow-x: auto;
+
+    th, td {
+      border: 1px solid $border;
+      padding: 6px 12px;
+    }
+
+    th {
+      font-family: $sans;
+      font-size: 14px;
+      background-color: $code-bg;
+    }
+  }
+
+  code {
+    font-family: $mono;
+    font-size: 0.82em;
+    background-color: $code-bg;
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
+
+  pre {
+    background-color: $code-bg;
+    border: 1px solid $border;
+    border-radius: 6px;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+    line-height: 1.5;
+    margin: 0 0 1.1em;
+
+    code {
+      background: none;
+      padding: 0;
+      font-size: 13px;
+    }
+  }
+
+  img {
+    display: block;
+    margin: 1.2em auto;
+  }
+}
+
+/* Post body: box-style the leading table of contents (first list in the
+   article, when the post starts with one). */
+article [itemprop="articleBody"] > ul:first-of-type {
+  font-family: $serif;
+  border: 1px solid $border;
+  border-radius: 8px;
+  background-color: #fafbfc;
+  padding: 1.2rem 1.5rem 1.2rem 1.2rem;
+  list-style: none;
+  margin: 1.2rem 0 2rem;
+
+  > li {
+    margin-bottom: 0.55em;
+  }
+
+  ul {
+    list-style: circle;
+    margin: 0.4em 0 0;
+    padding-left: 1.8em;
+
+    li {
+      margin-bottom: 0.35em;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Homepage post list
+   -------------------------------------------------------------------------- */
+
+.post-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  > li {
+    padding: 1.6rem 0;
+    border-bottom: 1px solid $border;
+    margin: 0;
+    text-align: left; /* headlines and excerpts stay ragged-right */
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  h2 {
+    margin: 0 0 0.45rem;
+    font-size: 1.4rem;
+    line-height: 1.3;
+  }
+}
+
+.post-link {
+  color: $text;
+
+  &:hover {
+    color: $accent;
+    text-decoration: none;
+  }
+}
+
+.post-excerpt {
+  font-family: $sans;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #4a5259;
+  margin: 0.6rem 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  border-top: 1px solid $border;
+  margin-top: 3rem;
+  padding: 1.5rem 0 0.5rem;
+  text-align: center;
+}
+
+.my-span-icon {
+  display: inline-block;
+  margin: 0 0.6rem;
+
+  a {
+    display: inline-block;
+  }
+}
+
+.my-svg-icon {
+  fill: #9aa0a6;
+  width: 22px;
+  height: 22px;
+  transition: fill 0.15s ease;
+
+  &:hover {
+    fill: $accent;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Syntax highlighting (rouge, GitHub-like palette)
+   -------------------------------------------------------------------------- */
+
+.highlight {
+  .c, .cm, .c1, .cs { color: #6a737d; font-style: italic; }  /* comments */
+  .k, .kd, .kn, .kp, .kr, .kt, .kc { color: #d73a49; }        /* keywords */
+  .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr, .ss { color: #032f62; } /* strings */
+  .m, .mf, .mh, .mi, .mo, .il { color: #005cc5; }             /* numbers */
+  .na, .nb, .nc, .no, .nd, .ne, .nf, .nx { color: #6f42c1; }  /* names */
+  .nn, .nt { color: #22863a; }                                /* namespaces/tags */
+  .o, .ow { color: #d73a49; }                                 /* operators */
+  .gd { color: #b31d28; background-color: #ffeef0; }          /* diff del */
+  .gi { color: #22863a; background-color: #f0fff4; }          /* diff ins */
+  .err { color: #b31d28; }
+}
+
+/* --------------------------------------------------------------------------
+   Small screens
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: $mobile) {
+  body {
+    font-size: 16px;
+  }
+
+  .post-title {
+    font-size: 1.55rem;
+  }
+
+  .post-list h2 {
+    font-size: 1.25rem;
+  }
+}

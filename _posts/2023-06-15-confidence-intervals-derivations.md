@@ -5,7 +5,7 @@ date:   2023-06-14 22:10:33 +0200
 permalink: stats/confidence_intervals
 tags: [Statistics, Machine Learning, Metrics]
 categories: [Statistics]
-excerpt: ""
+excerpt: "Deriving confidence intervals for binary and macro Recall, Precision and F1 using the multivariate delta method on the confusion matrix."
 
 ---
 {% include katex.html %}
@@ -19,6 +19,7 @@ excerpt: ""
 - [Computing the derivative for binary F1](#computing-the-derivative-for-binary-f1)
 - [Computing the derivative for Macro Recall](#computing-the-derivative-for-macro-recall)
 - [Computing the derivative for Macro Precision](#computing-the-derivative-for-macro-precision)
+{: .toc}
 
 
 

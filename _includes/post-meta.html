@@ -1,0 +1,31 @@
+{% assign item = include.item %}
+{% assign post_tag = item.categories[0] | default: item.tags[0] %}
+{% if post_tag == nil or post_tag == "" %}
+  {% assign url_parts = item.url | remove_first: "/" | split: "/" %}
+  {% assign post_tag = url_parts[0] %}
+{% endif %}
+
+{%- comment -%}
+  Tags reach us in several shapes: real front matter ("deep-learning"), a legacy
+  category ("MachineLearning"), or the post's URL path ("deeplearning"). Normalise
+  to a single key first, then map the known ones to a properly spaced label so the
+  same topic doesn't show up as both "Deep learning" and "Deeplearning".
+{%- endcomment -%}
+{% assign tag_key = post_tag | downcase | replace: "-", "" | replace: "_", "" | replace: " ", "" %}
+{% case tag_key %}
+  {% when "deeplearning" %}{% assign tag_label = "Deep learning" %}
+  {% when "machinelearning" %}{% assign tag_label = "Machine learning" %}
+  {% when "computervision" %}{% assign tag_label = "Computer vision" %}
+  {% when "stats" or "statistics" %}{% assign tag_label = "Statistics" %}
+  {% when "activelearning" %}{% assign tag_label = "Active learning" %}
+  {% when "explainability" %}{% assign tag_label = "Explainability" %}
+  {% else %}{% assign tag_label = post_tag | replace: "-", " " | replace: "_", " " | capitalize %}
+{% endcase %}
+
+{% assign words = item.content | strip_html | number_of_words %}
+{% assign reading_time = words | divided_by: 200 %}
+{% if reading_time == 0 %}{% assign reading_time = 1 %}{% endif %}
+<div class="post-meta-row">
+  <span class="post-meta-date">{{ item.date | date: "%b %-d, %Y" }} &middot; {{ reading_time }} min read</span>
+  {% if tag_label %}<span class="tag-chip">{{ tag_label }}</span>{% endif %}
+</div>

@@ -31,6 +31,7 @@ excerpt: "Overview of different Active Learning algorithms for Deep Learning."
     + [Diverse mini-batch Active Learning](#diverse-mini-batch-active-learning)
     + [Deep Batch Active Learning by Diverse, Uncertain Gradient Lower Bounds](#deep-batch-active-learning-by-diverse--uncertain-gradient-lower-bounds)
 - [Summary](#summary)
+{: .toc}
 
 
 # Introduction

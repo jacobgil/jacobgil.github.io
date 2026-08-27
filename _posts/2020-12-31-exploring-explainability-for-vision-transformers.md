@@ -5,7 +5,7 @@ date:   2020-12-31 22:10:33 +0200
 permalink: deeplearning/vision-transformer-explainability
 tags: [Explainability, Deep Learning]
 categories: [deep-learning]
-excerpt: ""
+excerpt: "A visual exploration of the Q, K and V attention patterns inside a Vision Transformer, and how to turn them into explainability heatmaps."
 
 ---
 {% include katex.html %}
@@ -28,6 +28,7 @@ excerpt: ""
   * [Where does the Transformer see a Musket dog (category 161) and a Parrot (category 87)?](#where-does-the-transformer-see-a-musket-dog--category-161--and-a-parrot--category-87--)
 - [What Activation Maximization Tells us](#what-activation-maximization-tells-us)
 - [Summary](#summary)
+{: .toc}
 
 
 
@@ -224,7 +225,7 @@ From looking at the Q,K visualizations for different channels I think there are 
 **Layer 8, channel 26, first attention head:**
 
 | Query image                                     | Key image                                       | Original                      |
-| ----------------------------------------------- | ----------------------------------------------- | ----------------------------- |
+| ----------------------------------------------- | ----------------------------------------------- | ------------------------------ |
 | ![](../assets/vit/q_k/layer_8_channel_26_q.png) | ![](../assets/vit/q_k/layer_8_channel_26_k.png) | ![](../assets/vit/plane2.png) |
 
 

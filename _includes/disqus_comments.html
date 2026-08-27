@@ -1,8 +1,13 @@
 <div id="disqus_thread"></div>
 <script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    /* Point Disqus at the canonical live URL so the same comment threads
+       load regardless of where the page is served from (e.g. localhost). */
+    var disqus_config = function () {
+        {%- comment -%} site.url is overridden to localhost by `jekyll serve`,
+        so the live domain is written out explicitly. {%- endcomment -%}
+        this.page.url = 'https://jacobgil.github.io{{ page.url | replace: "index.html", "" }}';
+    };
     var disqus_shortname = 'jacobgil'; // required: replace example with your forum shortname
-    /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

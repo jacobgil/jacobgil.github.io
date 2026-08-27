@@ -1,4 +1,8 @@
-# Patents
+---
+layout: page
+title: Patents
+permalink: /patents/
+---
 
 - **System and Method for Interactively and Iteratively Developing Algorithms for Detection of Biological Structures in Biological Samples**, US Patent App. 2023  
   *(Inventors: Jacob Gildenblat, Ido Ben-Shaul, and others)*  
