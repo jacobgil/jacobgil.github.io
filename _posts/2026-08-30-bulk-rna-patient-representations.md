@@ -5,7 +5,7 @@ date:   2026-08-30 09:00:00 +0200
 permalink: biology/bulk-rna-patient-representations
 tags: [Deep Learning, Bulk RNA-seq, Transcriptomics, Gene Expression, Computational Biology]
 categories: [Biology]
-excerpt: "A curated review of how patients are represented from bulk RNA-seq: gene modules, pathway scores, learned pathway embeddings, graph models and foundation models, and what the benchmarks report about each."
+excerpt: "How patients are represented from bulk RNA-seq — from expression vectors and PCA to pathway graphs and foundation models — and whether it helps."
 
 ---
 {% include katex.html %}

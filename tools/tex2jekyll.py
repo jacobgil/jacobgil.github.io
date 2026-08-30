@@ -55,11 +55,15 @@ excerpt: "{excerpt}"
      Regenerate with: python3 tools/tex2jekyll.py -->
 """
 
+# _includes/social-metatags.html truncates the description at 152 characters,
+# so anything longer gets cut mid-word in the Open Graph card that LinkedIn
+# and Twitter render. Keep this under that limit -- see the assert in main().
 EXCERPT = (
-    "A curated review of how patients are represented from bulk RNA-seq: gene "
-    "modules, pathway scores, learned pathway embeddings, graph models and "
-    "foundation models, and what the benchmarks report about each."
+    "How patients are represented from bulk RNA-seq — from expression "
+    "vectors and PCA to pathway graphs and foundation models — and whether "
+    "it helps."
 )
+EXCERPT_LIMIT = 152
 
 
 def slugify(text):
@@ -293,6 +297,13 @@ def render_references(bib):
 
 
 def main():
+    if len(EXCERPT) > EXCERPT_LIMIT:
+        raise SystemExit(
+            f"EXCERPT is {len(EXCERPT)} chars; social-metatags.html truncates "
+            f"at {EXCERPT_LIMIT}, which would cut the link-preview description "
+            "mid-word. Shorten it."
+        )
+
     tex = TEX.read_text(encoding="utf-8")
     math = MathStore()
 
@@ -331,6 +342,7 @@ def main():
     print(f"  table rows {n_rows}")
     print(f"  equations  {sum(1 for _, k in math.items if k == DISPLAY)}")
     print(f"  words      {len(post.split())}")
+    print(f"  excerpt    {len(EXCERPT)}/{EXCERPT_LIMIT} chars")
 
 
 if __name__ == "__main__":
