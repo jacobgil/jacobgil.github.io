@@ -1,0 +1,9 @@
+# LaTeX build artifacts -- keep contributors' local builds out of the repo.
+*.aux
+*.log
+*.out
+*.toc
+*.pdf
+*.synctex.gz
+*.fls
+*.fdb_latexmk
