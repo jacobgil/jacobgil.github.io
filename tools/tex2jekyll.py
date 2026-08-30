@@ -43,7 +43,7 @@ layout: post
 title:  "{title}"
 date:   {date} {time}
 permalink: biology/{slug}
-tags: [Bulk RNA-seq, Transcriptomics, Gene Expression, Deep Learning, Computational Biology]
+tags: [Deep Learning, Bulk RNA-seq, Transcriptomics, Gene Expression, Computational Biology]
 categories: [Biology]
 excerpt: "{excerpt}"
 

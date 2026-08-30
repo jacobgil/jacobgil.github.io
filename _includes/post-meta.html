@@ -1,31 +1,78 @@
 {% assign item = include.item %}
-{% assign post_tag = item.categories[0] | default: item.tags[0] %}
-{% if post_tag == nil or post_tag == "" %}
+
+{%- comment -%}
+  Tags reach us in several shapes: real front matter ("Deep Learning"), a
+  legacy category ("MachineLearning" or "deep-learning"), or -- for the older
+  posts that carry neither -- the first segment of the post's URL
+  ("deeplearning"). Collect every source, then normalise to a single key per
+  topic so the same subject cannot appear twice as both "Deep learning" and
+  "Deeplearning".
+{%- endcomment -%}
+
+{% assign raw_tags = "" | split: "," %}
+{% if item.categories and item.categories.size > 0 %}
+  {% assign raw_tags = raw_tags | concat: item.categories %}
+{% endif %}
+{% if item.tags and item.tags.size > 0 %}
+  {% assign raw_tags = raw_tags | concat: item.tags %}
+{% endif %}
+{% if raw_tags.size == 0 %}
   {% assign url_parts = item.url | remove_first: "/" | split: "/" %}
-  {% assign post_tag = url_parts[0] %}
+  {% assign raw_tags = url_parts | slice: 0, 1 %}
 {% endif %}
 
 {%- comment -%}
-  Tags reach us in several shapes: real front matter ("deep-learning"), a legacy
-  category ("MachineLearning"), or the post's URL path ("deeplearning"). Normalise
-  to a single key first, then map the known ones to a properly spaced label so the
-  same topic doesn't show up as both "Deep learning" and "Deeplearning".
+  Liquid has no unique-by filter and no way to push onto an array, so dedupe by
+  accumulating delimited keys in a string and building the labels alongside.
 {%- endcomment -%}
-{% assign tag_key = post_tag | downcase | replace: "-", "" | replace: "_", "" | replace: " ", "" %}
-{% case tag_key %}
-  {% when "deeplearning" %}{% assign tag_label = "Deep learning" %}
-  {% when "machinelearning" %}{% assign tag_label = "Machine learning" %}
-  {% when "computervision" %}{% assign tag_label = "Computer vision" %}
-  {% when "stats" or "statistics" %}{% assign tag_label = "Statistics" %}
-  {% when "activelearning" %}{% assign tag_label = "Active learning" %}
-  {% when "explainability" %}{% assign tag_label = "Explainability" %}
-  {% else %}{% assign tag_label = post_tag | replace: "-", " " | replace: "_", " " | capitalize %}
-{% endcase %}
+{% assign seen_keys = "" %}
+{% assign labels = "" %}
+
+{% for raw_tag in raw_tags %}
+  {% assign tag_key = raw_tag | downcase | replace: "-", "" | replace: "_", "" | replace: " ", "" %}
+  {% assign key_marker = "|" | append: tag_key | append: "|" %}
+
+  {% unless tag_key == "" or seen_keys contains key_marker %}
+    {% assign seen_keys = seen_keys | append: key_marker %}
+
+    {% case tag_key %}
+      {% when "deeplearning" %}{% assign tag_label = "Deep learning" %}
+      {% when "machinelearning" %}{% assign tag_label = "Machine learning" %}
+      {% when "computervision" %}{% assign tag_label = "Computer vision" %}
+      {% when "stats" or "statistics" %}{% assign tag_label = "Statistics" %}
+      {% when "activelearning" %}{% assign tag_label = "Active learning" %}
+      {% when "explainability" %}{% assign tag_label = "Explainability" %}
+      {% else %}
+        {%- comment -%}
+          Front-matter tags are already written the way they should read
+          ("Bulk RNA-seq"), and Liquid's `capitalize` would lowercase the rest
+          of the string into "Bulk rna seq". Only reformat tags that arrive
+          entirely lowercase, which is the URL-derived and legacy-slug case.
+        {%- endcomment -%}
+        {% assign lowered = raw_tag | downcase %}
+        {% if raw_tag == lowered %}
+          {% assign tag_label = raw_tag | replace: "-", " " | replace: "_", " " | capitalize %}
+        {% else %}
+          {% assign tag_label = raw_tag %}
+        {% endif %}
+    {% endcase %}
+
+    {% assign labels = labels | append: tag_label | append: "~" %}
+  {% endunless %}
+{% endfor %}
+
+{% assign tag_labels = labels | split: "~" %}
 
 {% assign words = item.content | strip_html | number_of_words %}
 {% assign reading_time = words | divided_by: 200 %}
 {% if reading_time == 0 %}{% assign reading_time = 1 %}{% endif %}
 <div class="post-meta-row">
   <span class="post-meta-date">{{ item.date | date: "%b %-d, %Y" }} &middot; {{ reading_time }} min read</span>
-  {% if tag_label %}<span class="tag-chip">{{ tag_label }}</span>{% endif %}
+  {%- comment -%}
+    Capped so a heavily tagged post cannot crowd out the headline it sits
+    under. Order the front-matter tags most-relevant-first.
+  {%- endcomment -%}
+  {% for tag_label in tag_labels limit: 3 %}
+    <span class="tag-chip">{{ tag_label }}</span>
+  {% endfor %}
 </div>

@@ -3,7 +3,7 @@ layout: post
 title:  "Patient Representations from Bulk RNA-seq: From Gene Expression to Foundation Models"
 date:   2026-08-30 09:00:00 +0200
 permalink: biology/bulk-rna-patient-representations
-tags: [Bulk RNA-seq, Transcriptomics, Gene Expression, Deep Learning, Computational Biology]
+tags: [Deep Learning, Bulk RNA-seq, Transcriptomics, Gene Expression, Computational Biology]
 categories: [Biology]
 excerpt: "A curated review of how patients are represented from bulk RNA-seq: gene modules, pathway scores, learned pathway embeddings, graph models and foundation models, and what the benchmarks report about each."
 
