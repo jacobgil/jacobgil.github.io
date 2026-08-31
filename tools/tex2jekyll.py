@@ -45,6 +45,7 @@ date:   {date} {time}
 permalink: biology/{slug}
 tags: [Deep Learning, Bulk RNA-seq, Transcriptomics, Gene Expression, Computational Biology]
 categories: [Biology]
+image: /assets/bulk-rna/card.png
 excerpt: "{excerpt}"
 
 ---
