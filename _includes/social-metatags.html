@@ -51,11 +51,19 @@
 
 {% assign page_description = desc_source | truncate: 152 | escape %}
 
-{%if page.image %}
-  {% assign page_image = site.url | append: site.baseurl | append: page.image %}
-{% elsif site.image %}
-  {% assign page_image = site.url | append: site.baseurl | append: site.image %}
-{%endif %}
+{%- comment -%}
+  `no_preview_image: true` in a page's front matter suppresses the card image
+  entirely, so LinkedIn and Twitter render the compact text-only link card
+  instead of a large picture. Without it a page with no `image:` of its own
+  still inherits site.image, so "no image" was previously not expressible.
+{%- endcomment -%}
+{% unless page.no_preview_image %}
+  {%if page.image %}
+    {% assign page_image = site.url | append: site.baseurl | append: page.image %}
+  {% elsif site.image %}
+    {% assign page_image = site.url | append: site.baseurl | append: site.image %}
+  {%endif %}
+{% endunless %}
 
 {% assign canonical_url = page.url | replace:'index.html','' | absolute_url %}
 

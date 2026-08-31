@@ -6,6 +6,7 @@ permalink: biology/bulk-rna-patient-representations
 tags: [Deep Learning, Bulk RNA-seq, Transcriptomics, Gene Expression, Computational Biology]
 categories: [Biology]
 image: /assets/bulk-rna/card.png
+no_preview_image: true
 excerpt: "How patients are represented from bulk RNA-seq — from expression vectors and PCA to pathway graphs and foundation models — and whether it helps."
 
 ---
