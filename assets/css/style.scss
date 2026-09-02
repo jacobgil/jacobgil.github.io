@@ -395,6 +395,14 @@ article [itemprop="articleBody"] .table-scroll table.eval-table {
 .eval-partial { color: $eval-partial; }
 .eval-none    { color: $eval-none; }
 
+/* Drawn rather than typed: the check and triangle glyphs are missing from
+   Inter and from the macOS fallback chain, so they rendered as tofu boxes. */
+.eval-mark {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.13em;
+}
+
 .table-caption {
   font-family: $sans;
   font-size: 13px;

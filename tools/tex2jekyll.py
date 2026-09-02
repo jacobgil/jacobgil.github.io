@@ -31,11 +31,32 @@ POST = REPO / "_posts" / f"{PUB_DATE}-{SLUG}.md"
 # MathJax's tex2jax picks up directly from the DOM (see _includes/katex.html).
 DISPLAY, INLINE, HTML_INLINE = "display", "inline", "html-inline"
 
+# The verdict marks are drawn rather than typed. U+2713 and U+25B3 are absent
+# from Inter and from the macOS fallback chain, so they rendered as tofu boxes;
+# an inline path depends on no font at all. stroke="currentColor" keeps the
+# .eval-* colour classes working.
+def _mark(css_class, label, path):
+    return (
+        f'<span class="{css_class}" role="img" aria-label="{label}">'
+        f'<svg class="eval-mark" viewBox="0 0 16 16" aria-hidden="true">'
+        f'<path d="{path}" fill="none" stroke="currentColor" stroke-width="2" '
+        f'stroke-linecap="round" stroke-linejoin="round"/>'
+        f"</svg></span>"
+    )
+
+
 SYMBOLS = {
-    "modelbetter": '<span class="eval-yes">&#10003;</span>',
-    "modelnotbetter": '<span class="eval-no">&#215;</span>',
-    "modelconditional": '<span class="eval-partial">&#9651;</span>',
-    "modeluntested": '<span class="eval-none">&mdash;</span>',
+    "modelbetter": _mark("eval-yes", "reported direct gain", "M3 8.5 L6.5 12 L13 4"),
+    "modelnotbetter": _mark(
+        "eval-no", "expression or PCA on par or better", "M4 4 L12 12 M12 4 L4 12"
+    ),
+    "modelconditional": _mark(
+        "eval-partial", "gain limited to some methods or input regimes",
+        "M8 3 L13.5 12.5 L2.5 12.5 Z",
+    ),
+    "modeluntested": _mark(
+        "eval-none", "no matched expression or PCA comparison", "M3 8 L13 8"
+    ),
 }
 
 FRONT_MATTER = """---
