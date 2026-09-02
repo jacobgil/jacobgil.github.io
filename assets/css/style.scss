@@ -403,6 +403,16 @@ article [itemprop="articleBody"] .table-scroll table.eval-table {
   vertical-align: -0.13em;
 }
 
+/* A `cases` block can't be line-broken, so on a phone the widest display
+   equation pushed the whole page into horizontal scroll. Let the equation
+   scroll inside its own box instead, the way the comparison table does. */
+.MathJax_SVG_Display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
 .table-caption {
   font-family: $sans;
   font-size: 13px;

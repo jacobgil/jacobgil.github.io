@@ -1,7 +1,18 @@
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  TeX: { equationNumbers: { autoNumber: "AMS" } },
+  /* Long display equations otherwise run off the side on phones. */
+  SVG: { linebreaks: { automatic: true } }
 });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<!--
+  SVG output rather than the default HTML-CSS.
+
+  HTML-CSS draws every glyph from downloadable MathJax_* web fonts, and when
+  one fails to resolve the reader gets empty boxes instead of the symbol --
+  \mathcal was rendering as tofu on macOS because MathJax_Caligraphic never
+  loaded. SVG output ships the glyph outlines as paths, so the maths depends
+  on no font being available and looks identical on every platform.
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_SVG" type="text/javascript"></script>
